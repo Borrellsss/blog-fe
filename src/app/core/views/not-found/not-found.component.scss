@@ -1,0 +1,25 @@
+@import "src/styles/variables.scss";
+
+.not-found {
+  .not-found-img {
+    margin-inline: auto;
+    width: 50%;
+    filter: grayscale(100%);
+    position: relative;
+  }
+  .not-found-content {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50%;
+
+    .not-found-code {
+      font-size: 4em;
+      color: $color-2;
+    }
+    .not-found-message {
+      font-size: 2em;
+    }
+  }
+}

@@ -1,0 +1,32 @@
+@import "src/styles/variables.scss";
+
+.header-dec {
+  height: 3px;
+  background: linear-gradient(90deg, $color-1 50%, $color-2 50%);
+}
+header {
+  padding-block: 1em;
+  border-bottom: 1px solid $color-4;
+
+  .nav-l {
+    gap: 1em;
+
+    .nav-links {
+      li {
+        padding: 0.5em 2em;
+      }
+    }
+    .logo {
+      cursor: pointer;
+
+      &:hover {
+        color: $color-2;
+      }
+    }
+  }
+  .nav-r {
+    .nav-links {
+      gap: 1em;
+    }
+  }
+}

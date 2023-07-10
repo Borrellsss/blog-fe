@@ -1,1 +1,118 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import "styles/variables";
+
+//reset
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #2d2d2d;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+
+  > *,
+  .fa-solid {
+    color: #fff;
+  }
+  a,
+  a:visited {
+    color: $color-1;
+  }
+
+  // commons
+  // containers
+  .container {
+    margin-inline: auto;
+
+    &-s {
+      width: 80vw;
+    }
+    &-m {
+      width: 90vw;
+    }
+    &-l {
+      width: 100vw;
+    }
+  }
+
+  // flex
+  .flex {
+    display: flex;
+
+    &-wrap {
+      flex-wrap: wrap;
+    }
+    &.a-c-center {
+      align-content: center;
+    }
+    &.a-i-center {
+      align-items: center;
+    }
+    &.j-c-center {
+      justify-content: center;
+    }
+    &.j-c-between {
+      justify-content: space-between;
+    }
+  }
+
+  // buttons
+  .btn {
+    padding-block: 0.5em;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+
+    &:visited {
+      color: inherit;
+    }
+    &-1 {
+      background-color: $color-1;
+    }
+    &-2 {
+      background-color: $color-2;
+    }
+    &-3 {
+      background-color: $color-3;
+    }
+    &-s {
+      padding-inline: 1.5em;
+    }
+    &-l {
+      width: 100%;
+      text-align: center;
+    }
+    &-squared {
+      border-radius: 0.2em;
+    }
+    &-rounded {
+      border-radius: 100em;
+    }
+  }
+
+  // lists
+  ul.nav-links {
+    list-style-type: none;
+
+    .nav-link {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+
+  // others
+  section {
+    padding-block: 2em;
+  }
+  img {
+    width: 100%;
+    display: block;
+  }
+}
