@@ -1,18 +1,23 @@
-<div class="header">
+<div class="header-wrapper">
   <div class="flex header-dec"></div>
   <header>
-    <div class="container container-s">
-      <nav class="flex j-c-between">
+    <div class="container-s">
+      <nav class="flex j-c-between a-i-center">
         <div class="nav-l flex a-i-center">
-          <div routerLink="/" class="logo">FAKE-OVERFLOW</div>
+          <div class="logo-wrapper">
+            <img [routerLink]="isSignedIn ? '/' : 'welcome'" src="../../../../assets/logo-2.png" alt="app-logo" class="logo-2">
+          </div>
         </div>
         <div class="nav-r">
           <ul class="flex nav-links">
-            <li>
-              <a routerLink="/users/sign-in" class="btn btn-squared btn-1 btn-s">Sign in</a>
+            <li *ngIf="!isSignedIn">
+              <a routerLink="/sign-in" class="btn btn-squared btn-1 btn-s">Sign in</a>
             </li>
-            <li>
-              <a routerLink="/users/sign-up" class="btn btn-squared btn-2 btn-s">Sign up</a>
+            <li *ngIf="!isSignedIn">
+              <a routerLink="/sign-up" class="btn btn-squared btn-2 btn-s">Sign up</a>
+            </li>
+            <li *ngIf="isSignedIn">
+              <a (click)="signOut()" class="btn btn-squared btn-2 btn-s">Sign out</a>
             </li>
           </ul>
         </div>

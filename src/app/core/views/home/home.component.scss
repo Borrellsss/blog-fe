@@ -1,0 +1,47 @@
+@import "../../../../styles/variables";
+
+.flex {
+
+  .l-aside,
+  .r-aside {
+    padding-block: 1.5em;
+    flex-shrink: 0;
+  }
+  .l-aside {
+    width: 160px;
+    min-height: calc(100vh - 80px);
+    border-right: 1px solid $color-4;
+
+    .nav-links {
+      width: 160px;
+      position: fixed;
+
+      > li {
+
+        > .nav-link:not(.active):hover {
+          background-color: rgba($color-4, 0.8);
+        }
+        > a {
+          padding: 0.75em 2em;
+          display: block;
+
+          &.active {
+            color: $color-2;
+            font-weight: 600;
+            background-color: rgba($color-4, 0.3);
+            box-shadow: -4px 0 0 0 $color-2 inset;
+          }
+        }
+      }
+    }
+  }
+  .content {
+    flex-grow: 1;
+  }
+  .r-aside {
+    width: 300px;
+    color: $color-4;
+    font-size: 1.5em;
+    border-left: 1px solid $color-4;
+  }
+}

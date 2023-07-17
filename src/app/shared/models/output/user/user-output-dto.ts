@@ -4,7 +4,7 @@ export interface UserOutputDto {
   id: number;
   firstName: string;
   lastName: string;
-  age: number;
+  birthdate: Date;
   email: string;
   username: string;
   avatar: string;
@@ -14,5 +14,5 @@ export interface UserOutputDto {
   updatedBy: number;
   createdAt: Date;
   updatedAt: Date;
-  roles: Array<RoleOutputDto>;
+  role: RoleOutputDto;
 }

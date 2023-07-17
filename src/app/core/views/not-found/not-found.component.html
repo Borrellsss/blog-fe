@@ -1,10 +1,10 @@
-<div class="container container-s">
+<div class="container-s">
   <section class="not-found">
     <img src="/assets/pitech-blog-404.png" alt="404 NOT FOUND" class="not-found-img">
     <div class="not-found-content">
       <div class="not-found-code">404</div>
       <div class="not-found-message">Page not found</div>
-      <a routerLink="/">return to home</a>
+      <a [routerLink]="isSignedIn ? '/' : '/welcome'">return to home</a>
     </div>
   </section>
 </div>

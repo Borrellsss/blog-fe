@@ -9,17 +9,18 @@
   }
   .not-found-content {
     text-align: center;
-    position: absolute;
+    position: relative;
     top: 50%;
-    left: 50%;
-    translate: -50%;
+    left: calc(50% - 5px);
+    translate: -50% -150%;
 
     .not-found-code {
-      font-size: 4em;
+      font-size: 5em;
       color: $color-2;
     }
     .not-found-message {
-      font-size: 2em;
+      margin-bottom: 0.5em;
+      font-size: 2.2em;
     }
   }
 }

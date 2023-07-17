@@ -1,0 +1,97 @@
+<div class="container-s">
+  <section>
+    <div class="form-wrapper">
+      <div class="logo-wrapper">
+        <img routerLink="/welcome" src="../../../../assets/logo-1.png" alt="app-logo" class="logo">
+      </div>
+      <form [formGroup]="signUpForm" (ngSubmit)="signUp()" appToggleSubmit>
+        <!-- FIRSTNAME -->
+        <div class="form-input-wrapper">
+          <input type="text" formControlName="firstName" id="firstName" appInputLabelAnimation appInputIgnoreNumbers appInputIgnoreSpecialCharacters [class]="{'invalid': errors.get('firstName') && !signUpForm.get('firstName')?.dirty}">
+          <label for="firstName">First Name</label>
+          <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('firstName') && !signUpForm.get('firstName')?.dirty"></i>
+        </div>
+        <div *ngIf="errors.get('firstName')">
+          <div *ngFor="let error of errors.get('firstName')" class="input-error">{{ error }}</div>
+        </div>
+        <!-- LASTNAME -->
+        <div class="form-input-wrapper">
+          <input type="text" formControlName="lastName" id="lastName" appInputLabelAnimation appInputIgnoreNumbers appInputIgnoreSpecialCharacters [class]="{'invalid': errors.get('lastName') && !signUpForm.get('lastName')?.dirty}">
+          <label for="lastName">Last Name</label>
+          <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('lastName') && !signUpForm.get('lastName')?.dirty"></i>
+        </div>
+        <div *ngIf="errors.get('lastName')">
+          <div *ngFor="let error of errors.get('lastName')" class="input-error">{{ error }}</div>
+        </div>
+        <!-- BIRTHDATE -->
+        <div class="form-input-wrapper">
+          <input type="date" formControlName="birthdate" id="birthdate" appInputLabelAnimation [class]="{'invalid': errors.get('birthdate') && !signUpForm.get('birthdate')?.dirty}">
+          <label for="birthdate">Birthdate</label>
+          <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('birthdate') && !signUpForm.get('birthdate')?.dirty"></i>
+        </div>
+        <div *ngIf="errors.get('birthdate')">
+          <div *ngFor="let error of errors.get('birthdate')" class="input-error">{{ error }}</div>
+        </div>
+        <!-- EMAIL -->
+        <div class="form-input-wrapper">
+          <input type="email" formControlName="email" id="email" appInputLabelAnimation [class]="{'invalid': errors.get('email') && !signUpForm.get('email')?.dirty}">
+          <label for="email">Email</label>
+          <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('email') && !signUpForm.get('email')?.dirty"></i>
+        </div>
+        <div *ngIf="errors.get('email')">
+          <div *ngFor="let error of errors.get('email')" class="input-error">{{ error }}</div>
+        </div>
+        <!-- USERNAME -->
+        <div class="form-input-wrapper">
+          <input type="text" formControlName="username" id="username" appInputLabelAnimation [class]="{'invalid': errors.get('username') && !signUpForm.get('username')?.dirty}">
+          <label for="username">Username</label>
+          <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('username') && !signUpForm.get('username')?.dirty"></i>
+        </div>
+        <div *ngIf="errors.get('username')">
+          <div *ngFor="let error of errors.get('username')" class="input-error">{{ error }}</div>
+        </div>
+        <!-- PASSWORD -->
+        <div class="form-input-wrapper">
+          <input type="{{ passwordVisible ? 'text' : 'password' }}" formControlName="password" id="password" appInputLabelAnimation [class]="{'invalid': errors.get('password') && !signUpForm.get('password')?.dirty}">
+          <label for="password">Password</label>
+          <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('password') && !signUpForm.get('password')?.dirty"></i>
+          <button type="button" class="toggle-password" (click)="passwordVisible = !passwordVisible">
+            <i [class]="{'fa-solid': true, 'fa-eye-slash': !passwordVisible, 'fa-eye': passwordVisible}"></i>
+          </button>
+        </div>
+        <div *ngIf="errors.get('password')">
+          <div *ngFor="let error of errors.get('password')" class="input-error">{{ error }}</div>
+        </div>
+        <div>Passwords must contain at least eight characters, including at least 1 lower-case and 1 upper-case letter, 1 number and 1 special character.</div>
+        <!-- AVATAR -->
+        <div class="form-input-wrapper">
+          <input type="text" formControlName="avatar" id="avatar" appInputLabelAnimation [class]="{'invalid': errors.get('avatar') && !signUpForm.get('avatar')?.dirty}">
+          <label for="avatar">Avatar</label>
+          <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('avatar') && !signUpForm.get('avatar')?.dirty"></i>
+        </div>
+        <div *ngIf="errors.get('avatar')">
+          <div *ngFor="let error of errors.get('avatar')" class="input-error">{{ error }}</div>
+        </div>
+        <div class="btn-s-wrapper">
+          <button type="submit" class="btn btn-squared btn-1 btn-s">Sign up</button>
+        </div>
+        <p class="text-center">
+          <span>By clicking “Sign up”, you agree to our </span>
+          <a>terms of service</a>
+          <span> and acknowledge that you have read and understand our </span>
+          <a>privacy policy</a>
+          <span> and </span>
+          <a>code of conduct</a>.
+        </p>
+      </form>
+    </div>
+    <div class="text-center">
+      <span>Already have an account? </span>
+      <a routerLink="../sign-in">Sign in</a>
+    </div>
+    <div class="text-center">
+      <span>Are you an employer? </span>
+      <a>Sign up on Talent</a>
+    </div>
+  </section>
+</div>

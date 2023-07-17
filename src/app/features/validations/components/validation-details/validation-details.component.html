@@ -1,0 +1,108 @@
+<div class="container-l">
+  <h2>{{ formField }}</h2>
+  <div class="validation-details-wrapper">
+    <div *ngIf="!validation" class="flex j-c-center a-i-center placeholder">
+      <div class="flex flex-column a-i-center">
+        <i class="fa fa-exclamation-triangle"></i>
+        <p>No validation rules set for this field</p>
+        <a [routerLink]="['../../edit', formField.split(' ')[0], formField.split(' ')[2]]" class="btn btn-rounded btn-2 btn-s">Set up now</a>
+      </div>
+    </div>
+    <div *ngIf="validation" class="validation-validators-wrapper">
+      <div class="flex j-c-between validation-validators">
+        <div>
+          <div>
+            <span class="validator-label">Code: </span>
+            <span class="validator-value">{{ validation.code }}</span>
+          </div>
+          <div>
+            <span class="validator-label">Created by: </span>
+            <span class="validator-value">{{ validation.createdBy }}</span>
+          </div>
+          <div>
+            <span class="validator-label">Updated by: </span>
+            <span class="validator-value">{{ validation.updatedBy }}</span>
+          </div>
+          <div>
+            <span class="validator-label">Created at: </span>
+            <span class="validator-value">{{ validation.createdAt | date }}</span>
+          </div>
+          <div>
+            <span class="validator-label">Updated at: </span>
+            <span class="validator-value">{{ validation.updatedAt | date:"medium" }}</span>
+          </div>
+          <div>
+            <span class="validator-label">Not null: </span>
+            <span class="validator-value">{{ validation.notNull }}</span>
+          </div>
+          <div>
+            <span class="validator-label">Not empty: </span>
+            <span class="validator-value">{{ validation.notEmpty }}</span>
+          </div>
+        </div>
+        <div>
+          <div>
+            <span class="validator-label">Min: </span>
+            <span class="validator-value">{{ validation.min ? validation.min : "UNSET" }}</span>
+          </div>
+          <div>
+            <span class="validator-label">Max: </span>
+            <span class="validator-value">{{ validation.max ? validation.max : "UNSET" }}</span>
+          </div>
+          <div>
+            <span class="validator-label">Regex: </span>
+            <span class="validator-value">{{ validation.regex ? "SET" : "UNSET" }}</span>
+          </div>
+          <div>
+            <span class="validator-label">Min uppercase letters: </span>
+            <span class="validator-value">{{ validation.minUpperCaseLetters ? validation.minUpperCaseLetters : "UNSET" }}</span>
+          </div>
+          <div>
+            <span class="validator-label">Min lowercase letters: </span>
+            <span class="validator-value">{{ validation.minLowerCaseLetters ? validation.minLowerCaseLetters : "UNSET" }}</span>
+          </div>
+          <div>
+            <span class="validator-label">Min digits: </span>
+            <span class="validator-value">{{ validation.minDigits ?  validation.minDigits : "UNSET" }}</span>
+          </div>
+          <div>
+            <span class="validator-label">Min special characters: </span>
+            <span class="validator-value">{{ validation.minSpecialCharacters ? validation.minSpecialCharacters : "UNSET" }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex edit-or-delete-section">
+        <a [routerLink]="['../../edit', formField.split(' ')[0], formField.split(' ')[2]]" class="btn btn-squared btn-1 btn-s">Edit</a>
+        <a (click)="deleteValidation(validation.code)" class="btn btn-squared btn-2 btn-s">Delete</a>
+      </div>
+      <div (click)=showErrorMessages($event) class="validation-error-messages-wrapper">
+        <div class="flex j-c-between a-i-center">
+          <span>Error Messages</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="validation-error-messages">
+          <div>
+            add message
+          </div>
+          <div *ngFor="let errorMessage of validation.errorMessages" class="validation-error-message">
+            <div>{{ errorMessage.errorType.split(".")[2] }}: {{ errorMessage.message }}</div>
+            <div class="flex j-c-between">
+              <div>
+                <div>created by: {{ errorMessage.createdBy }}</div>
+                <div>updated by: {{ errorMessage.updatedBy }}</div>
+              </div>
+              <div>
+                <div>created at: {{ errorMessage.createdAt | date }}</div>
+                <div>updated at: {{ errorMessage.updatedAt | date:"medium" }}</div>
+              </div>
+            </div>
+            <div class="flex edit-or-delete-section">
+              <a [routerLink]="['../../edit', formField.split(' ')[0], formField.split(' ')[2]]" class="btn btn-rounded btn-1 btn-s">Edit</a>
+              <a (click)="deleteErrorMessage(errorMessage.id)" class="btn btn-rounded btn-2 btn-s">Delete</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div>
+  <h1>Validations</h1>
+  <div class="flex">
+    <div class="validations-wrapper">
+      <div (click)=showFields($event) *ngFor="let form of forms" class="validation-card">
+        <div class="validation-name flex j-c-between a-i-center">
+          <span>{{ form.constructor.name.replace("Form",'') }} Form</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="validation-fields-wrapper">
+          <div
+            [routerLink]="[form.constructor.name.replace('Form',''), field]"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            *ngFor="let field of object.keys(form)"
+            class="flex j-c-between a-i-center validation-field"
+          >
+            <span>{{ field }}</span>
+            <i class="flex j-c-center a-i-center fa-solid"></i>
+            <div class="legend">
+              <div class="flex a-i-center">
+                <i class="flex j-c-center a-i-center fa-solid fa-check"></i>
+                <div>: Validation rules applied for this field</div>
+              </div>
+              <div class="flex a-i-center">
+                <i class="flex j-c-center a-i-center fa-solid fa-triangle-exclamation"></i>
+                <div>: No validation rules applied for this field</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="validation">
+      <div class="flex j-c-center a-i-center placeholder" *ngIf="!isActive">Select a form field</div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

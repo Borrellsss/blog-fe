@@ -1,0 +1,44 @@
+<div class="container-s">
+  <section>
+    <div class="form-wrapper">
+      <div class="logo-wrapper">
+        <img routerLink="/welcome" src="../../../../assets/logo-1.png" alt="app-logo" class="logo">
+      </div>
+      <form [formGroup]="signInForm" (ngSubmit)="signIn()" appToggleSubmit>
+        <!-- USERNAME -->
+        <div class="form-input-wrapper">
+          <input type="text" formControlName="username" id="username" appInputLabelAnimation [class]="{'invalid': errors.get('username') && !signInForm.get('username')?.dirty}">
+          <label for="username">Username</label>
+          <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('username') && !signInForm.get('username')?.dirty"></i>
+        </div>
+        <div *ngIf="errors.get('username')">
+          <div *ngFor="let error of errors.get('username')" class="input-error">{{ error }}</div>
+        </div>
+        <!-- PASSWORD -->
+        <div class="form-input-wrapper">
+          <input type="{{ passwordVisible ? 'text' : 'password' }}" formControlName="password" id="password" appInputLabelAnimation [class]="{'invalid': errors.get('password') && !signInForm.get('password')?.dirty}">
+          <label for="password">Password</label>
+          <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('password') && !signInForm.get('password')?.dirty"></i>
+          <button type="button" class="toggle-password" (click)="passwordVisible = !passwordVisible">
+            <i [class]="{'fa-solid': true, 'fa-eye-slash': !passwordVisible, 'fa-eye': passwordVisible}"></i>
+          </button>
+        </div>
+        <div *ngIf="errors.get('password')">
+          <div *ngFor="let error of errors.get('password')" class="input-error">{{ error }}</div>
+        </div>
+        <div>Passwords must contain at least eight characters, including at least 1 lower-case and 1 upper-case letter, 1 number and 1 special character.</div>
+        <div class="btn-s-wrapper">
+          <button type="submit" [disabled]="!signInForm.valid" class="btn btn-squared btn-1 btn-s">Sign in</button>
+        </div>
+      </form>
+    </div>
+    <div class="text-center">
+      <span>Don’t have an account? </span>
+      <a routerLink="../sign-up">Sign up</a>
+    </div>
+    <div class="text-center">
+      <span>Are you an employer? </span>
+      <a>Sign up on Talent</a>
+    </div>
+  </section>
+</div>

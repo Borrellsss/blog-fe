@@ -1,0 +1,84 @@
+@import "../../../../../styles/variables";
+
+.container-l {
+  height: 100%;
+
+  > h2 {
+    text-align: center;
+  }
+  > .validation-details-wrapper {
+    width: 100%;
+    height: 100%;
+
+    .placeholder {
+      font-size: 1.5em;
+      color: $color-4;
+
+      .fa-exclamation-triangle {
+        color: $color-4;
+        margin-bottom: 0.3em;
+        font-size: 1.5em;
+      }
+      p {
+        margin-bottom: 0.7em;
+      }
+      .btn {
+        font-size: 0.7em;
+      }
+    }
+    > .validation-validators-wrapper {
+
+      > div:not(:last-child) {
+        margin-bottom: 1.5em;
+      }
+      .edit-or-delete-section {
+        justify-content: start;
+        gap: 1em;
+      }
+      > .validation-validators {
+
+        .validator-label {
+          color: $color-2;
+        }
+      }
+      > .validation-error-messages-wrapper {
+        border: 1px solid $color-4;
+        cursor: pointer;
+
+        > .flex {
+          padding: 1em 2em;
+
+          > .fa-solid.fa-chevron-down {
+            transform: rotate(0);
+            transition: all 0.1s ease-in-out;
+
+            &.open {
+              transform: rotate(-180deg);
+            }
+          }
+        }
+
+        .validation-error-messages {
+          display: none;
+          background-color: rgba($color-3, 0.8);
+
+          > .validation-error-message {
+            padding: 1em 2em;
+
+            > *:not(:last-child) {
+              margin-bottom: 1em;
+            }
+            &:hover {
+              background-color: $color-3;
+            }
+          }
+        }
+
+        &.active .validation-error-messages {
+          display: block;
+        }
+      }
+    }
+  }
+
+}
