@@ -9,17 +9,10 @@ export class AuthInterceptorService implements HttpInterceptor {
   constructor(private authService: AuthService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this.authService.isSignedIn$
-      .subscribe((isSignedIn: boolean) => {
-        if (isSignedIn) {
-          const jwt = JSON.parse(localStorage.getItem("user")!).jwt;
-          req = req.clone({
-            setHeaders: {
-              Authorization: `Bearer ${jwt}`
-            }
-          });
-        }
-      });
+    if (this.authService.isTokenValid()) {
+      const jwt = JSON.parse(localStorage.getItem("token")!).jwt;
+      req = req.clone({headers: req.headers.set('Authorization', `Bearer ${jwt}`)});
+    }
     return next.handle(req);
   }
 }

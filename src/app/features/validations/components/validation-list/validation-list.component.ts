@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
-import { Router } from "@angular/router";
-import { Subscription, timer } from "rxjs";
+import { NavigationEnd, Router } from "@angular/router";
+import { Subscription } from "rxjs";
 
 import { ValidationsService } from "../../../../core/services/validations.service";
 import { ValidationOutputDto } from "../../../../shared/models/output/validation/validation-output-dto";
@@ -38,93 +38,50 @@ export class ValidationListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.sub = this.router.events.subscribe((val: any) => {
-      this.isActive = val["routerEvent"]?.url !== "/validations";
-      const code = val["routerEvent"]?.url.split("?")[1]?.split("&")[0]?.split("=")[1];
-      const deleted = val["routerEvent"]?.url.split("?")[1]?.split("&")[1]?.split("=")[1];
-      if (code && deleted === "true") {
-        this.validations.forEach((value, key) => {
-          value.forEach((validation) => {
-            if ((validation.code === code) && this.validations.has(key)) {
-              let formName = "";
-              let formField = "";
-              this.validations.set(key, this.validations.get(key)!
-                .filter((validation) => {
-                  if (validation.code === code) {
-                    formName = validation.field.split(".")[0]
-                      .replace("InputDto", " Form");
-                    formField = validation.field.split(".")[1];
-                  }
-                  return validation.code !== code;
-                }));
-              this.resetValidationField(formName, formField);
-            }
-          });
-        });
+    this.setValidations();
+    this.sub = this.router.events.subscribe((event: any) => {
+      this.isActive = event["routerEvent"]?.url !== "/validations";
+      if (event instanceof NavigationEnd) {
+        this.setValidations();
       }
-    });
-    this.forms.forEach((form) => {
-      this.validationsService.readByFieldStartsWith(form.constructor.name.replace("Form", ""))
-        .subscribe((res: Array<ValidationOutputDto>) => {
-          this.validations.set(form.constructor.name, res);
-          timer(500).subscribe(() => {
-            this.setValidatedFields();
-            this.setIcons();
-          });
-        });
     });
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
-  private setValidatedFields() {
-    document.querySelectorAll(".validation-card").forEach((field) => {
-      const formName: string = field.childNodes[0].childNodes[0].textContent?.replace(" ", "")!;
-      if (!this.validations.has(formName)) {
+  private setValidations() {
+    this.validations = new Map();
+    this.forms.forEach((form) => {
+      this.validationsService.readByFieldStartsWith(form.constructor.name.replace("Form", ""))
+        .subscribe((res: Array<ValidationOutputDto>) => {
+          this.validations.set(form.constructor.name, res);
+          this.setValidatedFields(form.constructor.name);
+        });
+    });
+  }
+  private setValidatedFields(formName: string) {
+    document.getElementById(`${formName}`)?.childNodes[1].childNodes.forEach((child) => {
+      if (child.nodeName !== "DIV") {
         return;
       }
-      // @ts-ignore
-      if (this.validations.get(formName).length > 0) {
-        this.validations.get(formName)!.forEach((validation) => {
-          field.childNodes[1].childNodes.forEach((child) => {
-            const validationFieldSuffix = validation.field.split(".")[1];
-            if (validationFieldSuffix === child.firstChild?.textContent) {
-              this.renderer.addClass(child, "validated");
-            }
-          });
-        });
-      }
-    });
-  }
-  private setIcons() {
-    document.querySelectorAll(".validation-fields-wrapper")
-      .forEach((el) => {
-        el.childNodes.forEach((child, index,parent) => {
-          if (parent.length - 1 === index) {
-            return;
-          }
-          if ((child as Element).classList?.contains("validated")) {
-            this.renderer.addClass(child.childNodes[1], "fa-check");
-          } else {
-            this.renderer.addClass(child.childNodes[1], "fa-triangle-exclamation");
-          }
-        });
-      });
-  }
-  private resetValidationField(formName: string, formField: string): void {
-    document.querySelectorAll(".validation-card")
-      .forEach((parent) => {
-        if (parent.firstChild?.textContent === formName) {
-          parent.lastChild?.childNodes.forEach((child) => {
-            if (child.firstChild?.textContent === formField) {
-              this.renderer.removeClass(child, "validated");
-              this.renderer.removeClass(child.childNodes[1], "fa-check");
-              this.renderer.addClass(child.childNodes[1], "fa-triangle-exclamation");
-            }
-          });
+      this.renderer.removeClass(child, "validated");
+      this.validations.get(formName)?.forEach((validation) => {
+        if (validation.field.split(".")[1] === child.firstChild?.textContent) {
+          this.renderer.addClass(child, "validated");
         }
+        this.setIcons(child as Element);
+      });
     });
+  }
+  private setIcons(el: Element): void {
+    if (el.classList?.contains("validated")) {
+      this.renderer.removeClass(el.childNodes[1], "fa-triangle-exclamation");
+      this.renderer.addClass(el.childNodes[1], "fa-check");
+    } else {
+      this.renderer.removeClass(el.childNodes[1], "fa-check");
+      this.renderer.addClass(el.childNodes[1], "fa-triangle-exclamation");
+    }
   }
   showFields(event: MouseEvent): void {
     const active = document.querySelector(".validation-card.active") as HTMLElement;

@@ -24,7 +24,6 @@ export class TagListComponent implements OnInit {
     this.tagService.readAll(--this.page).subscribe({
       next: (res: TagPageableOutputDto) => {
         this.tagPageableOutputDto = res;
-        console.log(this.tagPageableOutputDto)
       },
       error: (err) => console.log(err)
     });

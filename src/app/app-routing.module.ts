@@ -15,14 +15,19 @@ const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
-        path: "users",
-        loadChildren: () => import("./features/users/users.module")
-          .then(module => module.UsersModule)
+        path: "posts",
+        loadChildren: () => import("./features/posts/posts.module")
+          .then(module => module.PostsModule)
       },
       {
         path: "tags",
         loadChildren: () => import("./features/tags/tags.module")
           .then(module => module.TagsModule)
+      },
+      {
+        path: "users",
+        loadChildren: () => import("./features/users/users.module")
+          .then(module => module.UsersModule)
       },
       {
         path: "validations",

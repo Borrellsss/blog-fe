@@ -34,7 +34,7 @@ export class SignInComponent implements OnInit {
   ngOnInit(): void {
     this.reset();
     this.signInForm = new FormGroup({
-      username: new FormControl(localStorage.getItem('username')),
+      username: new FormControl(localStorage.getItem('user')),
       password: new FormControl(null)
     });
   }

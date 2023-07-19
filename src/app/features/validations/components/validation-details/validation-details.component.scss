@@ -41,6 +41,9 @@
           color: $color-2;
         }
       }
+      .btn {
+        font-size: 0.9em;
+      }
       > .validation-error-messages-wrapper {
         border: 1px solid $color-4;
         cursor: pointer;
@@ -57,25 +60,79 @@
             }
           }
         }
-
         .validation-error-messages {
           display: none;
-          background-color: rgba($color-3, 0.8);
+          background-color: $color-3;
+          cursor: default;
 
           > .validation-error-message {
             padding: 1em 2em;
 
+            &:not(:last-child) {
+              border-bottom: 1px solid $color-4;
+            }
+            > .edit-validation-error-message {
+              padding-block: 1em 1em;
+              display: none;
+
+              &.active {
+                display: block;
+              }
+            }
             > *:not(:last-child) {
               margin-bottom: 1em;
             }
-            &:hover {
+          }
+          > .add-validation-error-message-wrapper {
+
+            &:not(.disabled):hover {
+              color: $color-2;
+            }
+            &.disabled {
+              color: $color-4;
+              pointer-events: none;
+            }
+            > .add-validation-error-message {
+              padding: 1.3em 2em;
+              gap: 0.5em;
               background-color: $color-3;
+              cursor: pointer;
+
+              > .fa-solid.fa-plus {
+                font-size: 1em;
+              }
+            }
+            > .new-validation-error-message {
+              padding: 0 2em 2em;
+              display: none;
+              background-color: $color-3;
+
+              &.active {
+                display: block;
+              }
             }
           }
         }
-
         &.active .validation-error-messages {
           display: block;
+        }
+        .form-input-wrapper {
+
+          ~ .hint {
+            margin-bottom: 1em;
+          }
+        }
+        .radio-group-label {
+          margin-bottom: 0.5em;
+          gap: 0.5em;
+
+          > .input-alert {
+            font-size: 1.6em;
+            color: $color-6;
+            position: static;
+            translate: 0 0;
+            box-shadow: none;
+          }
         }
       }
     }

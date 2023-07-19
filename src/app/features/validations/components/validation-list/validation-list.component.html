@@ -2,7 +2,7 @@
   <h1>Validations</h1>
   <div class="flex">
     <div class="validations-wrapper">
-      <div (click)=showFields($event) *ngFor="let form of forms" class="validation-card">
+      <div (click)=showFields($event) *ngFor="let form of forms" class="validation-card" id="{{ form.constructor.name }}">
         <div class="validation-name flex j-c-between a-i-center">
           <span>{{ form.constructor.name.replace("Form",'') }} Form</span>
           <i class="fa-solid fa-chevron-down"></i>

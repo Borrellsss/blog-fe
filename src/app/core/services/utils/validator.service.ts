@@ -124,28 +124,27 @@ export class ValidatorService {
     }
   }
   private setErrorMessagePlaceholder(key: string, validation: ValidationOutputDto, errorType: string): string {
-    key = key.charAt(0).toUpperCase() + key.slice(1);
     switch (errorType) {
       case "notNull":
-        return `${key} is required`;
+        return `Field is required`;
       case "notEmpty":
-        return `${key} cannot be empty`;
+        return `Field cannot be empty`;
       case "min":
-        return `${key} must be greater than or equal to ${validation.min}`;
+        return `Field must be greater than or equal to ${validation.min}`;
       case "max":
-        return `${key} must be less than or equal to ${validation.max}`;
+        return `Field must be less than or equal to ${validation.max}`;
       case "regex":
-        return `${key} must be in the correct format`;
+        return `Field must be in the correct format`;
       case "minUpperCaseLetters":
-        return `${key} must contain at least ${validation.minUpperCaseLetters} uppercase letters`;
+        return `Field must contain at least ${validation.minUpperCaseLetters} uppercase letters`;
       case "minLowerCaseLetters":
-        return `${key} must contain at least ${validation.minLowerCaseLetters} lowercase letters`;
+        return `Field must contain at least ${validation.minLowerCaseLetters} lowercase letters`;
       case "minDigits":
-        return `${key} must contain at least ${validation.minDigits} digits`;
+        return `Field must contain at least ${validation.minDigits} digits`;
       case "minSpecialCharacters":
-        return `${key} must contain at least ${validation.minSpecialCharacters} special characters`;
+        return `Field must contain at least ${validation.minSpecialCharacters} special characters`;
       default:
-        return `${key} is invalid`;
+        return `Field is invalid`;
     }
   }
 }

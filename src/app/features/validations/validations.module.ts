@@ -15,7 +15,7 @@ import { ValidationDetailsComponent } from './components/validation-details/vali
   ],
   imports: [
     SharedModule,
-    ValidationsRoutingModule
+    ValidationsRoutingModule,
   ],
   exports: [
     ValidationListComponent

@@ -16,26 +16,26 @@ export class AuthService {
 
   onSignUp(signUpOutputDto: SignUpOutputDto): void {
     this.onSignOut();
-    localStorage.setItem("username", signUpOutputDto.username);
+    localStorage.setItem("user", signUpOutputDto.username);
   }
   onSignIn(signInOutputDto: SignInOutputDto): void {
-    if (localStorage.getItem("username")) {
-      localStorage.removeItem("username");
+    if (localStorage.getItem("user")) {
+      localStorage.removeItem("user");
     }
-    localStorage.setItem("user", JSON.stringify(signInOutputDto));
+    localStorage.setItem("token", JSON.stringify(signInOutputDto));
     this.user = JSON.parse(this.parseJwt(signInOutputDto.jwt).user);
     this.isSignedIn$.next(true);
   }
   onSignOut(): void {
-    if (localStorage.getItem("user")) {
-      localStorage.removeItem("user");
+    if (localStorage.getItem("token")) {
+      localStorage.removeItem("token");
       this.user = null;
       this.isSignedIn$.next(false);
     }
   }
   isTokenValid(): boolean {
-    if (localStorage.getItem("user")) {
-      const token = JSON.parse(localStorage.getItem("user")!).jwt;
+    if (localStorage.getItem("token")) {
+      const token = JSON.parse(localStorage.getItem("token")!).jwt;
       const payload = this.parseJwt(token);
       if (!payload || !this.isTokenExpired(payload.exp)) {
         this.isSignedIn$.next(false);
@@ -49,7 +49,7 @@ export class AuthService {
   }
   isTokenExpired(exp: number): boolean {
     if (new Date(exp * 1000) < new Date()) {
-      localStorage.removeItem("user");
+      localStorage.removeItem("token");
       return false;
     }
     return true;

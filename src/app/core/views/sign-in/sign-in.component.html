@@ -16,7 +16,7 @@
         </div>
         <!-- PASSWORD -->
         <div class="form-input-wrapper">
-          <input type="{{ passwordVisible ? 'text' : 'password' }}" formControlName="password" id="password" appInputLabelAnimation [class]="{'invalid': errors.get('password') && !signInForm.get('password')?.dirty}">
+          <input type="{{ passwordVisible ? 'text' : 'password' }}" formControlName="password" id="password" appInputLabelAnimation appInputIgnoreSpaces [class]="{'invalid': errors.get('password') && !signInForm.get('password')?.dirty}">
           <label for="password">Password</label>
           <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('password') && !signInForm.get('password')?.dirty"></i>
           <button type="button" class="toggle-password" (click)="passwordVisible = !passwordVisible">

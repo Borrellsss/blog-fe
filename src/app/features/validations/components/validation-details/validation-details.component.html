@@ -81,12 +81,85 @@
           <i class="fa-solid fa-chevron-down"></i>
         </div>
         <div class="validation-error-messages">
-          <div>
-            add message
+          <div class="add-validation-error-message-wrapper">
+            <div (click)="showErrorMessageForm($event)" class="flex a-i-center add-validation-error-message">
+              <i class="fa-regular fa-square-plus"></i>
+              <span>Add new error message {{ checkDisabledRadioButton() ? "(Limit reached)" : "" }}</span>
+            </div>
+            <div class="new-validation-error-message">
+              <div class="form-wrapper-dark-2">
+                <form [formGroup]="errorMessageForm">
+                  <div [class]="{'radio-group-label': true, 'flex': true, 'a-i-center': true, 'input-error': errorMessageForm.get('errorType')?.invalid}">
+                    <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errorMessageForm.get('errorType')?.invalid"></i>
+                    <div>Error type<span class="input-required">*</span></div>
+                  </div>
+                  <div class="radio-group">
+                    <div class="custom-radio-wrapper">
+                      <input type="radio" value='notNull' id="not-null" formControlName="errorType">
+                      <label for="not-null">Not null</label>
+                    </div>
+                    <div class="custom-radio-wrapper">
+                      <input type="radio" value='notEmpty' id="not-empty" formControlName="errorType">
+                      <label for="not-empty">Not empty</label>
+                    </div>
+                    <div class="custom-radio-wrapper">
+                      <input type="radio" value='min' id="min" formControlName="errorType">
+                      <label for="min">Min</label>
+                    </div>
+                    <div class="custom-radio-wrapper">
+                      <input type="radio" value='max' id="max" formControlName="errorType">
+                      <label for="max">Max</label>
+                    </div>
+                    <div class="custom-radio-wrapper">
+                      <input type="radio" value='regex' id="regex" formControlName="errorType">
+                      <label for="regex">Regex</label>
+                    </div>
+                    <div class="custom-radio-wrapper">
+                      <input type="radio" value='minUpperCaseLetters' id="min-uppercase-letters" formControlName="errorType">
+                      <label for="min-uppercase-letters">Min uppercase letters</label>
+                    </div>
+                    <div class="custom-radio-wrapper">
+                      <input type="radio" value='minLowerCaseLetters' id="min-lower-letters" formControlName="errorType">
+                      <label for="min-lower-letters">Min lowercase letters</label>
+                    </div>
+                    <div class="custom-radio-wrapper">
+                      <input type="radio" value='minDigits' id="min-digits" formControlName="errorType">
+                      <label for="min-digits">Min digits</label>
+                    </div>
+                    <div class="custom-radio-wrapper">
+                      <input type="radio" value='minSpecialCharacters' id="min-special-characters" formControlName="errorType">
+                      <label for="min-special-characters">Min special characters</label>
+                    </div>
+                  </div>
+                  <div *ngIf="errorMessageForm.get('errorType')?.invalid">
+                    <div class="input-error">Error type is required</div>
+                  </div>
+                  <div class="form-input-wrapper">
+                    <input
+                      formControlName="newErrorMessage"
+                      appInputLabelAnimation
+                      type="text"
+                      id="new-error-message"
+                      maxlength="150"
+                      [class]="{'invalid': errorMessageForm.get('newErrorMessage')?.invalid && !errorMessageForm.get('newErrorMessage')?.dirty}">
+                    <label for="new-error-message">New error message<span class="input-required">*</span></label>
+                    <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errorMessageForm.get('newErrorMessage')?.invalid"></i>
+                  </div>
+                  <div *ngIf="errorMessageForm.get('newErrorMessage')?.invalid">
+                    <div class="input-error">Message is required</div>
+                  </div>
+                  <div class="hint">Max 150 characters</div>
+                </form>
+                <div class="flex edit-or-delete-section">
+                  <button (click)="createErrorMessage()" class="btn btn-squared btn-1 btn-s">Add</button>
+                  <button (click)="clearForm(errorMessageForm)" type="button" class="btn btn-squared btn-2 btn-s">Cancel</button>
+                </div>
+              </div>
+            </div>
           </div>
           <div *ngFor="let errorMessage of validation.errorMessages" class="validation-error-message">
             <div>{{ errorMessage.errorType.split(".")[2] }}: {{ errorMessage.message }}</div>
-            <div class="flex j-c-between">
+            <div class="flex j-c-between validation-error-message-body">
               <div>
                 <div>created by: {{ errorMessage.createdBy }}</div>
                 <div>updated by: {{ errorMessage.updatedBy }}</div>
@@ -97,8 +170,33 @@
               </div>
             </div>
             <div class="flex edit-or-delete-section">
-              <a [routerLink]="['../../edit', formField.split(' ')[0], formField.split(' ')[2]]" class="btn btn-rounded btn-1 btn-s">Edit</a>
-              <a (click)="deleteErrorMessage(errorMessage.id)" class="btn btn-rounded btn-2 btn-s">Delete</a>
+              <a (click)="showEditErrorMessageForm(errorMessage.id)" class="btn btn-squared btn-1 btn-s">Edit message</a>
+              <a (click)="deleteErrorMessage(errorMessage.id)" class="btn btn-squared btn-2 btn-s">Delete</a>
+            </div>
+            <div [id]="'edit-form-' + errorMessage.id" class="edit-validation-error-message">
+              <div class="form-wrapper-dark-2">
+                <form [formGroup]="editErrorMessageForm">
+                  <div class="form-input-wrapper">
+                    <input
+                      formControlName="editErrorMessage"
+                      appInputLabelAnimation
+                      type="text"
+                      id="edit-error-message"
+                      maxlength="150"
+                      [class]="{'invalid': editErrorMessageForm.get('editErrorMessage')?.invalid && !editErrorMessageForm.get('editErrorMessage')?.dirty}">
+                    <label for="edit-error-message" [id]="'edit-input-label-' + errorMessage.id">Edit error message<span class="input-required">*</span></label>
+                    <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="editErrorMessageForm.get('editErrorMessage')?.invalid"></i>
+                  </div>
+                  <div *ngIf="editErrorMessageForm.get('editErrorMessage')?.invalid">
+                    <div class="input-error">Message is required</div>
+                  </div>
+                  <div class="hint">Max 150 characters</div>
+                </form>
+                <div class="flex edit-or-delete-section">
+                  <button (click)="updateErrorMessage(errorMessage)" class="btn btn-squared btn-1 btn-s">Confirm</button>
+                  <button (click)="clearForm(editErrorMessageForm)" type="button" class="btn btn-squared btn-2 btn-s">Clear</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

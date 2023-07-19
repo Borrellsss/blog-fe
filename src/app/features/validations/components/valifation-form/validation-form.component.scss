@@ -1,0 +1,33 @@
+@import '../../../../../styles/variables.scss';
+
+.edit-validation-error-message {
+  padding: 3em 2.5em;
+  background-color: $color-3;
+  border: 1px solid $color-4;
+  border-radius: 0.5em;
+  box-shadow: $shadow-1;
+
+  > h2 {
+    margin-bottom: 1.5em;
+  }
+  .form-wrapper-dark-2 {
+
+    > form {
+
+      > .custom-checkbox-wrapper {
+        margin-bottom: 1.5em;
+      }
+      > .edit-or-delete-section {
+        padding-top: 1.5em;
+        gap: 1em;
+
+        > .btn {
+          font-size: 1em;
+        }
+      }
+      > .hint {
+        margin-bottom: 1.5em;
+      }
+    }
+  }
+}

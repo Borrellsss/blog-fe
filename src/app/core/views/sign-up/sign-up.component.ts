@@ -69,7 +69,7 @@ export class SignUpComponent implements OnInit {
         .subscribe({
           next: (res: SignUpOutputDto) => {
             this.authService.onSignUp(res);
-            this.router.navigate(['/users/sign-in']);
+            this.router.navigate(['/sign-in']);
           },
           error: (err) => console.error(err)
         });

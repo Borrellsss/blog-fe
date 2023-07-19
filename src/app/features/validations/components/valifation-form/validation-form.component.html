@@ -1,1 +1,143 @@
-<p>edit works!</p>
+<div class="edit-validation-error-message">
+  <h2>{{ validation ? "Edit" : "Set" }} {{ formField }} field </h2>
+  <div class="form-wrapper-dark-2">
+    <form [formGroup]="validationForm">
+      <!-- CODE -->
+      <div class="form-input-wrapper" *ngIf="!validation">
+        <input
+          formControlName="code"
+          appInputLabelAnimation
+          appInputIgnoreSpaces
+          appInputIgnoreSpecialCharacters
+          type="text"
+          maxlength="8"
+          id="code"
+        >
+        <label for="min-uppercase-letters">Code<span class="input-required">*</span></label>
+        <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="validationForm.get('code')?.invalid"></i>
+      </div>
+      <div *ngIf="validationForm.get('code')?.invalid && !validation">
+        <div class="input-error">{{ validationForm.get('code')?.getError("required") ? "Code is required" : "Code must be 8 characters long"}}</div>
+      </div>
+      <div class="hint" *ngIf="!validation">Set a code that can be easily recognize</div>
+      <!-- NOT NULL -->
+      <div class="custom-checkbox-wrapper">
+        <input type="checkbox" id="not-null" formControlName="notNull">
+        <label for="not-null">Not null</label>
+      </div>
+      <!-- NOT EMPTY -->
+      <div class="custom-checkbox-wrapper">
+        <input type="checkbox" id="not-empty" formControlName="notEmpty">
+        <label for="not-empty">Not empty</label>
+      </div>
+      <!-- MIN -->
+      <div class="form-input-wrapper">
+        <input
+          formControlName="min"
+          appInputLabelAnimation
+          appInputIgnoreLetters
+          appInputIgnoreSpaces
+          appInputIgnoreSpecialCharacters
+          type="number"
+          min="1"
+          id="min"
+        >
+        <label for="min">Min</label>
+        <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="validationForm.get('min')?.invalid"></i>
+      </div>
+      <!-- MAX -->
+      <div class="form-input-wrapper">
+        <input
+          formControlName="max"
+          appInputLabelAnimation
+          appInputIgnoreSpaces
+          appInputIgnoreLetters
+          appInputIgnoreSpecialCharacters
+          type="number"
+          min="1"
+          id="max"
+        >
+        <label for="max">Max</label>
+        <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="validationForm.get('max')?.invalid"></i>
+      </div>
+      <!-- REGEX -->
+      <div class="form-input-wrapper">
+        <input
+          formControlName="regex"
+          appInputLabelAnimation
+          appInputIgnoreSpaces
+          type="text"
+          id="regex"
+        >
+        <label for="regex">Regex</label>
+        <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="validationForm.get('regex')?.invalid"></i>
+      </div>
+      <div class="hint">Set a pattern that this form field must match</div>
+      <!-- MIN UPPERCASE LETTERS -->
+      <div class="form-input-wrapper">
+        <input
+          formControlName="minUpperCaseLetters"
+          appInputLabelAnimation
+          appInputIgnoreLetters
+          appInputIgnoreSpaces
+          appInputIgnoreSpecialCharacters
+          type="number"
+          min="1"
+          id="min-uppercase-letters"
+        >
+        <label for="min-uppercase-letters">Min uppercase letters</label>
+        <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="validationForm.get('minUpperCaseLetters')?.invalid"></i>
+      </div>
+      <!-- MIN LOWERCASE LETTERS -->
+      <div class="form-input-wrapper">
+        <input
+          formControlName="minLowerCaseLetters"
+          appInputLabelAnimation
+          appInputIgnoreLetters
+          appInputIgnoreSpaces
+          appInputIgnoreSpecialCharacters
+          type="number"
+          min="1"
+          id="min-lowercase-letters"
+        >
+        <label for="min-lowercase-letters">Min lowercase letters</label>
+        <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="validationForm.get('minLowerCaseLetters')?.invalid"></i>
+      </div>
+      <!-- MIN DIGITS -->
+      <div class="form-input-wrapper">
+        <input
+          formControlName="minDigits"
+          appInputLabelAnimation
+          appInputIgnoreLetters
+          appInputIgnoreSpaces
+          appInputIgnoreSpecialCharacters
+          type="number"
+          min="1"
+          id="min-digits"
+        >
+        <label for="min-digits">Min digits</label>
+        <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="validationForm.get('minDigits')?.invalid"></i>
+      </div>
+      <!-- MIN SPECIAL CHARACTERS -->
+      <div class="form-input-wrapper">
+        <input
+          formControlName="minSpecialCharacters"
+          appInputLabelAnimation
+          appInputIgnoreLetters
+          appInputIgnoreSpaces
+          appInputIgnoreSpecialCharacters
+          type="number"
+          min="1"
+          id="min-special-characters"
+        >
+        <label for="min-special-characters">Min special characters</label>
+        <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="validationForm.get('minSpecialCharacters')?.invalid"></i>
+      </div>
+      <div class="flex edit-or-delete-section">
+        <button (click)="createOrUpdate()" class="btn btn-squared btn-1 btn-s">Confirm</button>
+        <button (click)="clearForm()" type="button" class="btn btn-squared btn-2 btn-s">Clear</button>
+      </div>
+    </form>
+
+  </div>
+</div>
