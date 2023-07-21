@@ -1,0 +1,77 @@
+<div class="edit-post">
+  <h1>{{ post ? "Edit " + post.title : "Create a new post" }}</h1>
+  <div class="form-wrapper-dark-1">
+    <form [formGroup]="postForm" (ngSubmit)="createOrUpdate()">
+      <!-- TITLE -->
+      <div class="form-input-wrapper" *ngIf="!post">
+        <input
+          formControlName="title"
+          appInputLabelAnimation
+          appInputIgnoreSpecialCharacters
+          type="text"
+          id="title"
+          [class]="{'invalid': errors.get('title') && !postForm.get('title')?.dirty}"
+        >
+        <label for="title">Title<span class="input-required">*</span></label>
+        <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('title') && !postForm.get('title')?.dirty"></i>
+      </div>
+      <div *ngIf="errors.get('title')">
+        <div *ngFor="let error of errors.get('title')" class="input-error">{{ error }}</div>
+      </div>
+      <!-- CATEGORY -->
+      <div class="category-section" *ngIf="!post">
+        <div [class]="{ 'custom-input-label': true, 'flex': true, 'a-i-center': true, 'input-error': errors.get('category') }">
+          <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('category')"></i>
+          <div>Category<span class="input-required">*</span></div>
+        </div>
+        <div class="flex">
+          <div class="form-select-wrapper">
+            <select formControlName="category" id="category" (change)="readAllTagsByCategoryName(postForm.get('category')?.value, 0)">
+              <option [ngValue]="null">Select a category</option>
+              <option *ngFor="let category of categoryPageableOutputDto?.categories" [ngValue]="category.name">{{ category.name }}</option>
+            </select>
+          </div>
+          <div class="flex next-previous-wrapper">
+            <button type="button" (click)="previousCategoryPage()" class="btn btn-rounded btn-2 btn-s" [disabled]="categoryPage < 1">Load less</button>
+            <button type="button" (click)="nextCategoryPage()" class="btn btn-rounded btn-2 btn-s" [disabled]="categoryPage + 1 === categoryPageableOutputDto?.totalPages">Load more</button>
+          </div>
+        </div>
+        <div *ngIf="errors.get('category')">
+          <div *ngFor="let error of errors.get('category')" class="input-error">{{ error }}</div>
+        </div>
+      </div>
+      <!-- TAGS -->
+      <div class="tags-section" *ngIf="postForm.get('category')?.value">
+        <div [class]="{ 'custom-input-label': true, 'flex': true, 'a-i-center': true, 'input-error': errors.get('tags') }">
+          <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('tags')"></i>
+          <div>Tags<span class="input-required">*</span></div>
+        </div>
+        <div *ngIf="postForm.get('category')?.value" class="flex flex-wrap tags-wrapper">
+          <div class="custom-checkbox-wrapper" *ngFor="let tag of tagPageableOutputDto?.tags">
+            <input type="checkbox" id="{{ 'tag-' + tag.id }}" (click)="addOrRemoveTag($event, tag.id)" [value]="tag.id">
+            <label for="{{ 'tag-' + tag.id }}">{{ tag.name }}</label>
+          </div>
+        </div>
+        <div *ngIf="errors.get('tags')">
+          <div *ngFor="let error of errors.get('tags')" class="input-error">{{ error }}</div>
+        </div>
+        <div class="flex next-previous-wrapper">
+          <button type="button" (click)="previousTagsPage()" class="btn btn-rounded btn-2 btn-s" [disabled]="tagPage < 1">Load less</button>
+          <button type="button" (click)="nextTagsPage()" class="btn btn-rounded btn-2 btn-s" [disabled]="tagPage + 1 === tagPageableOutputDto?.totalPages">Load more</button>
+        </div>
+        <div class="hint" *ngIf="postForm.get('category')?.value && !post">Select at least one tag</div>
+      </div>
+      <!-- CONTENT -->
+      <div [class]="{ 'custom-input-label': true, 'flex': true, 'a-i-center': true, 'input-error': errors.get('content') }">
+        <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('content')"></i>
+        <div>Post content<span class="input-required">*</span></div>
+      </div>
+      <ejs-richtexteditor [toolbarSettings]="customToolbar" [insertImageSettings]="imageSettings" formControlName="content">
+      </ejs-richtexteditor>
+      <div *ngIf="errors.get('content')">
+        <div *ngFor="let error of errors.get('content')" class="input-error">{{ error }}</div>
+      </div>
+      <button type="submit" class="btn btn-squared btn-2 btn-s">Confirm</button>
+    </form>
+  </div>
+</div>

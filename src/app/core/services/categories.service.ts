@@ -1,9 +1,23 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
+import { Observable } from "rxjs";
+import { CategoryOutputDto } from "../../shared/models/output/categories/category-output-dto";
+import { CategoryPageableOutputDto } from "../../shared/models/output/categories/category-pageable-output-dto";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriesService {
+  constructor(private http: HttpClient) { }
 
-  constructor() { }
+  readAll(page: number = 0): Observable<CategoryPageableOutputDto> {
+    return this.http.get<CategoryPageableOutputDto>("categories", {
+      params: {
+        page: page
+      }
+    });
+  }
+  readByName(name: string): Observable<CategoryOutputDto> {
+    return this.http.get<CategoryOutputDto>(`categories/name/${name}`);
+  }
 }

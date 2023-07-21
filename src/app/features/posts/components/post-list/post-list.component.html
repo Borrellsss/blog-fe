@@ -1,1 +1,21 @@
-<p>posts-list works!</p>
+<div class="post-list-section">
+  <div class="flex j-c-between a-i-center">
+    <h1>Posts</h1>
+    <a routerLink="edit" class="btn btn-1 btn-rounded btn-s">New</a>
+  </div>
+  <div class="flex flex-wrap posts-wrapper">
+    <div *ngFor="let post of postPageableOutputDto?.posts" class="post-card-wrapper" [routerLink]="['/posts/details/', post.user.id, post.id, post.title]">
+      <div class="card post-card">
+        <div class="post-card-title">{{ post.title }}</div>
+        <div class="post-card-body">
+          <div>{{ post.createdAt | date }}</div>
+          <div>{{ post.updatedAt | date:"full" }}</div>
+          <div class="post-category">{{ post.category.name }}</div>
+          <div class="flex">
+            <span *ngFor="let tag of post.tags" class="tag">{{ tag.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

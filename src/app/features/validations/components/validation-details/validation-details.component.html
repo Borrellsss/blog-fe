@@ -89,7 +89,7 @@
             <div class="new-validation-error-message">
               <div class="form-wrapper-dark-2">
                 <form [formGroup]="errorMessageForm">
-                  <div [class]="{'radio-group-label': true, 'flex': true, 'a-i-center': true, 'input-error': errorMessageForm.get('errorType')?.invalid}">
+                  <div [class]="{'custom-input-label': true, 'flex': true, 'a-i-center': true, 'input-error': errorMessageForm.get('errorType')?.invalid}">
                     <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errorMessageForm.get('errorType')?.invalid"></i>
                     <div>Error type<span class="input-required">*</span></div>
                   </div>
@@ -149,11 +149,11 @@
                     <div class="input-error">Message is required</div>
                   </div>
                   <div class="hint">Max 150 characters</div>
+                  <div class="flex edit-or-delete-section">
+                    <button (click)="createErrorMessage()" class="btn btn-squared btn-1 btn-s">Add</button>
+                    <button (click)="clearForm(errorMessageForm)" type="button" class="btn btn-squared btn-2 btn-s">Cancel</button>
+                  </div>
                 </form>
-                <div class="flex edit-or-delete-section">
-                  <button (click)="createErrorMessage()" class="btn btn-squared btn-1 btn-s">Add</button>
-                  <button (click)="clearForm(errorMessageForm)" type="button" class="btn btn-squared btn-2 btn-s">Cancel</button>
-                </div>
               </div>
             </div>
           </div>
@@ -191,11 +191,11 @@
                     <div class="input-error">Message is required</div>
                   </div>
                   <div class="hint">Max 150 characters</div>
+                  <div class="flex edit-or-delete-section">
+                    <button (click)="updateErrorMessage(errorMessage)" class="btn btn-squared btn-1 btn-s">Confirm</button>
+                    <button (click)="clearForm(editErrorMessageForm)" type="button" class="btn btn-squared btn-2 btn-s">Clear</button>
+                  </div>
                 </form>
-                <div class="flex edit-or-delete-section">
-                  <button (click)="updateErrorMessage(errorMessage)" class="btn btn-squared btn-1 btn-s">Confirm</button>
-                  <button (click)="clearForm(editErrorMessageForm)" type="button" class="btn btn-squared btn-2 btn-s">Clear</button>
-                </div>
               </div>
             </div>
           </div>

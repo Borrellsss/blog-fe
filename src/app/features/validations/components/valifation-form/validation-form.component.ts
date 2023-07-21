@@ -3,10 +3,10 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ValidationsService } from "../../../../core/services/validations.service";
 import { ValidationInputDto } from "../../../../shared/models/input/validation-input-dto";
-import { ValidationOutputDto } from "../../../../shared/models/output/validation/validation-output-dto";
+import { ValidationOutputDto } from "../../../../shared/models/output/validations/validation-output-dto";
 
 @Component({
-  selector: 'app-validation-form',
+  selector: 'app-validations-form',
   templateUrl: './validation-form.component.html',
   styleUrls: ['./validation-form.component.scss']
 })

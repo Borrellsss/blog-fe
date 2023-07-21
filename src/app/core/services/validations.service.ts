@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
-import { ValidationInputDto } from "../../shared/models/input/validation-input-dto";
 
-import { ValidationOutputDto } from "../../shared/models/output/validation/validation-output-dto";
+import { ValidationInputDto } from "../../shared/models/input/validation-input-dto";
+import { ValidationOutputDto } from "../../shared/models/output/validations/validation-output-dto";
 
 @Injectable({
   providedIn: 'root'

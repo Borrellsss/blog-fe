@@ -3,8 +3,9 @@ import { NavigationEnd, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 
 import { ValidationsService } from "../../../../core/services/validations.service";
-import { ValidationOutputDto } from "../../../../shared/models/output/validation/validation-output-dto";
+import { ValidationOutputDto } from "../../../../shared/models/output/validations/validation-output-dto";
 import { CategoryForm } from "../../models/category-form.model";
+import { PostForm } from "../../models/post-form";
 import { RoleForm } from "../../models/role-form.model";
 import { SignInForm } from "../../models/sign-in-form.model";
 import { SignUpForm } from "../../models/sign-up-form.model";
@@ -12,7 +13,7 @@ import { TagForm } from "../../models/tag-form.model";
 import { UserForm } from "../../models/user-form.model";
 
 @Component({
-  selector: 'app-validation-list',
+  selector: 'app-validations-list',
   templateUrl: './validation-list.component.html',
   styleUrls: ['./validation-list.component.scss']
 })
@@ -24,6 +25,7 @@ export class ValidationListComponent implements OnInit, OnDestroy {
     new SignInForm(),
     new UserForm(),
     new RoleForm(),
+    new PostForm(),
     new CategoryForm(),
     new TagForm()
   ];
@@ -61,17 +63,18 @@ export class ValidationListComponent implements OnInit, OnDestroy {
     });
   }
   private setValidatedFields(formName: string) {
-    document.getElementById(`${formName}`)?.childNodes[1].childNodes.forEach((child) => {
-      if (child.nodeName !== "DIV") {
-        return;
-      }
-      this.renderer.removeClass(child, "validated");
-      this.validations.get(formName)?.forEach((validation) => {
-        if (validation.field.split(".")[1] === child.firstChild?.textContent) {
-          this.renderer.addClass(child, "validated");
+    document.getElementById(`${formName}`)?.childNodes[1]
+      .childNodes.forEach((child) => {
+        if (child.nodeName !== "DIV") {
+          return;
         }
+        this.renderer.removeClass(child, "validated");
+        this.validations.get(formName)?.forEach((validation) => {
+          if (validation.field.split(".")[1] === child.firstChild?.textContent) {
+            this.renderer.addClass(child, "validated");
+          }
+        });
         this.setIcons(child as Element);
-      });
     });
   }
   private setIcons(el: Element): void {
@@ -84,24 +87,24 @@ export class ValidationListComponent implements OnInit, OnDestroy {
     }
   }
   showFields(event: MouseEvent): void {
-    const active = document.querySelector(".validation-card.active") as HTMLElement;
+    const active = document.querySelector(".validations-card.active") as HTMLElement;
     const target = event.target as HTMLElement;
-    const targetChevron = target.closest(".validation-card")?.children[0].lastChild;
-    if (target.closest(".validation-fields-wrapper")?.contains(target)) {
+    const targetChevron = target.closest(".validations-card")?.children[0].lastChild;
+    if (target.closest(".validations-fields-wrapper")?.contains(target)) {
       return;
     }
     if (!active) {
-      this.renderer.addClass(target.closest(".validation-card"), "active");
+      this.renderer.addClass(target.closest(".validations-card"), "active");
       this.renderer.addClass(targetChevron, "open");
     } else {
-      const activeChevron = active.closest(".validation-card")?.children[0].lastChild;
-      if (active === target.closest(".validation-card")) {
+      const activeChevron = active.closest(".validations-card")?.children[0].lastChild;
+      if (active === target.closest(".validations-card")) {
         this.renderer.removeClass(active, "active");
         this.renderer.removeClass(activeChevron, "open");
       } else {
         this.renderer.removeClass(active, "active");
         this.renderer.removeClass(activeChevron, "open");
-        this.renderer.addClass(target.closest(".validation-card"), "active");
+        this.renderer.addClass(target.closest(".validations-card"), "active");
         this.renderer.addClass(targetChevron, "open");
       }
     }

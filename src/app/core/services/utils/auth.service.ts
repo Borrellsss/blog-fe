@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Subject } from "rxjs";
 
-import { SignInOutputDto } from "../../../shared/models/output/user/sign-in-output-dto";
-import { SignUpOutputDto } from "../../../shared/models/output/user/sign-up-output-dto";
-import { UserOutputDto } from "../../../shared/models/output/user/user-output-dto";
+import { SignInOutputDto } from "../../../shared/models/output/users/sign-in-output-dto";
+import { SignUpOutputDto } from "../../../shared/models/output/users/sign-up-output-dto";
+import { UserOutputDto } from "../../../shared/models/output/users/user-output-dto";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   isSignedIn$: Subject<boolean> = new Subject<boolean>();
-  user: UserOutputDto | null = null;
 
   constructor() { }
 
@@ -23,15 +22,19 @@ export class AuthService {
       localStorage.removeItem("user");
     }
     localStorage.setItem("token", JSON.stringify(signInOutputDto));
-    this.user = JSON.parse(this.parseJwt(signInOutputDto.jwt).user);
     this.isSignedIn$.next(true);
   }
   onSignOut(): void {
     if (localStorage.getItem("token")) {
       localStorage.removeItem("token");
-      this.user = null;
       this.isSignedIn$.next(false);
     }
+  }
+  getUser(): UserOutputDto | null {
+    if (!this.isTokenValid()) {
+      return null;
+    }
+    return JSON.parse(this.parseJwt(localStorage.getItem("token")).user);
   }
   isTokenValid(): boolean {
     if (localStorage.getItem("token")) {
@@ -54,7 +57,10 @@ export class AuthService {
     }
     return true;
   }
-  private parseJwt(token: string): any {
+  private parseJwt(token: string | null): any {
+    if (!token) {
+      return null;
+    }
     try {
       const base64Payload = token.split('.')[1];
       return JSON.parse(atob(base64Payload));

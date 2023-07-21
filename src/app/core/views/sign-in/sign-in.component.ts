@@ -8,8 +8,8 @@ import { ValidatorService } from "../../services/utils/validator.service";
 import { UsersService } from "../../services/users.service";
 import { ValidationsService } from "../../services/validations.service";
 import { SignInInputDto } from "../../../shared/models/input/sign-in-input-dto";
-import { SignInOutputDto } from "../../../shared/models/output/user/sign-in-output-dto";
-import { ValidationOutputDto } from "../../../shared/models/output/validation/validation-output-dto";
+import { SignInOutputDto } from "../../../shared/models/output/users/sign-in-output-dto";
+import { ValidationOutputDto } from "../../../shared/models/output/validations/validation-output-dto";
 
 @Component({
   selector: 'app-sign-in',
@@ -51,9 +51,9 @@ export class SignInComponent implements OnInit {
   }
   signIn(): void {
     this.reset();
+    const signInInputDto: SignInInputDto = this.signInForm.value;
     timer(100).pipe(take(1)).subscribe(() => {
-      this.formValidatorService.validate(this.signInForm, this.prefix);
-      const signInInputDto: SignInInputDto = this.signInForm.value;
+      this.formValidatorService.validate(signInInputDto, this.prefix);
       if (this.formValidatorService.errors.size > 0) {
         this.formValidatorService.errors
           .forEach((value, key) =>

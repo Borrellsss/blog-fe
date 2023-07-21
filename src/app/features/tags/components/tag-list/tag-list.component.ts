@@ -14,24 +14,19 @@ export class TagListComponent implements OnInit {
   constructor(private tagService: TagsService) { }
 
   ngOnInit(): void {
-    this.tagService.readAll(0).subscribe({
-      next: (res: TagPageableOutputDto) => this.tagPageableOutputDto = res,
-      error: (err) => console.log(err)
-    });
+    this.readAll(this.page);
   }
 
-  previous(): void {
-    this.tagService.readAll(--this.page).subscribe({
-      next: (res: TagPageableOutputDto) => {
-        this.tagPageableOutputDto = res;
-      },
-      error: (err) => console.log(err)
-    });
-  }
-  next(): void {
-    this.tagService.readAll(++this.page).subscribe({
+  private readAll(page: number) {
+    this.tagService.readAll(page).subscribe({
       next: (res: TagPageableOutputDto) => this.tagPageableOutputDto = res,
       error: (err) => console.log(err)
     });
+  }
+  nextPage(): void {
+    this.readAll(++this.page);
+  }
+  previousPage(): void {
+    this.readAll(--this.page);
   }
 }

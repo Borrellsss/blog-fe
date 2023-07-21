@@ -8,8 +8,8 @@ import { ValidatorService } from "../../services/utils/validator.service";
 import { UsersService } from "../../services/users.service";
 import { ValidationsService } from "../../services/validations.service";
 import { SignUpInputDto } from "../../../shared/models/input/sign-up-input-dto";
-import { SignUpOutputDto } from "../../../shared/models/output/user/sign-up-output-dto";
-import { ValidationOutputDto } from "../../../shared/models/output/validation/validation-output-dto";
+import { SignUpOutputDto } from "../../../shared/models/output/users/sign-up-output-dto";
+import { ValidationOutputDto } from "../../../shared/models/output/validations/validation-output-dto";
 
 @Component({
   selector: 'app-sign-up',
@@ -56,9 +56,9 @@ export class SignUpComponent implements OnInit {
   }
   signUp(): void {
     this.reset();
+    const signUpInputDto: SignUpInputDto = this.signUpForm.value;
     timer(100).pipe(take(1)).subscribe(() => {
-      this.formValidatorService.validate(this.signUpForm, this.prefix);
-      const signUpInputDto: SignUpInputDto = this.signUpForm.value;
+      this.formValidatorService.validate(signUpInputDto, this.prefix);
       if (this.formValidatorService.errors.size > 0) {
         this.formValidatorService.errors
           .forEach((value, key) =>

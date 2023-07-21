@@ -1,0 +1,26 @@
+.edit-post {
+
+  > .form-wrapper-dark-1 {
+
+     > form {
+
+       .input-label {
+         margin-bottom: 0.5em;
+       }
+       .category-section {
+          margin-block: 1.5em;
+
+         .next-previous-wrapper {
+           margin-left: 2em;
+         }
+       }
+       > .tags-section {
+         margin-bottom: 1.5em;
+
+         .tags-wrapper {
+           gap: 0.5em;
+         }
+       }
+     }
+  }
+}

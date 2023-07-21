@@ -1,0 +1,63 @@
+@import "../../../../../styles/variables";
+
+.post-details-section {
+
+  .post-wrapper {
+    margin-bottom: 1em;
+
+    > .post-category {
+      color: $color-2;
+    }
+    > .flex:first-child {
+      margin-bottom: 1em;
+
+      h1 {
+        margin-bottom: 0;
+      }
+    }
+    .post-dates {
+      margin-bottom: 1em;
+    }
+    .post-tags {
+      gap: 1em;
+    }
+  }
+  .like-section {
+    gap: 1em;
+
+    > .vote-count-wrapper {
+      font-size: 1.2em;
+      vertical-align: middle;
+
+      > .vote-count {
+        color: $color-2;
+      }
+    }
+    > .like {
+      width: fit-content;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.2em;
+      cursor: pointer;
+      font-size: 2.6em;
+      color: $color-4;
+
+      > span {
+        font-size: 0.5em;
+      }
+      &.up-vote {
+
+        .active {
+          color: $color-success;
+        }
+      }
+      &.down-vote {
+
+        .active {
+          color: $color-danger;
+        }
+      }
+    }
+  }
+}

@@ -1,4 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-icons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-lists/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-richtexteditor/styles/material.css';
 @import "styles/variables";
 
 //reset
@@ -246,6 +255,20 @@ body {
           }
         }
       }
+      .form-select-wrapper {
+        > select {
+          padding: 0.5em 1em;
+          min-width: fit-content;
+          background-color: #fff;
+          border: 1px solid $color-4;
+          font: inherit;
+          border-radius: 0.5em;
+
+          > option {
+            font: inherit;
+          }
+        }
+      }
       .input-error {
         color: $color-6;
       }
@@ -379,6 +402,18 @@ body {
           }
         }
       }
+      .custom-input-label {
+        margin-bottom: 0.5em;
+        gap: 0.5em;
+
+        > .input-alert {
+          font-size: 1.6em;
+          color: $color-6;
+          position: static;
+          translate: 0 0;
+          box-shadow: none;
+        }
+      }
     }
     &-dark {
       @extend .form-wrapper;
@@ -396,7 +431,7 @@ body {
 
           .input-alert {
             background-color: #2d2d2d;
-            box-shadow: $shadow-5
+            box-shadow: $shadow-5;
           }
           .form-input-wrapper {
 
@@ -405,6 +440,16 @@ body {
             > label.active {
               background-color: #2d2d2d;
               box-shadow: $shadow-5;
+            }
+          }
+          .form-select-wrapper {
+            > select {
+              background-color: transparent;
+              color: #fff;
+
+              > option {
+                background-color: #2d2d2d;
+              }
             }
           }
         }
@@ -429,6 +474,16 @@ body {
             > label.active {
               background-color: $color-3;
               box-shadow: $shadow-4;
+            }
+          }
+          .form-select-wrapper {
+            > select {
+              background-color: $color-3;
+              color: #fff;
+
+              > option {
+                background-color: $color-3;
+              }
             }
           }
         }
@@ -463,7 +518,7 @@ body {
       padding-block: 2em;
     }
   }
-  img {
+  img:not(.e-rte-image) {
     width: 100%;
     display: block;
   }
@@ -498,11 +553,18 @@ body {
       }
     }
   }
-
   .tag {
     padding: 0.5em 1em;
+    display: block;
     color: $color-2;
     background-color: rgba($color-2, 0.15);
     border-radius: 0.25em;
+  }
+  .next-previous-wrapper {
+    gap: 1em;
+
+    > .btn {
+      font-size: 0.9em;
+    }
   }
 }

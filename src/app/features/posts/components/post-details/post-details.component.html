@@ -1,0 +1,29 @@
+<div class="post-details-section">
+  <div class="post-wrapper">
+    <div class="post-category">{{ post!.category.name }}</div>
+    <div class="flex j-c-between a-i-center">
+      <h1>{{ post!.title }}</h1>
+      <button [routerLink]="['/posts/edit']" [queryParams]="{ post: post?.id }" class="btn btn-2 btn-rounded btn-s" *ngIf="post?.user?.id === currentUser?.id">Edit</button>
+    </div>
+    <div class="post-dates">
+      <div>Created at: {{ post!.createdAt | date }}</div>
+      <div>Last update: {{ post!.updatedAt | date:"medium" }}</div>
+    </div>
+    <div class="flex flex-wrap post-tags">
+      <span *ngFor="let tag of post?.tags" class="tag">{{ tag.name }}</span>
+    </div>
+    <div>{{ post!.user.username }}</div>
+    <div id="post-content"></div>
+  </div>
+  <div class="flex a-i-center like-section">
+    <div class="vote-count-wrapper">Votes: <span class="vote-count">{{ post?.votes?.length }}</span></div>
+    <a (click)="addOrRemoveUpVote()" class="like up-vote">
+      <i class="fa-solid fa-circle-arrow-up"></i>
+      <span>Up vote</span>
+    </a>
+    <a (click)="addOrRemoveDownVote()" class="like down-vote">
+      <i class="fa-solid fa-circle-arrow-down"></i>
+      <span>Down vote</span>
+    </a>
+  </div>
+</div>

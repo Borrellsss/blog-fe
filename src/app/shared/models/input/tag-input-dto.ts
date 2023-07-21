@@ -1,4 +1,4 @@
-export interface TagInputDtoModel {
+export interface TagInputDto {
   name: string;
   categories: Set<number>
 }

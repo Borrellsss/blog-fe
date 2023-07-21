@@ -1,8 +1,12 @@
 <div>
   <h1>Tags</h1>
   <input type="text" name="" id="" placeholder="Filter by tag name">
+  <div class="flex next-previous-wrapper">
+    <button (click)="previousPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page < 1">Previous</button>
+    <button (click)="nextPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page + 1 === tagPageableOutputDto?.totalPages">Next</button>
+  </div>
   <div class="tags-wrapper flex flex-wrap">
-    <div routerLink="/" *ngFor="let tag of tagPageableOutputDto?.tags" class="tag-card">
+    <div routerLink="/" *ngFor="let tag of tagPageableOutputDto?.tags" class="card tag-card">
       <div class="tag-card-title">
         <span class="tag">{{ tag.name }}</span>
       </div>
@@ -14,10 +18,8 @@
       </div>
     </div>
   </div>
-  <!--  <div *ngFor="let tag of tagPageableOutputDto?.tags">-->
-  <!--    {{ tag.name }}-->
-  <!--    <span *ngFor="let category of tag.categories">{{ category.name }}</span>-->
-  <!--  </div>-->
-  <button (click)="previous()">Previous</button>
-  <button (click)="next()">Next</button>
+  <div class="flex next-previous-wrapper">
+    <button (click)="previousPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page < 1">Previous</button>
+    <button (click)="nextPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page + 1 === tagPageableOutputDto?.totalPages">Next</button>
+  </div>
 </div>

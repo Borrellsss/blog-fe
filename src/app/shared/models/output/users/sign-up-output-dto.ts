@@ -1,4 +1,4 @@
-import { RoleOutputDto } from "../role/role-output-dto";
+import { RoleOutputDto } from "../roles/role-output-dto";
 
 export interface SignUpOutputDto {
   id: number;

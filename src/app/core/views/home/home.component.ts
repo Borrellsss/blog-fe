@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RoleOutputDto } from "../../../shared/models/output/role/role-output-dto";
+import { RoleOutputDto } from "../../../shared/models/output/roles/role-output-dto";
 import { AuthService } from "../../services/utils/auth.service";
 
 @Component({
@@ -13,6 +13,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userRole = this.authService.user?.role;
+    this.userRole = this.authService.getUser()?.role;
   }
 }

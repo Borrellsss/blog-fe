@@ -4,9 +4,9 @@ import { Observable } from "rxjs";
 import { SignInInputDto } from "../../shared/models/input/sign-in-input-dto";
 
 import { SignUpInputDto } from "../../shared/models/input/sign-up-input-dto";
-import { SignInOutputDto } from "../../shared/models/output/user/sign-in-output-dto";
-import { SignUpOutputDto } from "../../shared/models/output/user/sign-up-output-dto";
-import { UserOutputDto } from "../../shared/models/output/user/user-output-dto";
+import { SignInOutputDto } from "../../shared/models/output/users/sign-in-output-dto";
+import { SignUpOutputDto } from "../../shared/models/output/users/sign-up-output-dto";
+import { UserOutputDto } from "../../shared/models/output/users/user-output-dto";
 
 @Injectable({
   providedIn: 'root',

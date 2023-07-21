@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from "@angular/forms";
 
-import { ErrorMessageOutputDto } from "../../../shared/models/output/validation/error-message-output-dto";
-import { ValidationOutputDto } from "../../../shared/models/output/validation/validation-output-dto";
+import { ErrorMessageOutputDto } from "../../../shared/models/output/validations/error-message-output-dto";
+import { ValidationOutputDto } from "../../../shared/models/output/validations/validation-output-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -13,31 +12,31 @@ export class ValidatorService {
 
   constructor() { }
 
-  validate(form: FormGroup, prefix: string): void {
+  validate(inputDto: any, prefix: string): void {
     this.errors.clear();
     this.validations.forEach((validation: ValidationOutputDto) => {
       const suffix = validation.field.replace(`${prefix}.`, "");
-      const formField = form.controls[suffix];
-      if (!formField) {
+      if (!Object.hasOwn(inputDto, suffix)) {
         return;
       }
-      if (validation.notNull && formField.value === null) {
+      const field = inputDto[suffix];
+      if (field === null && validation.notNull) {
         this.validateNull(suffix, validation);
       }
-      if (formField.value && !isNaN(Date.parse(formField.value))) {
-        this.validateDate(suffix, validation, new Date(formField.value));
+      if (field && !isNaN(Date.parse(field))) {
+        this.validateDate(suffix, validation, new Date(field));
         return;
       }
-      if (typeof formField.value === "number") {
-        this.validateNumber(suffix, validation, formField.value);
+      if (typeof field === "number") {
+        this.validateNumber(suffix, validation, field);
         return;
       }
-      if (typeof formField.value === "string") {
-        this.validateString(suffix, validation, formField.value);
+      if (typeof field === "string") {
+        this.validateString(suffix, validation, field);
         return;
       }
-      if (formField.value instanceof Array) {
-        this.validateArray(suffix, validation, formField.value);
+      if (field instanceof Array) {
+        this.validateArray(suffix, validation, field);
         return;
       }
     });

@@ -12,7 +12,14 @@ export class TagsService {
   readAll(page: number = 0): Observable<TagPageableOutputDto> {
     return this.http.get<TagPageableOutputDto>("tags", {
       params: {
-        page: page.toString()
+        page: page
+      }
+    });
+  }
+  readByCategoryName(categoryName: string, page: number = 0): Observable<TagPageableOutputDto> {
+    return this.http.get<TagPageableOutputDto>(`tags/category/${categoryName}`, {
+      params: {
+        page: page
       }
     });
   }

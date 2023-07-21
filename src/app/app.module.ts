@@ -14,7 +14,6 @@ import { WelcomeComponent } from "./core/views/welcome/welcome.component";
 import { NotFoundComponent } from "./core/views/not-found/not-found.component";
 import { SharedModule } from "./shared/shared.module";
 import { HomeComponent } from './core/views/home/home.component';
-import { PostListComponent } from './features/posts/components/post-list/post-list.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +25,6 @@ import { PostListComponent } from './features/posts/components/post-list/post-li
     HomeComponent,
     SignUpComponent,
     SignInComponent,
-    PostListComponent
   ],
     imports: [
       BrowserModule,
