@@ -16,5 +16,4 @@ export interface UserOutputDto {
   createdAt: Date;
   updatedAt: Date;
   role: RoleOutputDto;
-  posts: Array<PostOutputDto>;
 }

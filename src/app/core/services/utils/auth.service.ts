@@ -65,6 +65,7 @@ export class AuthService {
       const base64Payload = token.split('.')[1];
       return JSON.parse(atob(base64Payload));
     } catch (e) {
+      console.log("Teste: ", e);
       return null;
     }
   }

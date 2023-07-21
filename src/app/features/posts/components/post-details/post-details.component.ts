@@ -34,9 +34,6 @@ export class PostDetailsComponent implements OnInit {
           this.post = res;
           this.currentUser = this.authService.getUser();
           document.getElementById('post-content')!.innerHTML = this.post?.content;
-          document.querySelectorAll("img").forEach((img) => {
-            img.src = atob(img.src);
-          });
         },
         error: (err) => {
           this.router.navigate(['/posts']);

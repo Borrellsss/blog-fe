@@ -87,24 +87,24 @@ export class ValidationListComponent implements OnInit, OnDestroy {
     }
   }
   showFields(event: MouseEvent): void {
-    const active = document.querySelector(".validations-card.active") as HTMLElement;
+    const active = document.querySelector(".validation-card.active") as HTMLElement;
     const target = event.target as HTMLElement;
-    const targetChevron = target.closest(".validations-card")?.children[0].lastChild;
-    if (target.closest(".validations-fields-wrapper")?.contains(target)) {
+    const targetChevron = target.closest(".validation-card")?.children[0].lastChild;
+    if (target.closest(".validation-fields-wrapper")?.contains(target)) {
       return;
     }
     if (!active) {
-      this.renderer.addClass(target.closest(".validations-card"), "active");
+      this.renderer.addClass(target.closest(".validation-card"), "active");
       this.renderer.addClass(targetChevron, "open");
     } else {
-      const activeChevron = active.closest(".validations-card")?.children[0].lastChild;
-      if (active === target.closest(".validations-card")) {
+      const activeChevron = active.closest(".validation-card")?.children[0].lastChild;
+      if (active === target.closest(".validation-card")) {
         this.renderer.removeClass(active, "active");
         this.renderer.removeClass(activeChevron, "open");
       } else {
         this.renderer.removeClass(active, "active");
         this.renderer.removeClass(activeChevron, "open");
-        this.renderer.addClass(target.closest(".validations-card"), "active");
+        this.renderer.addClass(target.closest(".validation-card"), "active");
         this.renderer.addClass(targetChevron, "open");
       }
     }

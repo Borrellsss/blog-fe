@@ -12,5 +12,4 @@ export interface PostOutputDto {
   updatedAt: Date;
   category: CategoryOutputDto;
   tags: Array<TagOutputDto>;
-  votes: number;
 }

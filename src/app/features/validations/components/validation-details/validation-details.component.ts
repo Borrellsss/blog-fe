@@ -46,7 +46,7 @@ export class ValidationDetailsComponent implements OnInit {
               this.setCreatedByAndUpdatedBy(errorMessage, errorMessage.updatedBy, "updatedBy");
             });
             this.disableRadioButton();
-            const addValidationErrorMessageWrapper = (document.querySelector(".add-validations-error-message-wrapper")?.lastChild as Element);
+            const addValidationErrorMessageWrapper = (document.querySelector(".add-validation-error-message-wrapper")?.lastChild as Element);
             if (addValidationErrorMessageWrapper) {
               this.renderer.removeClass(addValidationErrorMessageWrapper, "active");
               this.resetAddValidationErrorMessageWrapper();
@@ -82,9 +82,9 @@ export class ValidationDetailsComponent implements OnInit {
     this.disableRadioButton();
     this.resetAddValidationErrorMessageWrapper();
     const target = (event.target as HTMLElement);
-    const validationErrorMessagesWrapper = target.closest(".validations-error-messages-wrapper");
+    const validationErrorMessagesWrapper = target.closest(".validation-error-messages-wrapper");
     const targetChevron = validationErrorMessagesWrapper?.children[0].lastChild;
-    if (target.closest(".validations-error-messages")?.contains(target) || !validationErrorMessagesWrapper) {
+    if (target.closest(".validation-error-messages")?.contains(target) || !validationErrorMessagesWrapper) {
       return;
     }
     if (validationErrorMessagesWrapper.classList.contains("active")) {
@@ -182,9 +182,9 @@ export class ValidationDetailsComponent implements OnInit {
   }
   private resetAddValidationErrorMessageWrapper() {
     if (this.checkDisabledRadioButton()) {
-      this.renderer.addClass(document.querySelector(".add-validations-error-message-wrapper"), "disabled");
+      this.renderer.addClass(document.querySelector(".add-validation-error-message-wrapper"), "disabled");
     } else {
-      this.renderer.removeClass(document.querySelector(".add-validations-error-message-wrapper"), "disabled");
+      this.renderer.removeClass(document.querySelector(".add-validation-error-message-wrapper"), "disabled");
     }
   }
   showErrorMessageForm(event: MouseEvent) {
@@ -194,7 +194,7 @@ export class ValidationDetailsComponent implements OnInit {
       this.currentActiveEditFormId = null;
     }
     const target = (event.target as HTMLElement);
-    const newValidationErrorMessage = target.closest(".add-validations-error-message-wrapper")?.lastChild;
+    const newValidationErrorMessage = target.closest(".add-validation-error-message-wrapper")?.lastChild;
     if (this.checkDisabledRadioButton()) {
       return;
     }
@@ -250,7 +250,7 @@ export class ValidationDetailsComponent implements OnInit {
           this.setCreatedByAndUpdatedBy(errorMessage, errorMessage.updatedBy, "updatedBy");
         });
         this.disableRadioButton();
-        const addValidationErrorMessageWrapper = (document.querySelector(".add-validations-error-message-wrapper")?.lastChild as Element);
+        const addValidationErrorMessageWrapper = (document.querySelector(".add-validation-error-message-wrapper")?.lastChild as Element);
         if (!addValidationErrorMessageWrapper) {
           return;
         }
