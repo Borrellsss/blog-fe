@@ -9,6 +9,7 @@ import { InputIgnoreLettersDirective } from './directives/input-ignore-letters.d
 import { InputIgnoreSpecialCharactersDirective } from './directives/input-ignore-special-characters.directive';
 import { ToggleSubmitDirective } from './directives/toggle-submit.directive';
 import { InputIgnoreSpacesDirective } from './directives/input-ignore-spaces.directive';
+import { StrReplacePipe } from './pipes/str-replace.pipe';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { InputIgnoreSpacesDirective } from './directives/input-ignore-spaces.dir
     InputIgnoreSpecialCharactersDirective,
     ToggleSubmitDirective,
     InputIgnoreSpacesDirective,
+    StrReplacePipe,
   ],
   imports: [
     CommonModule,
@@ -29,20 +31,21 @@ import { InputIgnoreSpacesDirective } from './directives/input-ignore-spaces.dir
   ],
   providers: [
   ],
-  exports: [
-    CommonModule,
-    RouterModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NgOptimizedImage,
-    InputLabelAnimationDirective,
-    InputIgnoreNumbersDirective,
-    InputIgnoreLettersDirective,
-    InputIgnoreSpecialCharactersDirective,
-    ToggleSubmitDirective,
-    InputIgnoreSpacesDirective
-  ]
+    exports: [
+        CommonModule,
+        RouterModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NgOptimizedImage,
+        InputLabelAnimationDirective,
+        InputIgnoreNumbersDirective,
+        InputIgnoreLettersDirective,
+        InputIgnoreSpecialCharactersDirective,
+        ToggleSubmitDirective,
+        InputIgnoreSpacesDirective,
+        StrReplacePipe
+    ]
 })
 export class SharedModule {
 

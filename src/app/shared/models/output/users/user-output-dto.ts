@@ -1,5 +1,4 @@
 import { RoleOutputDto } from "../roles/role-output-dto";
-import { PostOutputDto } from "./post-output-dto";
 
 export interface UserOutputDto {
   id: number;

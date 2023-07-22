@@ -3,10 +3,10 @@
     <h1>Posts</h1>
     <a routerLink="edit" class="btn btn-1 btn-rounded btn-s">New</a>
   </div>
-  <div class="flex flex-wrap posts-wrapper">
-    <div *ngFor="let post of postPageableOutputDto?.posts" class="post-card-wrapper" [routerLink]="['/posts/details/', post.user.id, post.id, post.title]">
+  <div class="flex flex-wrap posts-wrapper" *ngIf="postPageableOutputDto">
+    <div *ngFor="let post of postPageableOutputDto?.posts" class="post-card-wrapper" [routerLink]="['/posts/details/', post.user.id, post.id, post.title.replaceAll(' ', '-')]">
       <div class="card post-card">
-        <div class="post-card-title">{{ post.title }}</div>
+        <h2 class="post-card-title">{{ post.title }}</h2>
         <div class="post-card-body">
           <div>{{ post.createdAt | date }}</div>
           <div>{{ post.updatedAt | date:"full" }}</div>
@@ -18,4 +18,5 @@
       </div>
     </div>
   </div>
+  <div class="placeholder" *ngIf="!postPageableOutputDto">No post found</div>
 </div>

@@ -1,29 +1,100 @@
 <div class="post-details-section">
-  <div class="post-wrapper">
-    <div class="post-category">{{ post?.category?.name }}</div>
-    <div class="flex j-c-between a-i-center">
-      <h1>{{ post?.title }}</h1>
-      <button [routerLink]="['/posts/edit']" [queryParams]="{ post: post?.id }" class="btn btn-2 btn-rounded btn-s" *ngIf="post?.user?.id === currentUser?.id">Edit</button>
-    </div>
-    <div class="post-dates">
-      <div>Created at: {{ post?.createdAt | date }}</div>
-      <div>Last update: {{ post?.updatedAt | date:"medium" }}</div>
-    </div>
-    <div class="flex flex-wrap post-tags">
-      <span *ngFor="let tag of post?.tags" class="tag">{{ tag.name }}</span>
-    </div>
-    <div>{{ post?.user?.username }}</div>
-    <div id="post-content"></div>
-  </div>
-  <div class="flex a-i-center like-section">
-    <div class="vote-count-wrapper">Votes: <span class="vote-count">{{ post?.votes?.length }}</span></div>
-    <a (click)="addOrRemoveUpVote()" class="like up-vote">
+  <div class="flex flex-column a-i-center like-section">
+    <a (click)="addOrRemoveUpVote()" [class]="{'like': true, 'up-vote': true, 'active': liked}">
       <i class="fa-solid fa-circle-arrow-up"></i>
-      <span>Up vote</span>
     </a>
-    <a (click)="addOrRemoveDownVote()" class="like down-vote">
+    <a (click)="addOrRemoveDownVote()" [class]="{'like': true, 'down-vote': true, 'active': disliked}">
       <i class="fa-solid fa-circle-arrow-down"></i>
-      <span>Down vote</span>
     </a>
+    <div class="vote-count-wrapper">
+      <span [class]="{'vote-count': true, 'up': likes > 0, 'down': likes < 0}">{{ likes }}</span>
+    </div>
+  </div>
+  <div class="post-content-section">
+    <div class="post-wrapper">
+      <div class="post-category">{{ post?.category?.name }}</div>
+      <div class="flex j-c-between a-i-center">
+        <h1>{{ post?.title }}</h1>
+        <button [routerLink]="['/posts/edit']" [queryParams]="{post: post?.id}" class="btn btn-2 btn-rounded btn-s" *ngIf="post?.user?.id === currentUser?.id">Edit</button>
+      </div>
+      <div class="post-dates">
+        <div>Created at: {{ post?.createdAt | date }}</div>
+        <div>Last update: {{ post?.updatedAt | date:"medium" }}</div>
+      </div>
+      <div class="flex flex-wrap post-tags">
+        <span *ngFor="let tag of post?.tags" class="tag">{{ tag.name }}</span>
+      </div>
+      <div id="post-content"></div>
+      <div class="flex">
+        <div class="user-avatar">
+          <img src="https://picsum.photos/200/300" alt="user image">
+        </div>
+        <div>
+          <div>{{ post?.user?.username }}</div>
+          <div>{{ post?.user?.role?.authority! | titlecase | strReplace:"Role_":"" | strReplace:"_":" " }}</div>
+        </div>
+      </div>
+    </div>
+    <h2>Comment section</h2>
+    <div class="comments-wrapper">
+      <div class="new-comment-section">
+        <div class="flex a-i-center add-validation-error-message" (click)="showCommentForm($event)">
+          <i class="fa-regular fa-square-plus"></i>
+          <span>Add comment</span>
+        </div>
+        <div class="form-wrapper-dark-2">
+          <div class="user-avatar">
+            <img src="https://picsum.photos/200/300" alt="user image">
+          </div>
+          <form [formGroup]="commentForm">
+            <!-- CONTENT -->
+            <div class="form-input-wrapper">
+            <textarea
+              formControlName="content"
+              appInputLabelAnimation
+              id="content"
+              [class]="{'invalid': errors.get('content') && !commentForm.get('content')?.dirty}"
+              placeholder="Write your comment here..."
+            >
+            </textarea>
+              <label for="content">Comment<span class="input-required">*</span></label>
+              <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('content') && !commentForm.get('content')?.dirty"></i>
+            </div>
+            <div *ngIf="errors.get('content')">
+              <div *ngFor="let error of errors.get('content')" class="input-error">{{ error }}</div>
+            </div>
+            <div class="flex">
+              <button (click)="createComment()" class="btn btn-squared btn-1 btn-s">Add</button>
+              <button (click)="clearForm(commentForm)" type="button" class="btn btn-squared btn-2 btn-s">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="comment-list">
+        <div class="comment-card-wrapper" *ngIf="commentPageableOutputDto?.totalElements! > 0">
+          <div class="comment-card flex" *ngFor="let comment of commentPageableOutputDto?.comments">
+            <div class="user-avatar">
+              <img src="https://picsum.photos/200/300" alt="user image">
+            </div>
+            <div class="card-body">
+              <div class="flex">
+                <a class="username">{{ comment?.user?.username }}</a>
+                <div class="comment-date">{{ comment?.updatedAt | date:"medium" }}</div>
+              </div>
+              <div class="comment-content">{{ comment?.content }}</div>
+              <div class="flex update-or-delete-comment" *ngIf="comment.user.id === currentUser?.id">
+                <button (click)="createComment()" class="btn btn-squared btn-1 btn-s">Edit</button>
+                <button (click)="clearForm(commentForm)" type="button" class="btn btn-squared btn-2 btn-s">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex next-previous-wrapper" *ngIf="commentPageableOutputDto?.totalElements! > 0">
+          <button (click)="previousPage()" class="btn btn-rounded btn-2 btn-s" [disabled]="commentPage < 1">Previous</button>
+          <button (click)="nextPage()" class="btn btn-rounded btn-2 btn-s" [disabled]="commentPage + 1 === commentPageableOutputDto?.totalPages">Next</button>
+        </div>
+        <div class="flex j-c-center a-i-center placeholder" *ngIf="commentPageableOutputDto?.totalElements! === 0">No comments found</div>
+      </div>
+    </div>
   </div>
 </div>

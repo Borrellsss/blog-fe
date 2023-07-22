@@ -10,11 +10,11 @@
     }
   }
   .posts-wrapper {
+    gap: 2em;
 
     .post-card-wrapper {
-      margin-bottom: 2em;
       padding: 1.5em;
-      width: calc((100% / 2) - 2em);
+      width: calc((100% / 2) - 1em);
       border: 1px solid $color-4;
       border-radius: 0.5em;
       cursor: pointer;
@@ -26,9 +26,10 @@
       .post-card {
 
         &-title {
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
           color: $color-2;
-          font-size: 2em;
-          margin-bottom: 0.5em;
         }
         &-body {
 
@@ -41,5 +42,11 @@
         }
       }
     }
+  }
+  > .placeholder {
+    padding-top: 4em;
+    text-align: center;
+    font-size: 1.5em;
+    color: $color-4;
   }
 }

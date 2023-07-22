@@ -17,7 +17,7 @@ export class InputLabelAnimationDirective implements OnInit {
   public activate(): void {
     const input = this.el.nativeElement;
     const label = this.el.nativeElement.parentElement.children[1];
-    if (input.value || input.type === "date") {
+    if (input.value || input.type === "date" || input.type === "textarea") {
       this.renderer.addClass(label, "active");
     } else {
       this.renderer.removeClass(label, "active");

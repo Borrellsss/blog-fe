@@ -1,22 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-
-import { ImageSettingsModel, ToolbarSettingsModel } from "@syncfusion/ej2-angular-richtexteditor";
 import { take, timer } from "rxjs";
+import {
+  ImageSettingsModel,
+  ImageUploadingEventArgs,
+  ToolbarSettingsModel
+} from "@syncfusion/ej2-angular-richtexteditor";
+
 import { CategoriesService } from "../../../../core/services/categories.service";
 import { PostsService } from "../../../../core/services/posts.service";
 import { TagsService } from "../../../../core/services/tags.service";
 import { ValidatorService } from "../../../../core/services/utils/validator.service";
 import { ValidationsService } from "../../../../core/services/validations.service";
 import { PostInputDto } from "../../../../shared/models/input/post-input-dto";
-import { SignUpInputDto } from "../../../../shared/models/input/sign-up-input-dto";
 import { CategoryOutputDto } from "../../../../shared/models/output/categories/category-output-dto";
 import { CategoryPageableOutputDto } from "../../../../shared/models/output/categories/category-pageable-output-dto";
+import { TagOutputDto } from "../../../../shared/models/output/categories/tag-output-dto";
 import { PostOutputDto } from "../../../../shared/models/output/posts/post-output-dto";
-import { TagOutputDto } from "../../../../shared/models/output/posts/tag-output-dto";
 import { TagPageableOutputDto } from "../../../../shared/models/output/tags/tag-pageable-output-dto";
-import { SignUpOutputDto } from "../../../../shared/models/output/users/sign-up-output-dto";
 import { ValidationOutputDto } from "../../../../shared/models/output/validations/validation-output-dto";
 
 @Component({
@@ -52,6 +54,14 @@ export class PostFormComponent implements OnInit {
       "Redo",
     ]
   }
+  onImageUploading = (args: ImageUploadingEventArgs) => {
+    console.log("file is uploading");
+    let imgSize: number = 500000;
+    let sizeInBytes: number = args.filesData[0].size;
+    if (imgSize < sizeInBytes) {
+      args.cancel = true;
+    }
+  }
 
   constructor(
     private postsService: PostsService,
@@ -61,7 +71,7 @@ export class PostFormComponent implements OnInit {
     private formValidatorService: ValidatorService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.reset();

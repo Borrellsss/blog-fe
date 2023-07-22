@@ -101,6 +101,9 @@ body {
     font-weight: 500;
     margin-bottom: 0.7em;
   }
+  h1 {
+    font-size: 2.5em;
+  }
 
   // buttons
   .btn {
@@ -262,7 +265,7 @@ body {
           background-color: #fff;
           border: 1px solid $color-4;
           font: inherit;
-          border-radius: 0.5em;
+          border-radius: 0.2em;
 
           > option {
             font: inherit;
@@ -448,7 +451,7 @@ body {
               color: #fff;
 
               > option {
-                background-color: #2d2d2d;
+                color: $color-3;
               }
             }
           }
@@ -482,7 +485,7 @@ body {
               color: #fff;
 
               > option {
-                background-color: $color-3;
+                color: $color-3;
               }
             }
           }

@@ -163,9 +163,11 @@ export class ValidationFormComponent implements OnInit {
   clearForm(): void {
     this.validationForm.reset(
       {
-        code: this.validationForm.controls["code"].value,
+        code: this.validation ? this.validation.code : null,
         notNull: false,
         notEmpty: false,
       });
+    document.querySelectorAll(`input[formControlName] ~ label`)
+      ?.forEach(label => label.classList.remove("active"));
   }
 }

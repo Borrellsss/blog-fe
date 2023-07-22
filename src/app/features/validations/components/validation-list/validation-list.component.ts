@@ -5,7 +5,8 @@ import { Subscription } from "rxjs";
 import { ValidationsService } from "../../../../core/services/validations.service";
 import { ValidationOutputDto } from "../../../../shared/models/output/validations/validation-output-dto";
 import { CategoryForm } from "../../models/category-form.model";
-import { PostForm } from "../../models/post-form";
+import { CommentForm } from "../../models/comment-form.model";
+import { PostForm } from "../../models/post-form.model";
 import { RoleForm } from "../../models/role-form.model";
 import { SignInForm } from "../../models/sign-in-form.model";
 import { SignUpForm } from "../../models/sign-up-form.model";
@@ -27,7 +28,8 @@ export class ValidationListComponent implements OnInit, OnDestroy {
     new RoleForm(),
     new PostForm(),
     new CategoryForm(),
-    new TagForm()
+    new TagForm(),
+    new CommentForm()
   ];
   validations: Map<string, Array<ValidationOutputDto>> = new Map();
   isActive = true;
