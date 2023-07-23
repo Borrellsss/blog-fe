@@ -25,7 +25,7 @@
         </div>
         <div class="flex">
           <div class="form-select-wrapper">
-            <select formControlName="category" id="category" (change)="readAllTagsByCategoryName(postForm.get('category')?.value, 0)">
+            <select formControlName="category" id="category" (change)="readAllTagsByCategoryNameOrderByName(postForm.get('category')?.value, 0)">
               <option [ngValue]="null">Select a category</option>
               <option *ngFor="let category of categoryPageableOutputDto?.categories" [ngValue]="category.name">{{ category.name }}</option>
             </select>
@@ -65,7 +65,14 @@
         <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('content')"></i>
         <div>Post content<span class="input-required">*</span></div>
       </div>
-      <ejs-richtexteditor [toolbarSettings]="customToolbar" [insertImageSettings]="imageSettings" (imageUploading)="onImageUploading($event)" formControlName="content">
+      <ejs-richtexteditor
+        [toolbarSettings]="toolbarOptions"
+        [insertImageSettings]="imageOptions"
+        [fontColor]="fontColorOptions"
+        [backgroundColor]="bgColorOptions"
+        (fileUploading)="onImageUploading($event)"
+        formControlName="content"
+      >
       </ejs-richtexteditor>
       <div *ngIf="errors.get('content')">
         <div *ngFor="let error of errors.get('content')" class="input-error">{{ error }}</div>

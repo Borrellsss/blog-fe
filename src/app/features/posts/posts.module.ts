@@ -6,24 +6,23 @@ import { PostsRoutingModule } from "./posts-routing.module";
 import { RichTextEditorAllModule } from "@syncfusion/ej2-angular-richtexteditor";
 import { PostFormComponent } from './components/post-form/post-form.component';
 import { PostDetailsComponent } from './components/post-details/post-details.component';
-import { PostPendingComponent } from './components/post-pending/post-pending.component';
+import { PostPendingComponent } from './components/post-list/post-pending/post-pending.component';
+import { MostPopularComponent } from './components/post-list/most-popular/most-popular.component';
+import { MostUpVotedComponent } from './components/post-list/most-up-voted/most-up-voted.component';
 
 @NgModule({
   declarations: [
     PostListComponent,
     PostFormComponent,
     PostDetailsComponent,
-    PostPendingComponent
+    PostPendingComponent,
+    MostPopularComponent,
+    MostUpVotedComponent
   ],
   imports: [
     SharedModule,
     PostsRoutingModule,
     RichTextEditorAllModule,
-  ],
-  providers: [],
-  exports: [
-    PostListComponent,
-    PostFormComponent
   ]
 })
 export class PostsModule {

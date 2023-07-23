@@ -1,0 +1,74 @@
+<div class="user-details-section">
+  <div class="flex user-details">
+    <div class="user-avatar">
+      <img src="https://picsum.photos/200/300" alt="user image">
+    </div>
+    <div class="user-infos">
+      <div class="flex a-i-center">
+        <div class="username">{{ user?.username }}</div>
+        <span class="role tag">{{ user?.role?.authority! | userRoleConverter }}</span>
+      </div>
+      <div *ngIf="user?.id === currentUser?.id">
+        <div class="email">{{ user?.email }}</div>
+        <div class="full-name">{{ user?.firstName }} {{ user?.lastName }}</div>
+      </div>
+      <div class="user-dates">
+        <div>Birthdate {{ user?.birthdate | date }} 🎂</div>
+        <div>Member since {{ user?.createdAt | date }}</div>
+        <div>Last update {{ user?.updatedAt | date:"medium" }}</div>
+      </div>
+    </div>
+    <div class="flex edit-delete-block-section" *ngIf="user?.id === currentUser?.id || currentUser?.role?.authority !== 'ROLE_USER'">
+      <button [routerLink]="['/']" class="btn btn-rounded btn-1 btn-s" *ngIf="user?.id === currentUser?.id">Edit</button>
+      <button
+        *ngIf="user?.id === currentUser?.id || (currentUser?.role?.authority !== 'ROLE_USER' && user?.role?.authority === 'ROLE_USER')"
+        (click)="delete()"
+        class="btn btn-rounded btn-2 btn-s"
+      >
+        Delete
+      </button>
+      <button
+        *ngIf="user?.id !== currentUser?.id && currentUser?.role?.authority === 'ROLE_MODERATOR' && user?.role?.authority === 'ROLE_USER'"
+        (click)="blockOrUnblock()"
+        class=""
+        [class]="{'btn': true, 'btn-rounded': true, 'btn-s': true, 'btn-1': user?.blocked, 'btn-2': !user?.blocked}"
+      >
+        {{ user?.blocked ? "Unblock" : "Block" }}
+      </button>
+    </div>
+  </div>
+  <div class="user-posts">
+    <div class="section-title">Recent posts</div>
+    <div class="flex flex-wrap user-posts-list" *ngIf="postPageableOutputDto && postPageableOutputDto.posts.length > 0">
+      <div class="user-post" *ngFor="let post of postPageableOutputDto?.posts">
+        <div class="user-post-category">{{ post.category.name }}</div>
+        <div class="user-post-title">{{ post.title }}</div>
+        <div class="user-post-body">
+          <div class="votes-count">Votes: {{ post.votes.length }}</div>
+          <div class="flex flex-wrap tags-wrapper">
+            <span class="tag" *ngFor="let tag of post.tags">{{ tag.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex next-previous-wrapper" *ngIf="postPageableOutputDto && postPageableOutputDto.posts.length > 0">
+      <button (click)="previousPostPage()" class="btn btn-squared btn-2 btn-s" [disabled]="postPage < 1">Previous</button>
+      <button (click)="nextPostPage()" class="btn btn-squared btn-2 btn-s" [disabled]="postPage + 1 === postPageableOutputDto.totalPages || !postPageableOutputDto.totalPages">Next</button>
+    </div>
+    <div class="placeholder" *ngIf="!postPageableOutputDto || postPageableOutputDto.posts.length === 0">This user has not published any articles</div>
+  </div>
+  <div class="user-comments">
+    <div class="section-title">Recent comments</div>
+    <div class="flex flex-wrap user-comments-list" *ngIf="commentPageableOutputDto && commentPageableOutputDto.comments.length > 0">
+      <div class="user-comment" *ngFor="let comment of commentPageableOutputDto?.comments">
+        <div class="user-comment-content">{{ comment.content }}</div>
+        <div class="user-comment-body">{{ comment.createdAt | date }}</div>
+      </div>
+    </div>
+    <div class="flex next-previous-wrapper" *ngIf="commentPageableOutputDto && commentPageableOutputDto.comments.length > 0">
+      <button (click)="previousCommentPage()" class="btn btn-squared btn-2 btn-s" [disabled]="commentPage < 1">Previous</button>
+      <button (click)="nextCommentPage()" class="btn btn-squared btn-2 btn-s" [disabled]="commentPage + 1 === commentPageableOutputDto.totalPages || !commentPageableOutputDto.totalPages">Next</button>
+    </div>
+    <div class="placeholder" *ngIf="!commentPageableOutputDto || commentPageableOutputDto.comments.length === 0">This user has not commented on any articles</div>
+  </div>
+</div>

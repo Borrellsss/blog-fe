@@ -1,0 +1,41 @@
+<div>
+  <h1>Categories</h1>
+  <div class="form-wrapper-dark-1">
+    <form [formGroup]="categoryListForm" (keyup)="filterCategories()">
+      <!-- NAME -->
+      <div>Filter categories by name</div>
+      <div class="form-input-wrapper">
+        <input
+          formControlName="name"
+          appInputLabelAnimation
+          type="text"
+          id="name"
+        >
+        <label for="name">Name</label>
+      </div>
+    </form>
+  </div>
+  <div class="flex next-previous-wrapper" *ngIf="categoryPageableOutputDto && categoryPageableOutputDto.categories.length > 0">
+    <button (click)="previousPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page < 1">Previous</button>
+    <button (click)="nextPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page + 1 === categoryPageableOutputDto.totalPages">Next</button>
+  </div>
+  <div class="categories-wrapper flex flex-wrap" *ngIf="categoryPageableOutputDto && categoryPageableOutputDto.categories.length > 0">
+    <div routerLink="/posts" [queryParams]="{category: category.name.replaceAll(' ', '%')}" *ngFor="let category of categoryPageableOutputDto.categories" class="card category-card">
+      <div class="category-card-title">{{ category.name }}</div>
+      <div class="category-card-body">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, cumque deleniti dolorum,
+          est eveniet expedita facilis fugiat incidunt laboriosam molestias
+        </p>
+      </div>
+      <div class="tag-card-footer">
+        <span>Created at {{ category.createdAt | date }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="placeholder" *ngIf="!categoryPageableOutputDto || categoryPageableOutputDto.categories.length === 0">No categories found</div>
+  <div class="flex next-previous-wrapper" *ngIf="categoryPageableOutputDto && categoryPageableOutputDto.categories.length > 0">
+    <button (click)="previousPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page < 1">Previous</button>
+    <button (click)="nextPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page + 1 === categoryPageableOutputDto.totalPages">Next</button>
+  </div>
+</div>

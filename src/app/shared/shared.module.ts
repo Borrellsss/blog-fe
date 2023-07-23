@@ -10,6 +10,7 @@ import { InputIgnoreSpecialCharactersDirective } from './directives/input-ignore
 import { ToggleSubmitDirective } from './directives/toggle-submit.directive';
 import { InputIgnoreSpacesDirective } from './directives/input-ignore-spaces.directive';
 import { StrReplacePipe } from './pipes/str-replace.pipe';
+import { UserRoleConverterPipe } from './pipes/user-role-converter.pipe';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { StrReplacePipe } from './pipes/str-replace.pipe';
     ToggleSubmitDirective,
     InputIgnoreSpacesDirective,
     StrReplacePipe,
+    UserRoleConverterPipe,
   ],
   imports: [
     CommonModule,
@@ -31,21 +33,22 @@ import { StrReplacePipe } from './pipes/str-replace.pipe';
   ],
   providers: [
   ],
-    exports: [
-        CommonModule,
-        RouterModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        FormsModule,
-        NgOptimizedImage,
-        InputLabelAnimationDirective,
-        InputIgnoreNumbersDirective,
-        InputIgnoreLettersDirective,
-        InputIgnoreSpecialCharactersDirective,
-        ToggleSubmitDirective,
-        InputIgnoreSpacesDirective,
-        StrReplacePipe
-    ]
+  exports: [
+    CommonModule,
+    RouterModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgOptimizedImage,
+    InputLabelAnimationDirective,
+    InputIgnoreNumbersDirective,
+    InputIgnoreLettersDirective,
+    InputIgnoreSpecialCharactersDirective,
+    ToggleSubmitDirective,
+    InputIgnoreSpacesDirective,
+    StrReplacePipe,
+    UserRoleConverterPipe
+  ]
 })
 export class SharedModule {
 

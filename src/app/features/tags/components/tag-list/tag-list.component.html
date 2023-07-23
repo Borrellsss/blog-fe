@@ -1,25 +1,43 @@
 <div>
   <h1>Tags</h1>
-  <input type="text" name="" id="" placeholder="Filter by tag name">
-  <div class="flex next-previous-wrapper">
-    <button (click)="previousPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page < 1">Previous</button>
-    <button (click)="nextPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page + 1 === tagPageableOutputDto?.totalPages">Next</button>
+  <div class="form-wrapper-dark-1">
+    <form [formGroup]="tagListForm" (keyup)="filterTags()">
+      <!-- NAME -->
+      <div>Filter tags by name</div>
+      <div class="form-input-wrapper">
+        <input
+          formControlName="name"
+          appInputLabelAnimation
+          type="text"
+          id="name"
+        >
+        <label for="name">Name</label>
+      </div>
+    </form>
   </div>
-  <div class="tags-wrapper flex flex-wrap">
-    <div routerLink="/" *ngFor="let tag of tagPageableOutputDto?.tags" class="card tag-card">
+  <div class="flex next-previous-wrapper" *ngIf="tagPageableOutputDto && tagPageableOutputDto.tags.length > 0">
+    <button (click)="previousPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page < 1">Previous</button>
+    <button (click)="nextPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page + 1 === tagPageableOutputDto.totalPages">Next</button>
+  </div>
+  <div class="tags-wrapper flex flex-wrap" *ngIf="tagPageableOutputDto && tagPageableOutputDto.tags.length > 0">
+    <div routerLink="/posts" [queryParams]="{tag: tag.name.replaceAll(' ', '%')}" *ngFor="let tag of tagPageableOutputDto.tags" class="card tag-card">
       <div class="tag-card-title">
         <span class="tag">{{ tag.name }}</span>
       </div>
       <div class="tag-card-body">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, cumque deleniti dolorum, est eveniet expedita facilis fugiat incidunt laboriosam molestias</p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, cumque deleniti dolorum,
+          est eveniet expedita facilis fugiat incidunt laboriosam molestias
+        </p>
       </div>
       <div class="tag-card-footer">
         <span>Created at {{ tag.createdAt | date }}</span>
       </div>
     </div>
   </div>
-  <div class="flex next-previous-wrapper">
+  <div class="placeholder" *ngIf="!tagPageableOutputDto || tagPageableOutputDto.tags.length === 0">No tags found</div>
+  <div class="flex next-previous-wrapper" *ngIf="tagPageableOutputDto && tagPageableOutputDto.tags.length > 0">
     <button (click)="previousPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page < 1">Previous</button>
-    <button (click)="nextPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page + 1 === tagPageableOutputDto?.totalPages">Next</button>
+    <button (click)="nextPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page + 1 === tagPageableOutputDto.totalPages">Next</button>
   </div>
 </div>

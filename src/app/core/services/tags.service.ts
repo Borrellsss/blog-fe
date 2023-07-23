@@ -16,7 +16,22 @@ export class TagsService {
       }
     });
   }
-  readByCategoryName(categoryName: string, page: number = 0): Observable<TagPageableOutputDto> {
+  readAllByOrderByName(page: number = 0): Observable<TagPageableOutputDto> {
+    return this.http.get<TagPageableOutputDto>("tags/order-by-name", {
+      params: {
+        page: page
+      }
+    });
+  }
+  readAllByNameContainsOrderByName(name: string, page: number = 0): Observable<TagPageableOutputDto> {
+    return this.http.get<TagPageableOutputDto>("tags/like", {
+      params: {
+        name: name,
+        page: page
+      }
+    });
+  }
+  readAllByCategoryNameOrderByName(categoryName: string, page: number = 0): Observable<TagPageableOutputDto> {
     return this.http.get<TagPageableOutputDto>(`tags/category/${categoryName}`, {
       params: {
         page: page

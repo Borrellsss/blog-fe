@@ -2,28 +2,31 @@
 
   > .form-wrapper-dark-1 {
 
-     > form {
+    > form {
 
-       .input-label {
-         margin-bottom: 0.5em;
-       }
-       .category-section {
-          margin-block: 1.5em;
+      .input-label {
+        margin-bottom: 0.5em;
+      }
+      .category-section {
+        margin-block: 1.5em;
 
-         .next-previous-wrapper {
-           margin-left: 2em;
-         }
-       }
-       > .tags-section {
-         margin-bottom: 1.5em;
+        .next-previous-wrapper {
+          margin-left: 2em;
+        }
+      }
+      > .tags-section {
+        margin-bottom: 1.5em;
 
-         > .tags-wrapper {
-           gap: 0.5em;
-         }
-         > .hint {
-           margin-bottom: 1em;
-         }
-       }
-     }
+        > .tags-wrapper {
+          gap: 0.5em;
+        }
+        > .hint {
+          margin-bottom: 1em;
+        }
+      }
+      ejs-richtexteditor {
+        max-width: 100%;
+      }
+    }
   }
 }

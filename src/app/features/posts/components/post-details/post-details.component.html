@@ -15,7 +15,10 @@
       <div class="post-category">{{ post?.category?.name }}</div>
       <div class="flex j-c-between a-i-center">
         <h1>{{ post?.title }}</h1>
-        <button [routerLink]="['/posts/edit']" [queryParams]="{post: post?.id}" class="btn btn-2 btn-rounded btn-s" *ngIf="post?.user?.id === currentUser?.id">Edit</button>
+        <div class="flex">
+          <button [routerLink]="['/posts/edit']" [queryParams]="{post: post?.id}" class="btn btn-2 btn-rounded btn-s" *ngIf="post?.user?.id === currentUser?.id">Edit</button>
+          <button class="btn btn-2 btn-rounded btn-s" *ngIf="post?.user?.id === currentUser?.id">Delete</button>
+        </div>
       </div>
       <div class="post-dates">
         <div>Created at: {{ post?.createdAt | date }}</div>
@@ -31,7 +34,7 @@
         </div>
         <div>
           <div>{{ post?.user?.username }}</div>
-          <div>{{ post?.user?.role?.authority! | titlecase | strReplace:"Role_":"" | strReplace:"_":" " }}</div>
+          <div>{{ post?.user?.role?.authority! | userRoleConverter }}</div>
         </div>
       </div>
     </div>
@@ -78,7 +81,8 @@
             </div>
             <div class="card-body">
               <div class="flex">
-                <a class="username">{{ comment?.user?.username }}</a>
+                <a [routerLink]="['/users/details', comment.user.id, comment.user.username]" class="username">{{ comment?.user?.username }}</a>
+                <div>{{ post?.user?.role?.authority! | userRoleConverter }}</div>
                 <div class="comment-date">{{ comment?.updatedAt | date:"medium" }}</div>
               </div>
               <div class="comment-content">{{ comment?.content }}</div>

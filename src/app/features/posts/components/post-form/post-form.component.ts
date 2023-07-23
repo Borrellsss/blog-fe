@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { ToolbarType } from "@syncfusion/ej2-richtexteditor/src/rich-text-editor/base/enum";
 import { take, timer } from "rxjs";
 import {
   ImageSettingsModel,
@@ -36,32 +37,32 @@ export class PostFormComponent implements OnInit {
   categoryPage: number = 0;
   tagPageableOutputDto: TagPageableOutputDto | null = null;
   tagPage: number = 0;
-  public imageSettings: ImageSettingsModel = {
-    saveFormat: "Base64"
-  }
-  public customToolbar: ToolbarSettingsModel = {
-    items: [
-      "Bold",
-      "Italic",
-      "Underline",
-      "StrikeThrough",
-      "|",
-      "CreateTable",
-      "CreateLink",
-      "Image",
-      "|",
-      "Undo",
-      "Redo",
+  // RICH TEXT EDITOR
+  public toolbarOptions: ToolbarSettingsModel = {
+    type: ToolbarType.MultiRow,
+    items: ['Bold', 'Italic', 'Underline', 'StrikeThrough', 'ClearAll', 'EmojiPicker',
+      'FontName', 'FontSize', 'FontColor', 'BackgroundColor',
+      'LowerCase', 'UpperCase', '|',
+      'Formats', 'Alignments', 'OrderedList', 'UnorderedList',
+      'Outdent', 'Indent', '|', 'CreateTable', 'SubScript', 'SuperScript', 'NumberFormatList', 'BulletFormatList', 'Cut', 'Copy', 'Paste', '|',
+      'CreateLink', 'Image', 'Replace', '|', 'ClearFormat', 'Print',
+      'SourceCode', '|', 'Undo', 'Redo', '|', 'Preview', 'InsertCode'
     ]
-  }
-  onImageUploading = (args: ImageUploadingEventArgs) => {
+  };
+  public imageOptions: ImageSettingsModel = {
+    saveFormat: "Base64",
+    maxWidth: "100%",
+  };
+  public bgColorOptions = { modeSwitcher : true };
+  public fontColorOptions = { modeSwitcher : true };
+  onImageUploading(args: ImageUploadingEventArgs) {
     console.log("file is uploading");
     let imgSize: number = 500000;
     let sizeInBytes: number = args.filesData[0].size;
     if (imgSize < sizeInBytes) {
       args.cancel = true;
     }
-  }
+  };
 
   constructor(
     private postsService: PostsService,
@@ -85,7 +86,7 @@ export class PostFormComponent implements OnInit {
       this.postsService.readById(postId).subscribe({
         next: (res: PostOutputDto) => {
           this.post = res;
-          this.postForm.controls["title"].setValue(this.post.title);
+          this.postForm.controls["title"].setValue(this.post.title.trim());
           this.postForm.controls["category"].setValue(this.post.category.name);
           this.postForm.controls["content"].setValue(this.post.content);
           this.tagsSet = new Set<number>(this.post.tags.map((tag: TagOutputDto) => tag.id));
@@ -112,15 +113,15 @@ export class PostFormComponent implements OnInit {
       this.postForm.controls["category"].setValue(null);
       this.tagsSet = new Set<number>();
     }
-    this.categoriesService.readAll(page).subscribe({
+    this.categoriesService.readAllByOrderByName(page).subscribe({
       next: (res: CategoryPageableOutputDto) => {
         this.categoryPageableOutputDto = res;
       },
       error: (err) => console.log(err)
     })
   }
-  readAllTagsByCategoryName(categoryName: string, page: number): void {
-    this.tagsService.readByCategoryName(categoryName, page).subscribe({
+  readAllTagsByCategoryNameOrderByName(categoryName: string, page: number): void {
+    this.tagsService.readAllByCategoryNameOrderByName(categoryName, page).subscribe({
       next: (res: TagPageableOutputDto) => {
         this.tagPageableOutputDto = res;
         timer(250).pipe(take(1))
@@ -143,16 +144,14 @@ export class PostFormComponent implements OnInit {
     this.tagPage = 0;
   }
   nextTagsPage(): void {
-    this.readAllTagsByCategoryName(this.postForm.controls["category"].value, ++this.tagPage);
+    this.readAllTagsByCategoryNameOrderByName(this.postForm.controls["category"].value, ++this.tagPage);
   }
   previousTagsPage(): void {
-    this.readAllTagsByCategoryName(this.postForm.controls["category"].value, --this.tagPage);
+    this.readAllTagsByCategoryNameOrderByName(this.postForm.controls["category"].value, --this.tagPage);
   }
   private setTags(): void {
     document.querySelectorAll("[type='checkbox']").forEach((el: Element)  => {
       const checkbox = el as HTMLInputElement;
-      console.log(checkbox.value);
-      console.log(this.tagsSet);
       if (this.tagsSet.has(+checkbox.value)) {
         checkbox.checked = true;
       }

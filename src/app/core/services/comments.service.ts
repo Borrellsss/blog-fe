@@ -14,7 +14,14 @@ export class CommentsService {
   create(commentInputDto: CommentInputDto): Observable<CommentOutputDto> {
     return this.http.post<CommentOutputDto>(`comments`, commentInputDto);
   }
-  readByPostIdOrderByCreatedAtDesc(postId: number, page: number): Observable<CommentPageableOutputDto> {
+  readAllByUserIdOrderByCreatedAtDesc(userId: number, page: number): Observable<CommentPageableOutputDto> {
+    return this.http.get<CommentPageableOutputDto>(`comments/user/${userId}`, {
+      params: {
+        page: page
+      }
+    });
+  }
+  readAllByPostIdOrderByCreatedAtDesc(postId: number, page: number): Observable<CommentPageableOutputDto> {
     return this.http.get<CommentPageableOutputDto>(`comments/post/${postId}`, {
       params: {
         page: page

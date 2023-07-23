@@ -59,12 +59,25 @@
         h1 {
           margin-bottom: 0;
         }
+        > .flex {
+          gap: 1em;
+        }
       }
       .post-dates {
         margin-bottom: 1em;
       }
       .post-tags {
         gap: 1em;
+      }
+      > #post-content {
+        padding-block: 2em;
+
+        > p {
+
+          > img {
+            max-width: 100% !important;
+          }
+        }
       }
       > .flex:last-child {
         justify-content: end;

@@ -4,17 +4,16 @@
 
   .l-aside,
   .r-aside {
-    padding-block: 1.5em;
     flex-shrink: 0;
   }
   .l-aside {
     width: 160px;
-    min-height: calc(100vh - 80px);
-    border-right: 1px solid $color-4;
+    height: fit-content;
+    position: sticky;
+    top: 63px;
 
     .nav-links {
-      width: 160px;
-      position: fixed;
+      padding-block: 1.5em;
 
       > li {
 
@@ -36,9 +35,11 @@
     }
   }
   .content {
-    flex-grow: 1;
+    width: calc(100% - 460px);
+    border-left: 1px solid $color-4;
   }
   .r-aside {
+    padding-top: 1.5em;
     width: 300px;
     color: $color-4;
     font-size: 1.5em;

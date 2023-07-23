@@ -1,22 +1,7 @@
 <div class="post-list-section">
   <div class="flex j-c-between a-i-center">
-    <h1>Posts</h1>
-    <a routerLink="edit" class="btn btn-1 btn-rounded btn-s">New</a>
-  </div>
-  <div class="form-wrapper-dark-1">
-    <form [formGroup]="postListForm" (keyup)="filterPosts()">
-      <!-- TITLE -->
-      <div>Filter posts by title</div>
-      <div class="form-input-wrapper">
-        <input
-          formControlName="title"
-          appInputLabelAnimation
-          type="text"
-          id="title"
-        >
-        <label for="title">Title</label>
-      </div>
-    </form>
+    <h1>Most popular</h1>
+    <a routerLink="../edit" class="btn btn-1 btn-rounded btn-s">New</a>
   </div>
   <div class="flex next-previous-wrapper" *ngIf="postPageableOutputDto && postPageableOutputDto.posts.length > 0">
     <button (click)="previousPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page < 1">Previous</button>
@@ -43,3 +28,4 @@
     <button (click)="nextPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page + 1 === postPageableOutputDto.totalPages">Next</button>
   </div>
 </div>
+

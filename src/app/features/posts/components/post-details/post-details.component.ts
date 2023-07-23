@@ -58,6 +58,7 @@ export class PostDetailsComponent implements OnInit {
           this.post = res;
           this.currentUser = this.authService.getUser();
           document.getElementById('post-content')!.innerHTML = this.post?.content;
+          console.log(document.querySelectorAll('post-content img'));
           this.votesService.readByUserIdAndPostId(this.currentUser?.id!, this.post?.id!).subscribe({
             next: (res: VoteOutputDto) => {
               if (res.liked) {
@@ -67,7 +68,10 @@ export class PostDetailsComponent implements OnInit {
               }
               this.countLikes();
             },
-            error: (err) => console.log(err)
+            error: (err) => {
+              this.countLikes();
+              console.log(err);
+            }
           });
           this.readComments(this.commentPage);
         },
@@ -162,23 +166,26 @@ export class PostDetailsComponent implements OnInit {
     }
   }
   countLikes(): void {
-    this.votesService.countPostLikes(this.post?.id!, true).subscribe({
-      next: (res: number) => {
-        this.likes = res;
-        this.votesService.countPostLikes(this.post?.id!, false).subscribe({
-          next: (res: number) => {
-            this.likes -= res;
-          },
-          error: (err) => console.log(err)
-        });
-      },
-      error: (err) => console.log(err)
-    });
+    this.votesService.countPostLikes(this.post?.id!, true)
+      .subscribe({
+        next: (res: number) => {
+          this.likes = res;
+          this.votesService.countPostLikes(this.post?.id!, false)
+            .subscribe({
+              next: (res: number) => {
+                this.likes -= res;
+              },
+              error: (err) => console.log(err)
+            });
+        },
+        error: (err) => console.log(err)
+      });
   }
   private readComments(page: number): void {
-    this.commentsService.readByPostIdOrderByCreatedAtDesc(this.post?.id!, page).subscribe({
+    this.commentsService.readAllByPostIdOrderByCreatedAtDesc(this.post?.id!, page).subscribe({
       next: (res: CommentPageableOutputDto) => {
         this.commentPageableOutputDto = res;
+        console.log(this.commentPageableOutputDto);
       },
       error: (err) => console.log(err)
     });

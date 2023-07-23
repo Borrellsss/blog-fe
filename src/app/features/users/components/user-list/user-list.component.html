@@ -1,0 +1,45 @@
+<div>
+  <h1>Users</h1>
+  <div class="form-wrapper-dark-1">
+    <form [formGroup]="userListForm" (keyup)="filterTags()">
+      <!-- USERNAME -->
+      <div>Filter users by username</div>
+      <div class="form-input-wrapper">
+        <input
+          formControlName="username"
+          appInputLabelAnimation
+          type="text"
+          id="username"
+        >
+        <label for="username">Username</label>
+      </div>
+    </form>
+  </div>
+  <div class="flex next-previous-wrapper" *ngIf="userPageableOutputDto && userPageableOutputDto.users.length > 0">
+    <button (click)="previousPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page < 1">Previous</button>
+    <button (click)="nextPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page + 1 === userPageableOutputDto.totalPages">Next</button>
+  </div>
+  <div class="users-wrapper flex flex-wrap" *ngIf="userPageableOutputDto && userPageableOutputDto.users.length > 0">
+    <div [routerLink]="['/users/details', user.id, user.username]" *ngFor="let user of userPageableOutputDto.users" class="card user-card">
+      <div class="flex">
+        <div class="user-avatar">
+          <img src="https://picsum.photos/200/300" alt="user image">
+        </div>
+        <div class="user-card-body">
+          <div class="user-card-title">
+            <div>{{ user.username }}</div>
+            <span [class]="{'role-highlight': user.role.authority !== 'ROLE_USER'}">{{ user.role.authority | userRoleConverter }}</span>
+          </div>
+          <div class="user-card-footer">
+            <span>Created at {{ user.createdAt | date }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="placeholder" *ngIf="!userPageableOutputDto || userPageableOutputDto.users.length === 0">No users found</div>
+  <div class="flex next-previous-wrapper" *ngIf="userPageableOutputDto && userPageableOutputDto.users.length > 0">
+    <button (click)="previousPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page < 1">Previous</button>
+    <button (click)="nextPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page + 1 === userPageableOutputDto.totalPages">Next</button>
+  </div>
+</div>

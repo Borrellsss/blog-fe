@@ -4,12 +4,12 @@
   width: 30%;
   margin-bottom: 1em;
 }
-.tags-wrapper {
+.categories-wrapper {
   padding-block: 2em;
   width: 100%;
   gap: calc(3em / 2);
 
-  > .tag-card {
+  > .category-card {
     padding: 1.5em;
     width: calc((100% / 3) - 1em);
     border: 1px solid $color-4;
@@ -20,10 +20,11 @@
       box-shadow: 0 0 10px 0 rgba($color-2, 0.5);
       border-color: $color-2;
     }
-    .tag-card-title {
-      width: fit-content;
+    .category-card-title {
+      font-size: 1.3em;
+      color: $color-2;
     }
-    .tag-card-body {
+    .category-card-body {
       margin-block: 1.3em;
     }
   }

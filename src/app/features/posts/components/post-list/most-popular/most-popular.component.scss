@@ -1,4 +1,4 @@
-@import "../../../../../styles/variables.scss";
+@import "../../../../../../styles/variables.scss";
 
 .post-list-section {
 
@@ -8,10 +8,6 @@
     > h1 {
       margin-bottom: 0;
     }
-  }
-  > .form-wrapper-dark-1 {
-    width: 30%;
-    margin-bottom: 1em;
   }
   .posts-wrapper {
     padding-block: 2em;

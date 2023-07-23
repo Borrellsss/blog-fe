@@ -259,6 +259,7 @@ body {
         }
       }
       .form-select-wrapper {
+
         > select {
           padding: 0.5em 1em;
           min-width: fit-content;
@@ -266,10 +267,7 @@ body {
           border: 1px solid $color-4;
           font: inherit;
           border-radius: 0.2em;
-
-          > option {
-            font: inherit;
-          }
+          cursor: pointer;
         }
       }
       .input-error {
@@ -512,7 +510,7 @@ body {
 
   // others
   .main-content {
-    margin-top: 61px;
+    margin-top: 63px;
   }
   section {
     padding-block: 4em;

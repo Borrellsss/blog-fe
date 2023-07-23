@@ -10,9 +10,6 @@ import { TagsRoutingModule } from "./tags-routing.module";
   imports: [
     SharedModule,
     TagsRoutingModule,
-  ],
-  exports: [
-    TagListComponent
   ]
 })
 export class TagsModule { }

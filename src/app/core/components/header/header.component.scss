@@ -12,22 +12,30 @@
     background: linear-gradient(90deg, $color-1 50%, $color-2 50%);
   }
   header {
-    padding-block: 1.2em;
     border-bottom: 1px solid $color-4;
     background-color: #2d2d2d;
 
-    .nav-l {
-      gap: 1em;
+    > .container-s {
+      height: 60px;
 
-      .nav-links {
-        li {
-          padding: 0.5em 2em;
+      > .flex {
+        height: 100%;
+
+        > .nav-l {
+          height: 100%;
+          gap: 1em;
+
+          .nav-links {
+            li {
+              padding: 0.5em 2em;
+            }
+          }
         }
-      }
-    }
-    .nav-r {
-      .nav-links {
-        gap: 1em;
+        > .nav-r {
+          .nav-links {
+            gap: 1em;
+          }
+        }
       }
     }
   }
