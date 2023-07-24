@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ToolbarType } from "@syncfusion/ej2-richtexteditor/src/rich-text-editor/base/enum";
 import { take, timer } from "rxjs";
-import {
-  ImageSettingsModel,
-  ImageUploadingEventArgs,
-  ToolbarSettingsModel
-} from "@syncfusion/ej2-angular-richtexteditor";
+import { ToolbarType } from "@syncfusion/ej2-richtexteditor/src/rich-text-editor/base/enum";
+import { ImageSettingsModel, ToolbarSettingsModel } from "@syncfusion/ej2-angular-richtexteditor";
 
 import { CategoriesService } from "../../../../core/services/categories.service";
 import { PostsService } from "../../../../core/services/posts.service";
@@ -21,6 +17,9 @@ import { TagOutputDto } from "../../../../shared/models/output/categories/tag-ou
 import { PostOutputDto } from "../../../../shared/models/output/posts/post-output-dto";
 import { TagPageableOutputDto } from "../../../../shared/models/output/tags/tag-pageable-output-dto";
 import { ValidationOutputDto } from "../../../../shared/models/output/validations/validation-output-dto";
+import ToastError from "../../../../shared/toasts/toast-error";
+import ToastSuccess from "../../../../shared/toasts/toast-success";
+import ToastWarning from "../../../../shared/toasts/toast-warning";
 
 @Component({
   selector: 'app-post-form',
@@ -40,13 +39,14 @@ export class PostFormComponent implements OnInit {
   // RICH TEXT EDITOR
   public toolbarOptions: ToolbarSettingsModel = {
     type: ToolbarType.MultiRow,
-    items: ['Bold', 'Italic', 'Underline', 'StrikeThrough', 'ClearAll', 'EmojiPicker',
-      'FontName', 'FontSize', 'FontColor', 'BackgroundColor',
-      'LowerCase', 'UpperCase', '|',
-      'Formats', 'Alignments', 'OrderedList', 'UnorderedList',
-      'Outdent', 'Indent', '|', 'CreateTable', 'SubScript', 'SuperScript', 'NumberFormatList', 'BulletFormatList', 'Cut', 'Copy', 'Paste', '|',
-      'CreateLink', 'Image', 'Replace', '|', 'ClearFormat', 'Print',
-      'SourceCode', '|', 'Undo', 'Redo', '|', 'Preview', 'InsertCode'
+    items: [
+      'Bold', 'Italic', 'Underline', 'StrikeThrough', 'ClearAll', '|',
+      'EmojiPicker', 'FontName', 'FontSize', 'FontColor', 'BackgroundColor', 'LowerCase', 'UpperCase', '|',
+      'Alignments', 'NumberFormatList', 'BulletFormatList', 'Outdent', 'Indent', '|',
+      'CreateTable', 'SubScript', 'SuperScript', 'Cut', 'Copy', 'Paste', '|',
+      'CreateLink', 'Image', 'Replace', '|', 'ClearFormat', 'Print', 'SourceCode', '|',
+      'Undo', 'Redo', '|',
+      'Preview', 'InsertCode'
     ]
   };
   public imageOptions: ImageSettingsModel = {
@@ -55,21 +55,14 @@ export class PostFormComponent implements OnInit {
   };
   public bgColorOptions = { modeSwitcher : true };
   public fontColorOptions = { modeSwitcher : true };
-  onImageUploading(args: ImageUploadingEventArgs) {
-    console.log("file is uploading");
-    let imgSize: number = 500000;
-    let sizeInBytes: number = args.filesData[0].size;
-    if (imgSize < sizeInBytes) {
-      args.cancel = true;
-    }
-  };
+  public charactersCount: number = Infinity;
 
   constructor(
     private postsService: PostsService,
     private categoriesService: CategoriesService,
     private tagsService: TagsService,
     private validationsService: ValidationsService,
-    private formValidatorService: ValidatorService,
+    public formValidatorService: ValidatorService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
@@ -91,7 +84,9 @@ export class PostFormComponent implements OnInit {
           this.postForm.controls["content"].setValue(this.post.content);
           this.tagsSet = new Set<number>(this.post.tags.map((tag: TagOutputDto) => tag.id));
         },
-        error: (err) => console.log(err)
+        error: (err) => {
+          // console.log(err);
+        }
       });
     }
     this.readAllCategories(this.categoryPage);
@@ -102,8 +97,15 @@ export class PostFormComponent implements OnInit {
       .subscribe({
         next: (res: Array<ValidationOutputDto>) => {
           this.formValidatorService.validations = res;
+          this.formValidatorService.validations.forEach((validation: ValidationOutputDto) => {
+            if (validation.field === "PostInputDto.content") {
+              this.charactersCount = validation.max;
+            }
+          });
         },
-        error: (err) => console.error(err)
+        error: (err) => {
+          // console.error(err);
+        }
       });
     this.errors.clear();
     this.postForm.markAsPristine();
@@ -117,7 +119,9 @@ export class PostFormComponent implements OnInit {
       next: (res: CategoryPageableOutputDto) => {
         this.categoryPageableOutputDto = res;
       },
-      error: (err) => console.log(err)
+      error: (err) => {
+        // console.log(err);
+      }
     })
   }
   readAllTagsByCategoryNameOrderByName(categoryName: string, page: number): void {
@@ -129,7 +133,7 @@ export class PostFormComponent implements OnInit {
       },
       error: (err) => {
         this.tagPageableOutputDto = null;
-        console.log(err);
+        // console.log(err);
       }
     });
   }
@@ -152,9 +156,7 @@ export class PostFormComponent implements OnInit {
   private setTags(): void {
     document.querySelectorAll("[type='checkbox']").forEach((el: Element)  => {
       const checkbox = el as HTMLInputElement;
-      if (this.tagsSet.has(+checkbox.value)) {
-        checkbox.checked = true;
-      }
+      checkbox.checked = this.tagsSet.has(+checkbox.value);
     });
   }
   addOrRemoveTag(event: MouseEvent, id: number): void {
@@ -173,7 +175,7 @@ export class PostFormComponent implements OnInit {
     const postInputDto: PostInputDto = {
       title: this.post ? this.post.title : this.postForm.controls["title"].value,
       content: this.postForm.controls["content"].value,
-      valid: this.post ? this.post.valid : null,
+      valid: this.post?.valid ? this.post.valid : null,
       category: this.post ? this.post.category.id : category,
       tags: tags
     }
@@ -183,6 +185,9 @@ export class PostFormComponent implements OnInit {
         this.formValidatorService.errors
           .forEach((value, key) =>
             this.errors.set(key, value.map(errorMessage => errorMessage.message)));
+        ToastWarning.fire({
+          text: "Please check the form for errors",
+        });
         return;
       }
       if (this.post) {
@@ -190,16 +195,32 @@ export class PostFormComponent implements OnInit {
           next: (res: PostOutputDto) => {
             this.postForm.reset();
             this.router.navigate(['/posts/details/', res.user.id, res.id, res.title.replaceAll(" ", "-")]);
+            ToastSuccess.fire({
+              text: "Post updated successfully"
+            });
           },
-          error: (err) => console.log(err)
+          error: (err) => {
+            ToastError.fire({
+              text: err.error.message
+            });
+            // console.log(err);
+          }
         });
       } else {
         this.postsService.create(postInputDto).subscribe({
           next: (res: PostOutputDto) => {
             this.postForm.reset();
             this.router.navigate(['/posts/details/', res.user.id, res.id, res.title.replaceAll(" ", "-")]);
+            ToastSuccess.fire({
+              text: "Post created successfully"
+            });
           },
-          error: (err) => console.log(err)
+          error: (err) => {
+            ToastError.fire({
+              text: err.error.message
+            });
+            // console.log(err);
+          }
         });
       }
     });

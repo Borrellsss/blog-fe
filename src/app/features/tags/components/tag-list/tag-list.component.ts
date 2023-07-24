@@ -26,17 +26,19 @@ export class TagListComponent implements OnInit {
   private readAllByOrderByName(page: number) {
     this.tagService.readAllByOrderByName(page).subscribe({
       next: (res: TagPageableOutputDto) => this.tagPageableOutputDto = res,
-      error: (err) => console.log(err)
+      error: (err) => {
+        // console.log(err);
+      }
     });
   }
   readAllByNameContainsOrderByName(name: string, page: number): void {
-    this.tagService.readAllByNameContainsOrderByName(name, page).subscribe({
+    this.tagService.readAllByNameContainingOrderByName(name, page).subscribe({
       next: (res: TagPageableOutputDto) => {
         this.tagPageableOutputDto = res
       },
       error: (err) => {
         this.tagPageableOutputDto = null;
-        console.log(err);
+        // console.log(err);
       }
     });
   }

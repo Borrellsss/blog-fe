@@ -22,14 +22,14 @@ export class UsersService {
   signIn(signInInputDto: SignInInputDto): Observable<SignInOutputDto> {
     return this.http.post<SignInOutputDto>("users/sign-in", signInInputDto);
   }
-  readAllByOrderByUsername(page: number): Observable<UserPageableOutputDto> {
+  readAllByDeletedIsFalseOrderByUsername(page: number): Observable<UserPageableOutputDto> {
     return this.http.get<UserPageableOutputDto>("users", {
       params: {
         page: page
       }
     });
   }
-  readAllByUsernameContainsOrderByUsername(username: string, page: number): Observable<UserPageableOutputDto> {
+  readAllByUsernameContainingAndDeletedIsFalseOrderByUsername(username: string, page: number): Observable<UserPageableOutputDto> {
     return this.http.get<UserPageableOutputDto>("users/username-contains", {
       params: {
         value: username,

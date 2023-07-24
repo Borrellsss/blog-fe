@@ -6,7 +6,7 @@ export interface PostOutputDto {
   id: number;
   title: string;
   content: string;
-  valid: boolean;
+  valid: boolean | null;
   verifiedBy: number;
   verifiedAt: Date;
   createdAt: Date;

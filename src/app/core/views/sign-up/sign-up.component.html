@@ -72,6 +72,20 @@
         <div *ngIf="errors.get('avatar')">
           <div *ngFor="let error of errors.get('avatar')" class="input-error">{{ error }}</div>
         </div>
+        <!-- NOTIFICATIONS -->
+        <div [class]="{ 'custom-input-label': true, 'flex': true, 'a-i-center': true, 'input-error': errors.get('notifications') }">
+          <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('notifications')"></i>
+          <div>Notifications</div>
+        </div>
+        <div class="tags-wrapper">
+          <div class="custom-checkbox-wrapper">
+            <input type="checkbox" id="notifications" formControlName="notifications">
+            <label for="notifications">Notify me about new updates</label>
+          </div>
+        </div>
+        <div *ngIf="errors.get('notifications')">
+          <div *ngFor="let error of errors.get('notifications')" class="input-error">{{ error }}</div>
+        </div>
         <div class="btn-s-wrapper">
           <button type="submit" class="btn btn-squared btn-1 btn-s">Sign up</button>
         </div>

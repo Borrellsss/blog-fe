@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { PostsService } from "../../../../../core/services/posts.service";
 import { PostPageableOutputDto } from "../../../../../shared/models/output/posts/post-pageable-output-dto";
 
@@ -18,9 +19,11 @@ export class MostUpVotedComponent {
   }
 
   private readAllByVotesIsTrueOrderByVotesDesc(page: number): void {
-    this.postsService.readAllByVotesIsTrueOrderByVotesDesc(page).subscribe({
+    this.postsService.readAllByVotesIsTrueAndValidIsTrueOrderByVotesDesc(page).subscribe({
       next: (res: PostPageableOutputDto) => this.postPageableOutputDto = res,
-      error: (err) => console.log(err)
+      error: (err) => {
+        // console.log(err);
+      }
     });
   }
   nextPage(): void {

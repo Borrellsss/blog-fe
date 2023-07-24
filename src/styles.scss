@@ -10,7 +10,7 @@
 @import '../node_modules/@syncfusion/ej2-richtexteditor/styles/material.css';
 @import "styles/variables";
 
-//reset
+// reset
 *,
 *::after,
 *::before {
@@ -20,7 +20,7 @@
 }
 
 body {
-  background-color: #2d2d2d;
+  background-color: $main-color;
   font-family: 'Poppins', sans-serif;
   font-size: 0.75rem;
 
@@ -431,7 +431,7 @@ body {
         > form {
 
           .input-alert {
-            background-color: #2d2d2d;
+            background-color: $main-color;
             box-shadow: $shadow-5;
           }
           .form-input-wrapper {
@@ -439,7 +439,7 @@ body {
             &:hover > label,
             > input:focus ~ label,
             > label.active {
-              background-color: #2d2d2d;
+              background-color: $main-color;
               box-shadow: $shadow-5;
             }
           }
@@ -568,4 +568,82 @@ body {
       font-size: 0.9em;
     }
   }
+}
+
+// rich text editor
+.e-richtexteditor .e-rte-toolbar.e-rte-tb-float,
+.e-richtexteditor .e-rte-toolbar.e-toolbar.e-extended-toolbar.e-rte-tb-float {
+  top: 63px !important;
+}
+
+// rich text editor content
+.e-richtexteditor .e-rte-content,
+.e-richtexteditor .e-source-content {
+  padding-bottom: 1em;
+  min-height: 250px;
+  color: #fff;
+  background: transparent;
+  border: 1px solid $color-4;
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+}
+
+// characters count
+.e-richtexteditor .e-rte-character-count {
+  margin: 0;
+  color: $color-4;
+  font-size: 1em;
+  padding-bottom: 10px;
+  padding-right: 10px;
+}
+
+// swal styles
+div:where(.swal2-container) div:where(.swal2-popup) {
+  border: 1px solid #484848 !important;
+  box-shadow: 1px 1px 3px 0 $color-3 !important;
+  font-size: 1.2em !important;
+}
+.ms-swal-close-btn {
+  color: $color-4;
+
+  &:hover {
+    color: $color-error;
+  }
+  &:focus,
+  &:active {
+    outline: none;
+    box-shadow: none;
+  }
+}
+.swal2-show {
+  animation: swalShow 0.1s ease-in-out !important;
+}
+@keyframes swalShow {
+  0% {
+    translate: 100% 0;
+  }
+  100% {
+    translate: 0 0;
+  }
+}
+.swal2-hide {
+  animation: swalHide 0.1s ease-in-out !important;
+}
+@keyframes swalHide {
+  0% {
+    translate: 0 0;
+  }
+  100% {
+    translate: 100% 0;
+  }
+}
+// swal toast success
+.ms-swal-progress-bar-success {
+  background-color: $color-success;
+}
+.ms-swal-progress-bar-warning {
+  background-color: $color-warning;
+}
+.ms-swal-progress-bar-error {
+  background-color: $color-error;
 }

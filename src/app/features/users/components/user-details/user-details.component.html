@@ -39,8 +39,8 @@
   </div>
   <div class="user-posts">
     <div class="section-title">Recent posts</div>
-    <div class="flex flex-wrap user-posts-list" *ngIf="postPageableOutputDto && postPageableOutputDto.posts.length > 0">
-      <div class="user-post" *ngFor="let post of postPageableOutputDto?.posts">
+    <div class="flex flex-wrap user-posts-list" *ngIf="validPostPageableOutputDto && validPostPageableOutputDto.posts.length > 0">
+      <div [routerLink]="['/posts/details', post.user.id, post.id, post.title]" class="user-post" *ngFor="let post of validPostPageableOutputDto?.posts">
         <div class="user-post-category">{{ post.category.name }}</div>
         <div class="user-post-title">{{ post.title }}</div>
         <div class="user-post-body">
@@ -51,11 +51,51 @@
         </div>
       </div>
     </div>
-    <div class="flex next-previous-wrapper" *ngIf="postPageableOutputDto && postPageableOutputDto.posts.length > 0">
-      <button (click)="previousPostPage()" class="btn btn-squared btn-2 btn-s" [disabled]="postPage < 1">Previous</button>
-      <button (click)="nextPostPage()" class="btn btn-squared btn-2 btn-s" [disabled]="postPage + 1 === postPageableOutputDto.totalPages || !postPageableOutputDto.totalPages">Next</button>
+    <div class="flex next-previous-wrapper" *ngIf="validPostPageableOutputDto && validPostPageableOutputDto.posts.length > 0">
+      <button (click)="previousValidPostPage()" class="btn btn-squared btn-2 btn-s" [disabled]="validPostPage < 1">Previous</button>
+      <button (click)="nextValidPostPage()" class="btn btn-squared btn-2 btn-s" [disabled]="validPostPage + 1 === validPostPageableOutputDto.totalPages || !validPostPageableOutputDto.totalPages">Next</button>
     </div>
-    <div class="placeholder" *ngIf="!postPageableOutputDto || postPageableOutputDto.posts.length === 0">This user has not published any articles</div>
+    <div class="placeholder" *ngIf="!validPostPageableOutputDto || validPostPageableOutputDto.posts.length === 0">This user has not published any articles</div>
+  </div>
+  <div class="user-posts" *ngIf="user?.id === currentUser?.id || currentUser?.role?.authority !== 'ROLE_USER'">
+    <div class="section-title">Post rejected</div>
+    <div class="flex flex-wrap user-posts-list" *ngIf="invalidPostPageableOutputDto && invalidPostPageableOutputDto.posts.length > 0">
+      <div [routerLink]="['/posts/details', post.user.id, post.id, post.title]" class="user-post" *ngFor="let post of invalidPostPageableOutputDto?.posts">
+        <div class="user-post-category">{{ post.category.name }}</div>
+        <div class="user-post-title">{{ post.title }}</div>
+        <div class="user-post-body">
+          <div class="votes-count">Votes: {{ post.votes.length }}</div>
+          <div class="flex flex-wrap tags-wrapper">
+            <span class="tag" *ngFor="let tag of post.tags">{{ tag.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex next-previous-wrapper" *ngIf="invalidPostPageableOutputDto && invalidPostPageableOutputDto.posts.length > 0">
+      <button (click)="previousInvalidPostPage()" class="btn btn-squared btn-2 btn-s" [disabled]="invalidPostPage < 1">Previous</button>
+      <button (click)="nextInvalidPostPage()" class="btn btn-squared btn-2 btn-s" [disabled]="invalidPostPage + 1 === invalidPostPageableOutputDto.totalPages || !invalidPostPageableOutputDto.totalPages">Next</button>
+    </div>
+    <div class="placeholder" *ngIf="!invalidPostPageableOutputDto || invalidPostPageableOutputDto.posts.length === 0">No post rejected has been found</div>
+  </div>
+  <div class="user-posts" *ngIf="user?.id === currentUser?.id || currentUser?.role?.authority !== 'ROLE_USER'">
+    <div class="section-title">Pending post</div>
+    <div class="flex flex-wrap user-posts-list" *ngIf="pendingPostPageableOutputDto && pendingPostPageableOutputDto.posts.length > 0">
+      <div [routerLink]="['/posts/details', post.user.id, post.id, post.title]" class="user-post" *ngFor="let post of pendingPostPageableOutputDto?.posts">
+        <div class="user-post-category">{{ post.category.name }}</div>
+        <div class="user-post-title">{{ post.title }}</div>
+        <div class="user-post-body">
+          <div class="votes-count">Votes: {{ post.votes.length }}</div>
+          <div class="flex flex-wrap tags-wrapper">
+            <span class="tag" *ngFor="let tag of post.tags">{{ tag.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex next-previous-wrapper" *ngIf="pendingPostPageableOutputDto && pendingPostPageableOutputDto.posts.length > 0">
+      <button (click)="previousPendingPostPage()" class="btn btn-squared btn-2 btn-s" [disabled]="pendingPostPage < 1">Previous</button>
+      <button (click)="nextPendingPostPage()" class="btn btn-squared btn-2 btn-s" [disabled]="pendingPostPage + 1 === pendingPostPageableOutputDto.totalPages || !pendingPostPageableOutputDto.totalPages">Next</button>
+    </div>
+    <div class="placeholder" *ngIf="!pendingPostPageableOutputDto || pendingPostPageableOutputDto.posts.length === 0">No posts waiting for approval has been found</div>
   </div>
   <div class="user-comments">
     <div class="section-title">Recent comments</div>

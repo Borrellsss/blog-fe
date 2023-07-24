@@ -70,7 +70,8 @@
         [insertImageSettings]="imageOptions"
         [fontColor]="fontColorOptions"
         [backgroundColor]="bgColorOptions"
-        (fileUploading)="onImageUploading($event)"
+        [showCharCount]="true"
+        [maxLength]="charactersCount"
         formControlName="content"
       >
       </ejs-richtexteditor>

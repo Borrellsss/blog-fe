@@ -30,7 +30,7 @@ export class CategoryListComponent implements OnInit {
     });
   }
   private readAllByNameContainsOrderByName(name: string, page: number): void {
-    this.categoriesService.readAllByNameContainsOrderByName(name, page).subscribe({
+    this.categoriesService.readAllByNameContainingOrderByName(name, page).subscribe({
       next: (res: CategoryPageableOutputDto) => {
         this.categoryPageableOutputDto = res
       },

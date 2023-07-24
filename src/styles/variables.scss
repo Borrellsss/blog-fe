@@ -7,11 +7,15 @@ $color-5: #d5d5d5;
 $color-6: #d95b5f;
 
 // alert colors
-$color-danger: #ff4444;
 $color-success: #00c851;
+$color-warning: #ffbb33;
+$color-error: #ff4444;
 
 // features colors
 $color-input-disabled: #444444;
+
+// main color
+$main-color: #2d2d2d;
 
 // logo filters
 $filter-1: invert(39%) sepia(89%) saturate(1039%) hue-rotate(181deg) brightness(101%) contrast(104%);
@@ -23,4 +27,4 @@ $shadow-1: #1f1f1f 0 13px 27px -5px, #000 0 8px 16px -8px;
 $shadow-2: 0 0 0 2px $color-6;
 $shadow-3: 0 0 0 2px #fff;
 $shadow-4: 0 0 0 2px $color-3;
-$shadow-5: 0 0 0 2px #2d2d2d;
+$shadow-5: 0 0 0 2px $main-color;

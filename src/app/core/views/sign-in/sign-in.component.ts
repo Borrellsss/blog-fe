@@ -10,6 +10,9 @@ import { ValidationsService } from "../../services/validations.service";
 import { SignInInputDto } from "../../../shared/models/input/sign-in-input-dto";
 import { SignInOutputDto } from "../../../shared/models/output/users/sign-in-output-dto";
 import { ValidationOutputDto } from "../../../shared/models/output/validations/validation-output-dto";
+import ToastSuccess from "../../../shared/toasts/toast-success";
+import ToastWarning from "../../../shared/toasts/toast-warning";
+import ToastError from "../../../shared/toasts/toast-error";
 
 @Component({
   selector: 'app-sign-in',
@@ -44,7 +47,9 @@ export class SignInComponent implements OnInit {
       .subscribe({
         next: (res: Array<ValidationOutputDto>) =>
           this.formValidatorService.validations = res,
-        error: (err) => console.error(err)
+        error: (err) => {
+          // console.error(err);
+        }
       });
     this.errors.clear();
     this.signInForm.markAsPristine();
@@ -58,6 +63,9 @@ export class SignInComponent implements OnInit {
         this.formValidatorService.errors
           .forEach((value, key) =>
             this.errors.set(key, value.map(errorMessage => errorMessage.message)));
+        ToastWarning.fire({
+          text: "Please check the form for errors",
+        });
         return;
       }
       this.userService.signIn(signInInputDto)
@@ -65,8 +73,16 @@ export class SignInComponent implements OnInit {
           next: (res: SignInOutputDto) => {
             this.authService.onSignIn(res);
             this.router.navigate(['/']);
+            ToastSuccess.fire({
+              text: "You have successfully signed in",
+            });
           },
-          error: (err) => console.error(err)
+          error: (err) => {
+            ToastError.fire({
+              text: err.error.message,
+            });
+            // console.error(err);
+          }
         });
       this.signInForm.reset();
     });

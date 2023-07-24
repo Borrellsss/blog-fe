@@ -1,1 +1,27 @@
-<p>post-pending works!</p>
+<div class="post-list-section">
+  <h1>Posts</h1>
+  <div class="flex next-previous-wrapper" *ngIf="postPageableOutputDto && postPageableOutputDto.posts.length > 0">
+    <button (click)="previousPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page < 1">Previous</button>
+    <button (click)="nextPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page + 1 === postPageableOutputDto.totalPages">Next</button>
+  </div>
+  <div class="flex flex-wrap posts-wrapper" *ngIf="postPageableOutputDto && postPageableOutputDto.posts.length > 0">
+    <div *ngFor="let post of postPageableOutputDto?.posts" class="post-card-wrapper" [routerLink]="['/posts/details/', post.user.id, post.id, post.title.replaceAll(' ', '-')]">
+      <div class="card post-card">
+        <div class="post-category">{{ post.category.name }}</div>
+        <div class="post-card-title">{{ post.title }}</div>
+        <div class="post-card-body">
+          <div>Created at: {{ post.createdAt | date }}</div>
+          <div>Last update: {{ post.updatedAt | date:"medium" }}</div>
+          <div class="flex flex-wrap">
+            <span *ngFor="let tag of post.tags" class="tag">{{ tag.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="placeholder" *ngIf="!postPageableOutputDto || postPageableOutputDto.posts.length === 0">There are no posts waiting for approval</div>
+  <div class="flex next-previous-wrapper" *ngIf="postPageableOutputDto && postPageableOutputDto.posts.length > 0">
+    <button (click)="previousPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page < 1">Previous</button>
+    <button (click)="nextPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page + 1 === postPageableOutputDto.totalPages">Next</button>
+  </div>
+</div>

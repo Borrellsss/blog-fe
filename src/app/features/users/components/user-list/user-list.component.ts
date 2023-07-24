@@ -25,17 +25,19 @@ export class UserListComponent implements OnInit {
   }
 
   private readAllByOrderByUsername(page: number) {
-    this.usersService.readAllByOrderByUsername(page).subscribe({
+    this.usersService.readAllByDeletedIsFalseOrderByUsername(page).subscribe({
       next: (res: UserPageableOutputDto) => this.userPageableOutputDto = res,
-      error: (err) => console.log(err)
+      error: (err) => {
+        // console.log(err);
+      }
     });
   }
   readAllByUsernameContainsOrderByUsername(username: string, page: number): void {
-    this.usersService.readAllByUsernameContainsOrderByUsername(username, page).subscribe({
+    this.usersService.readAllByUsernameContainingAndDeletedIsFalseOrderByUsername(username, page).subscribe({
       next: (res: UserPageableOutputDto) => this.userPageableOutputDto = res,
       error: (err) => {
         this.userPageableOutputDto = null;
-        console.log(err);
+        // console.log(err);
       }
     });
   }

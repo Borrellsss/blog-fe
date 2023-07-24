@@ -2,8 +2,8 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { take, timer } from "rxjs";
-import { CommentsService } from "../../../../core/services/comments.service";
 
+import { CommentsService } from "../../../../core/services/comments.service";
 import { PostsService } from "../../../../core/services/posts.service";
 import { UsersService } from "../../../../core/services/users.service";
 import { AuthService } from "../../../../core/services/utils/auth.service";
@@ -18,6 +18,9 @@ import { PostOutputDto } from "../../../../shared/models/output/posts/post-outpu
 import { VoteOutputDto } from "../../../../shared/models/output/posts/vote-output-dto";
 import { UserOutputDto } from "../../../../shared/models/output/users/user-output-dto";
 import { ValidationOutputDto } from "../../../../shared/models/output/validations/validation-output-dto";
+import ToastError from "../../../../shared/toasts/toast-error";
+import ToastSuccess from "../../../../shared/toasts/toast-success";
+import ToastWarning from "../../../../shared/toasts/toast-warning";
 
 @Component({
   selector: 'app-post-details',
@@ -70,14 +73,14 @@ export class PostDetailsComponent implements OnInit {
             },
             error: (err) => {
               this.countLikes();
-              console.log(err);
+              // console.log(err);
             }
           });
           this.readComments(this.commentPage);
         },
         error: (err) => {
           this.router.navigate(['/posts']);
-          console.log(err);
+          // console.log(err);
         }
       });
     });
@@ -91,7 +94,9 @@ export class PostDetailsComponent implements OnInit {
       .subscribe({
         next: (res: Array<ValidationOutputDto>) =>
           this.formValidatorService.validations = res,
-        error: (err) => console.error(err)
+        error: (err) => {
+          // console.error(err);
+        }
       });
     this.errors.clear();
     this.commentForm.markAsPristine();
@@ -106,7 +111,12 @@ export class PostDetailsComponent implements OnInit {
         }
         this.countLikes();
       },
-      error: (err) => console.log(err)
+      error: (err) => {
+        ToastError.fire({
+          text: err.error.message
+        });
+        // console.log(err);
+      }
     });
   }
   private updateVote(voteInputDto: VoteInputDto): void {
@@ -121,7 +131,12 @@ export class PostDetailsComponent implements OnInit {
         }
         this.countLikes();
       },
-      error: (err) => console.log(err)
+      error: (err) => {
+        ToastError.fire({
+          text: err.error.message
+        });
+        // console.log(err);
+      }
     });
   }
   private deleteVote(voteInputDto: VoteInputDto): void {
@@ -134,7 +149,12 @@ export class PostDetailsComponent implements OnInit {
         }
         this.countLikes();
       },
-      error: (err) => console.log(err)
+      error: (err) => {
+        ToastError.fire({
+          text: err.error.message
+        });
+        // console.log(err);
+      }
     });
   }
   addOrRemoveUpVote(): void {
@@ -175,10 +195,14 @@ export class PostDetailsComponent implements OnInit {
               next: (res: number) => {
                 this.likes -= res;
               },
-              error: (err) => console.log(err)
+              error: (err) => {
+                // console.log(err);
+              }
             });
         },
-        error: (err) => console.log(err)
+        error: (err) => {
+          // console.log(err);
+        }
       });
   }
   private readComments(page: number): void {
@@ -187,7 +211,9 @@ export class PostDetailsComponent implements OnInit {
         this.commentPageableOutputDto = res;
         console.log(this.commentPageableOutputDto);
       },
-      error: (err) => console.log(err)
+      error: (err) => {
+        // console.log(err);
+      }
     });
   }
   showCommentForm($event: MouseEvent): void {
@@ -215,15 +241,25 @@ export class PostDetailsComponent implements OnInit {
         this.formValidatorService.errors
           .forEach((value, key) =>
             this.errors.set(key, value.map(errorMessage => errorMessage.message)));
-        console.log(this.errors)
+        ToastWarning.fire({
+          text: "Error please check the comment"
+        });
         return;
       }
       this.commentsService.create(commentInputDto).subscribe({
         next: (res: CommentOutputDto ) => {
-          console.log(res);
           this.clearForm(this.commentForm);
           this.commentPage = 0;
           this.readComments(this.commentPage);
+          ToastSuccess.fire({
+            text: "Comment created successfully"
+          });
+        },
+        error: (err) => {
+          ToastError.fire({
+            text: err.error.message
+          });
+          // console.log(err);
         }
       });
     });
@@ -238,5 +274,49 @@ export class PostDetailsComponent implements OnInit {
     this.reset();
     form.reset();
     this.renderer.removeClass(document.querySelector(".add-validation-error-message"), "active");
+  }
+  accept(): void {
+    if (this.currentUser?.role?.authority === "ROLE_MODERATOR") {
+      this.postsService.accept(this.post?.id!).subscribe({
+        next: () => {
+          this.router.navigate(['/posts']);
+          ToastSuccess.fire({
+            text: "Post accepted successfully"
+          });
+        },
+        error: (err) => {
+          ToastError.fire({
+            text: err.error.message
+          });
+          // console.log(err);
+        }
+      });
+    } else {
+      ToastWarning.fire({
+        text: "You don't have permission to accept this post"
+      });
+    }
+  }
+  reject(): void {
+    if (this.currentUser?.role?.authority === "ROLE_MODERATOR") {
+      this.postsService.reject(this.post?.id!).subscribe({
+        next: () => {
+          this.router.navigate(['/posts']);
+          ToastSuccess.fire({
+            text: "Post rejected successfully"
+          });
+        },
+        error: (err) => {
+          ToastError.fire({
+            text: err.error.message
+          });
+          // console.log(err);
+        }
+      });
+    } else {
+      ToastWarning.fire({
+        text: "You don't have permission to accept this post"
+      });
+    }
   }
 }

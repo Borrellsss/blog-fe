@@ -1,0 +1,61 @@
+@import "../../../../../../styles/variables.scss";
+
+.post-list-section {
+
+  .flex:first-child {
+    margin-bottom: 2em;
+
+    > h1 {
+      margin-bottom: 0;
+    }
+  }
+  > .form-wrapper-dark-1 {
+    width: 30%;
+    margin-bottom: 1em;
+  }
+  .posts-wrapper {
+    padding-block: 2em;
+    gap: 2em;
+
+    .post-card-wrapper {
+      padding: 1.5em;
+      width: calc((100% / 2) - 1em);
+      border: 1px solid $color-4;
+      border-radius: 0.5em;
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: 0 0 10px 0 rgba($color-2, 0.5);
+        border-color: $color-2;
+      }
+      .post-card {
+
+        &-title {
+          font-size: 1.8em;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          color: $color-2;
+        }
+        &-body {
+
+          > div:not(:last-child) {
+            margin-bottom: 0.5em;
+          }
+          > .post-category {
+            margin-bottom: 0.5em;
+          }
+          > .flex {
+            gap: 0.5em;
+          }
+        }
+      }
+    }
+  }
+  > .placeholder {
+    padding-top: 4em;
+    text-align: center;
+    font-size: 1.5em;
+    color: $color-4;
+  }
+}

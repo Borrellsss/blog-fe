@@ -4,6 +4,18 @@
   .logo-wrapper {
     margin-bottom: 3em;
   }
+  .custom-input-label {
+    padding-top: 1em;
+  }
+  .custom-checkbox-wrapper {
+
+    input[type="checkbox"] {
+
+      &:checked {
+        background-color: #fff;
+      }
+    }
+  }
   .btn {
     margin-bottom: 1.5em;
   }

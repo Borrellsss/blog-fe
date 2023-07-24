@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { take, timer } from "rxjs";
+import ToastError from "../../../shared/toasts/toast-error";
+import ToastSuccess from "../../../shared/toasts/toast-success";
+import ToastWarning from "../../../shared/toasts/toast-warning";
 
 import { AuthService } from "../../services/utils/auth.service";
 import { ValidatorService } from "../../services/utils/validator.service";
@@ -41,6 +44,7 @@ export class SignUpComponent implements OnInit {
       username: new FormControl(null),
       password: new FormControl(null),
       avatar: new FormControl(null),
+      notifications: new FormControl(false),
     });
   }
 
@@ -49,7 +53,9 @@ export class SignUpComponent implements OnInit {
       .subscribe({
         next: (res: Array<ValidationOutputDto>) =>
           this.formValidatorService.validations = res,
-        error: (err) => console.error(err)
+        error: (err) => {
+          // console.error(err);
+        }
       });
     this.errors.clear();
     this.signUpForm.markAsPristine();
@@ -63,6 +69,9 @@ export class SignUpComponent implements OnInit {
         this.formValidatorService.errors
           .forEach((value, key) =>
             this.errors.set(key, value.map(errorMessage => errorMessage.message)));
+        ToastWarning.fire({
+          text: "Please check the form for errors",
+        });
         return;
       }
       this.userService.signUp(signUpInputDto)
@@ -70,8 +79,16 @@ export class SignUpComponent implements OnInit {
           next: (res: SignUpOutputDto) => {
             this.authService.onSignUp(res);
             this.router.navigate(['/sign-in']);
+            ToastSuccess.fire({
+              text: "You have successfully signed up",
+            });
           },
-          error: (err) => console.error(err)
+          error: (err) => {
+            ToastError.fire({
+              text: err.error.message,
+            });
+            // console.error(err);
+          }
         });
       this.signUpForm.reset();
     });

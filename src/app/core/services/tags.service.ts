@@ -23,7 +23,7 @@ export class TagsService {
       }
     });
   }
-  readAllByNameContainsOrderByName(name: string, page: number = 0): Observable<TagPageableOutputDto> {
+  readAllByNameContainingOrderByName(name: string, page: number = 0): Observable<TagPageableOutputDto> {
     return this.http.get<TagPageableOutputDto>("tags/like", {
       params: {
         name: name,

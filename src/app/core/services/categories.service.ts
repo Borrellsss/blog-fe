@@ -25,7 +25,7 @@ export class CategoriesService {
       }
     });
   }
-  readAllByNameContainsOrderByName(name: string, page: number = 0): Observable<CategoryPageableOutputDto> {
+  readAllByNameContainingOrderByName(name: string, page: number = 0): Observable<CategoryPageableOutputDto> {
     return this.http.get<CategoryPageableOutputDto>("categories/like", {
       params: {
         name: name,

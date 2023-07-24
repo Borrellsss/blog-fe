@@ -40,8 +40,8 @@
             width: 2.1em;
             aspect-ratio: 1/1;
             border-radius: 50%;
-            color: $color-danger;
-            background-color: rgba($color-danger, 0.3);
+            color: $color-error;
+            background-color: rgba($color-error, 0.3);
 
             &:hover ~ .legend {
               opacity: 1;
@@ -95,8 +95,8 @@
                 background-color: rgba($color-success, 0.3);
               }
               &.fa-triangle-exclamation {
-                color: $color-danger;
-                background-color: rgba($color-danger, 0.3);
+                color: $color-error;
+                background-color: rgba($color-error, 0.3);
               }
             }
             &::after {
