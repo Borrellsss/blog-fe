@@ -15,11 +15,11 @@ export class MostPopularComponent {
   constructor(private postsService: PostsService) { }
 
   ngOnInit(): void {
-    this.readAllByOrderByCommentsDesc(this.page);
+    this.readAllByValidIsTrueAndUserDeletedIsFalseOrderByCommentsDesc(this.page);
   }
 
-  private readAllByOrderByCommentsDesc(page: number): void {
-    this.postsService.readAllByValidIsTrueOrderByCommentsDesc(page).subscribe({
+  private readAllByValidIsTrueAndUserDeletedIsFalseOrderByCommentsDesc(page: number): void {
+    this.postsService.readAllByValidIsTrueAndUserDeletedIsFalseOrderByCommentsDesc(page).subscribe({
       next: (res: PostPageableOutputDto) => this.postPageableOutputDto = res,
       error: (err) => {
         // console.log(err);
@@ -27,9 +27,9 @@ export class MostPopularComponent {
     });
   }
   nextPage(): void {
-    this.readAllByOrderByCommentsDesc(++this.page);
+    this.readAllByValidIsTrueAndUserDeletedIsFalseOrderByCommentsDesc(++this.page);
   }
   previousPage(): void {
-    this.readAllByOrderByCommentsDesc(--this.page);
+    this.readAllByValidIsTrueAndUserDeletedIsFalseOrderByCommentsDesc(--this.page);
   }
 }

@@ -15,11 +15,11 @@ export class MostUpVotedComponent {
   constructor(private postsService: PostsService) { }
 
   ngOnInit(): void {
-    this.readAllByVotesIsTrueOrderByVotesDesc(this.page);
+    this.readAllByVotesIsTrueAndValidIsTrueAndUserDeletedIsFalseOrderByVotesDesc(this.page);
   }
 
-  private readAllByVotesIsTrueOrderByVotesDesc(page: number): void {
-    this.postsService.readAllByVotesIsTrueAndValidIsTrueOrderByVotesDesc(page).subscribe({
+  private readAllByVotesIsTrueAndValidIsTrueAndUserDeletedIsFalseOrderByVotesDesc(page: number): void {
+    this.postsService.readAllByVotesIsTrueAndValidIsTrueAndUserDeletedIsFalseOrderByVotesDesc(page).subscribe({
       next: (res: PostPageableOutputDto) => this.postPageableOutputDto = res,
       error: (err) => {
         // console.log(err);
@@ -27,9 +27,9 @@ export class MostUpVotedComponent {
     });
   }
   nextPage(): void {
-    this.readAllByVotesIsTrueOrderByVotesDesc(++this.page);
+    this.readAllByVotesIsTrueAndValidIsTrueAndUserDeletedIsFalseOrderByVotesDesc(++this.page);
   }
   previousPage(): void {
-    this.readAllByVotesIsTrueOrderByVotesDesc(--this.page);
+    this.readAllByVotesIsTrueAndValidIsTrueAndUserDeletedIsFalseOrderByVotesDesc(--this.page);
   }
 }

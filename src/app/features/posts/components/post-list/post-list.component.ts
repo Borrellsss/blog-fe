@@ -31,12 +31,12 @@ export class PostListComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params["tag"]) {
         this.tag = params["tag"];
-        this.readAllByTagsNameAndValidIsTrueOrderByCreatedAtDesc(params["tag"], this.page);
+        this.readAllByTagsNameAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(params["tag"], this.page);
       } else if (params["category"]) {
         this.category = params["category"];
-        this.readAllByCategoryNameAndValidIsTrueOrderByCreatedAtDesc(params["category"], this.page);
+        this.readAllByCategoryNameAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(params["category"], this.page);
       } else {
-        this.readAllByValidOrderByCreatedAtDesc(this.page);
+        this.readAllByValidAndUserDeletedIsFalseOrderByCreatedAtDesc(this.page);
       }
     });
     this.postListForm = new FormGroup({
@@ -44,16 +44,16 @@ export class PostListComponent implements OnInit {
     });
   }
 
-  private readAllByValidOrderByCreatedAtDesc(page: number): void {
-    this.postsService.readAllByValidOrderByCreatedAtDesc("true", page).subscribe({
+  private readAllByValidAndUserDeletedIsFalseOrderByCreatedAtDesc(page: number): void {
+    this.postsService.readAllByValidAndUserDeletedIsFalseOrderByCreatedAtDesc("true", page).subscribe({
       next: (res: PostPageableOutputDto) => this.postPageableOutputDto = res,
       error: (err) => {
         console.log(err);
       }
     });
   }
-  private readAllByTitleContainingAndValidIsTrueOrderByCreatedAtDesc(title: string, page: number): void {
-    this.postsService.readAllByTitleContainingAndValidIsTrueOrderByCreatedAtDesc(title, this.page).subscribe({
+  private readAllByTitleContainingAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(title: string, page: number): void {
+    this.postsService.readAllByTitleContainingAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(title, this.page).subscribe({
       next: (res: PostPageableOutputDto) => this.postPageableOutputDto = res,
       error: (err) => {
         this.postPageableOutputDto = null;
@@ -61,16 +61,16 @@ export class PostListComponent implements OnInit {
       }
     });
   }
-  private readAllByTagsNameAndValidIsTrueOrderByCreatedAtDesc(tag: string, page: number): void {
-    this.postsService.readAllByTagsNameAndValidIsTrueOrderByCreatedAtDesc(tag.replaceAll("%", " "), this.page).subscribe({
+  private readAllByTagsNameAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(tag: string, page: number): void {
+    this.postsService.readAllByTagsNameAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(tag.replaceAll("%", " "), this.page).subscribe({
       next: (res: PostPageableOutputDto) => this.postPageableOutputDto = res,
       error: (err) => {
         // console.log(err);
       }
     });
   }
-  private readAllByCategoryNameAndTitleContainingAndValidIsTrueOrderByCreatedAtDesc(categoryName: string, title: string, page: number): void {
-    this.postsService.readAllByCategoryNameAndTitleContainingAndValidIsTrueOrderByCreatedAtDesc(categoryName.replaceAll("%", " "), title, this.page).subscribe({
+  private readAllByCategoryNameAndTitleContainingAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(categoryName: string, title: string, page: number): void {
+    this.postsService.readAllByCategoryNameAndTitleContainingAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(categoryName.replaceAll("%", " "), title, this.page).subscribe({
       next: (res: PostPageableOutputDto) => this.postPageableOutputDto = res,
       error: (err) => {
         this.postPageableOutputDto = null;
@@ -78,16 +78,16 @@ export class PostListComponent implements OnInit {
       }
     });
   }
-  private readAllByCategoryNameAndValidIsTrueOrderByCreatedAtDesc(category: string, page: number): void {
-    this.postsService.readAllByCategoryNameAndValidIsTrueOrderByCreatedAtDesc(category.replaceAll("%", " "), this.page).subscribe({
+  private readAllByCategoryNameAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(category: string, page: number): void {
+    this.postsService.readAllByCategoryNameAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(category.replaceAll("%", " "), this.page).subscribe({
       next: (res: PostPageableOutputDto) => this.postPageableOutputDto = res,
       error: (err) => {
         // console.log(err)
       }
     });
   }
-  private readAllByTagsNameAndTitleContainingAndValidIsTrueOrderByCreatedAtDesc(tagName: string, title: string, page: number): void {
-    this.postsService.readAllByTagsNameAndTitleContainingAndValidIsTrueOrderByCreatedAtDesc(tagName.replaceAll("%", " "), title, this.page).subscribe({
+  private readAllByTagsNameAndTitleContainingAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(tagName: string, title: string, page: number): void {
+    this.postsService.readAllByTagsNameAndTitleContainingAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(tagName.replaceAll("%", " "), title, this.page).subscribe({
       next: (res: PostPageableOutputDto) => this.postPageableOutputDto = res,
       error: (err) => {
         this.postPageableOutputDto = null;
@@ -101,58 +101,58 @@ export class PostListComponent implements OnInit {
     if (!this.title) {
       this.isFilterActive = false;
       if (this.tag) {
-        this.readAllByTagsNameAndValidIsTrueOrderByCreatedAtDesc(this.tag, this.page);
+        this.readAllByTagsNameAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(this.tag, this.page);
       } else if (this.category) {
-        this.readAllByCategoryNameAndValidIsTrueOrderByCreatedAtDesc(this.category, this.page);
+        this.readAllByCategoryNameAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(this.category, this.page);
       } else {
-        this.readAllByValidOrderByCreatedAtDesc(this.page);
+        this.readAllByValidAndUserDeletedIsFalseOrderByCreatedAtDesc(this.page);
       }
     } else {
       this.isFilterActive = true;
       if (this.tag) {
-        this.readAllByTagsNameAndTitleContainingAndValidIsTrueOrderByCreatedAtDesc(this.tag, this.title, this.page);
+        this.readAllByTagsNameAndTitleContainingAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(this.tag, this.title, this.page);
       } else if (this.category) {
-        this.readAllByCategoryNameAndTitleContainingAndValidIsTrueOrderByCreatedAtDesc(this.category, this.title, this.page);
+        this.readAllByCategoryNameAndTitleContainingAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(this.category, this.title, this.page);
       } else {
-        this.readAllByTitleContainingAndValidIsTrueOrderByCreatedAtDesc(this.title, this.page);
+        this.readAllByTitleContainingAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(this.title, this.page);
       }
     }
   }
   nextPage(): void {
     if (this.isFilterActive) {
       if (this.tag) {
-        this.readAllByTagsNameAndValidIsTrueOrderByCreatedAtDesc(this.tag, ++this.page);
+        this.readAllByTagsNameAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(this.tag, ++this.page);
       } else if (this.category) {
-        this.readAllByCategoryNameAndValidIsTrueOrderByCreatedAtDesc(this.category, ++this.page);
+        this.readAllByCategoryNameAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(this.category, ++this.page);
       } else {
-        this.readAllByValidOrderByCreatedAtDesc(++this.page);
+        this.readAllByValidAndUserDeletedIsFalseOrderByCreatedAtDesc(++this.page);
       }
     } else {
       if (this.tag) {
-        this.readAllByTagsNameAndTitleContainingAndValidIsTrueOrderByCreatedAtDesc(this.tag, this.title!, ++this.page);
+        this.readAllByTagsNameAndTitleContainingAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(this.tag, this.title!, ++this.page);
       } else if (this.category) {
-        this.readAllByCategoryNameAndTitleContainingAndValidIsTrueOrderByCreatedAtDesc(this.category, this.title!, ++this.page);
+        this.readAllByCategoryNameAndTitleContainingAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(this.category, this.title!, ++this.page);
       } else {
-        this.readAllByTitleContainingAndValidIsTrueOrderByCreatedAtDesc(this.title!, ++this.page);
+        this.readAllByTitleContainingAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(this.title!, ++this.page);
       }
     }
   }
   previousPage(): void {
     if (this.isFilterActive) {
       if (this.tag) {
-        this.readAllByTagsNameAndValidIsTrueOrderByCreatedAtDesc(this.tag, --this.page);
+        this.readAllByTagsNameAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(this.tag, --this.page);
       } else if (this.category) {
-        this.readAllByCategoryNameAndValidIsTrueOrderByCreatedAtDesc(this.category, --this.page);
+        this.readAllByCategoryNameAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(this.category, --this.page);
       } else {
-        this.readAllByValidOrderByCreatedAtDesc(--this.page);
+        this.readAllByValidAndUserDeletedIsFalseOrderByCreatedAtDesc(--this.page);
       }
     } else {
       if (this.tag) {
-        this.readAllByTagsNameAndTitleContainingAndValidIsTrueOrderByCreatedAtDesc(this.tag, this.title!, --this.page);
+        this.readAllByTagsNameAndTitleContainingAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(this.tag, this.title!, --this.page);
       } else if (this.category) {
-        this.readAllByCategoryNameAndTitleContainingAndValidIsTrueOrderByCreatedAtDesc(this.category, this.title!, --this.page);
+        this.readAllByCategoryNameAndTitleContainingAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(this.category, this.title!, --this.page);
       } else {
-        this.readAllByTitleContainingAndValidIsTrueOrderByCreatedAtDesc(this.title!, --this.page);
+        this.readAllByTitleContainingAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(this.title!, --this.page);
       }
     }
   }

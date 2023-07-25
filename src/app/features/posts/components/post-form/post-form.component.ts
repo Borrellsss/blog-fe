@@ -78,7 +78,7 @@ export class PostFormComponent implements OnInit {
       content: new FormControl(null)
     });
     if (postId) {
-      this.postsService.readById(postId).subscribe({
+      this.postsService.readByIdAndUserDeletedIsFalse(postId).subscribe({
         next: (res: PostOutputDto) => {
           this.post = res;
           if (!this.authService.getUser() || this.post.user.id !== this.authService.getUser()?.id) {

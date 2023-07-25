@@ -44,9 +44,9 @@ export class UserDetailsComponent implements OnInit {
       this.usersService.readById(userId).subscribe({
         next: (res: UserOutputDto) => {
           this.user = res;
-          this.readAllByUserIdAndValidOrderByCreatedAtDesc(userId, "true", this.validPostPage);
-          this.readAllByUserIdAndValidOrderByCreatedAtDesc(userId, "false", this.invalidPostPage);
-          this.readAllByUserIdAndValidOrderByCreatedAtDesc(userId, "null", this.pendingPostPage);
+          this.readAllByUserIdAndValidAndUserDeletedIsFalseOrderByCreatedAtDesc(userId, "true", this.validPostPage);
+          this.readAllByUserIdAndValidAndUserDeletedIsFalseOrderByCreatedAtDesc(userId, "false", this.invalidPostPage);
+          this.readAllByUserIdAndValidAndUserDeletedIsFalseOrderByCreatedAtDesc(userId, "null", this.pendingPostPage);
           this.readCommentsAllByUserIdOrderByCreatedAtDesc(userId, this.commentPage);
         },
         error: (err: any) => {
@@ -57,8 +57,8 @@ export class UserDetailsComponent implements OnInit {
       this.currentUser = this.authService.getUser();
     });
   }
-  private readAllByUserIdAndValidOrderByCreatedAtDesc(userId: number, valid: string, page: number): void {
-    this.postsService.readAllByUserIdAndValidOrderByCreatedAtDesc(userId, valid, this.validPostPage)
+  private readAllByUserIdAndValidAndUserDeletedIsFalseOrderByCreatedAtDesc(userId: number, valid: string, page: number): void {
+    this.postsService.readAllByUserIdAndValidAndUserDeletedIsFalseOrderByCreatedAtDesc(userId, valid, this.validPostPage)
       .subscribe({
         next: (res: PostPageableOutputDto) => {
           if (valid === "true") {
@@ -92,22 +92,22 @@ export class UserDetailsComponent implements OnInit {
       });
   }
   previousValidPostPage(): void {
-    this.readAllByUserIdAndValidOrderByCreatedAtDesc(this.user?.id!, "true", --this.validPostPage);
+    this.readAllByUserIdAndValidAndUserDeletedIsFalseOrderByCreatedAtDesc(this.user?.id!, "true", --this.validPostPage);
   }
   nextValidPostPage(): void {
-    this.readAllByUserIdAndValidOrderByCreatedAtDesc(this.user?.id!, "true", ++this.validPostPage);
+    this.readAllByUserIdAndValidAndUserDeletedIsFalseOrderByCreatedAtDesc(this.user?.id!, "true", ++this.validPostPage);
   }
   previousInvalidPostPage(): void {
-    this.readAllByUserIdAndValidOrderByCreatedAtDesc(this.user?.id!, "false", --this.invalidPostPage);
+    this.readAllByUserIdAndValidAndUserDeletedIsFalseOrderByCreatedAtDesc(this.user?.id!, "false", --this.invalidPostPage);
   }
   nextInvalidPostPage(): void {
-    this.readAllByUserIdAndValidOrderByCreatedAtDesc(this.user?.id!, "false", ++this.invalidPostPage);
+    this.readAllByUserIdAndValidAndUserDeletedIsFalseOrderByCreatedAtDesc(this.user?.id!, "false", ++this.invalidPostPage);
   }
   previousPendingPostPage(): void {
-    this.readAllByUserIdAndValidOrderByCreatedAtDesc(this.user?.id!, "null", --this.pendingPostPage);
+    this.readAllByUserIdAndValidAndUserDeletedIsFalseOrderByCreatedAtDesc(this.user?.id!, "null", --this.pendingPostPage);
   }
   nextPendingPostPage(): void {
-    this.readAllByUserIdAndValidOrderByCreatedAtDesc(this.user?.id!, "null", ++this.pendingPostPage);
+    this.readAllByUserIdAndValidAndUserDeletedIsFalseOrderByCreatedAtDesc(this.user?.id!, "null", ++this.pendingPostPage);
   }
   previousCommentPage(): void {
     this.readCommentsAllByUserIdOrderByCreatedAtDesc(this.user?.id!, --this.commentPage)

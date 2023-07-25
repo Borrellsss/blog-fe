@@ -15,11 +15,11 @@ export class PostPendingComponent implements OnInit {
   constructor(private postsService: PostsService) { }
 
   ngOnInit(): void {
-    this.readAllByValidOrderByCreatedAtDesc(this.page);
+    this.readAllByValidAndUserDeletedIsFalseOrderByCreatedAtDesc(this.page);
   }
 
-  private readAllByValidOrderByCreatedAtDesc(page: number): void {
-    this.postsService.readAllByValidOrderByCreatedAtDesc("null", page)
+  private readAllByValidAndUserDeletedIsFalseOrderByCreatedAtDesc(page: number): void {
+    this.postsService.readAllByValidAndUserDeletedIsFalseOrderByCreatedAtDesc("null", page)
       .subscribe({
         next: (res: PostPageableOutputDto) => {
           console.log(res);
@@ -32,9 +32,9 @@ export class PostPendingComponent implements OnInit {
       });
   }
   previousPage(): void {
-    this.readAllByValidOrderByCreatedAtDesc(this.page--);
+    this.readAllByValidAndUserDeletedIsFalseOrderByCreatedAtDesc(this.page--);
   }
   nextPage(): void {
-    this.readAllByValidOrderByCreatedAtDesc(this.page++);
+    this.readAllByValidAndUserDeletedIsFalseOrderByCreatedAtDesc(this.page++);
   }
 }

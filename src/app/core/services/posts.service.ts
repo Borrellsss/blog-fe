@@ -15,21 +15,21 @@ export class PostsService {
   create(postInputDto: PostInputDto): Observable<PostOutputDto> {
     return this.http.post<PostOutputDto>("posts", postInputDto);
   }
-  readAllByValidIsTrueOrderByCommentsDesc(page: number = 0): Observable<PostPageableOutputDto> {
+  readAllByValidIsTrueAndUserDeletedIsFalseOrderByCommentsDesc(page: number = 0): Observable<PostPageableOutputDto> {
     return this.http.get<PostPageableOutputDto>("posts/most-popular", {
       params: {
         page: page
       }
     });
   }
-  readAllByVotesIsTrueAndValidIsTrueOrderByVotesDesc(page: number = 0): Observable<PostPageableOutputDto> {
+  readAllByVotesIsTrueAndValidIsTrueAndUserDeletedIsFalseOrderByVotesDesc(page: number = 0): Observable<PostPageableOutputDto> {
     return this.http.get<PostPageableOutputDto>("posts/most-up-voted", {
       params: {
         page: page
       }
     });
   }
-  readAllByValidOrderByCreatedAtDesc(valid: string, page: number = 0): Observable<PostPageableOutputDto> {
+  readAllByValidAndUserDeletedIsFalseOrderByCreatedAtDesc(valid: string, page: number = 0): Observable<PostPageableOutputDto> {
     return this.http.get<PostPageableOutputDto>("posts/state", {
       params: {
         valid: valid,
@@ -37,7 +37,7 @@ export class PostsService {
       }
     });
   }
-  readAllByTitleContainingAndValidIsTrueOrderByCreatedAtDesc(title: string, page: number = 0): Observable<PostPageableOutputDto> {
+  readAllByTitleContainingAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(title: string, page: number = 0): Observable<PostPageableOutputDto> {
     return this.http.get<PostPageableOutputDto>(`posts/title-contains`, {
       params: {
         value: title,
@@ -45,7 +45,7 @@ export class PostsService {
       }
     });
   }
-  readAllByCategoryNameAndValidIsTrueOrderByCreatedAtDesc(name: string, page: number = 0): Observable<PostPageableOutputDto> {
+  readAllByCategoryNameAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(name: string, page: number = 0): Observable<PostPageableOutputDto> {
     return this.http.get<PostPageableOutputDto>("posts/category", {
       params: {
         name: name,
@@ -53,7 +53,7 @@ export class PostsService {
       }
     });
   }
-  readAllByCategoryNameAndTitleContainingAndValidIsTrueOrderByCreatedAtDesc(categoryName: string, title: string, page: number = 0): Observable<PostPageableOutputDto> {
+  readAllByCategoryNameAndTitleContainingAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(categoryName: string, title: string, page: number = 0): Observable<PostPageableOutputDto> {
     return this.http.get<PostPageableOutputDto>(`posts/category/${categoryName}/title-contains`, {
       params: {
         value: title,
@@ -61,7 +61,7 @@ export class PostsService {
       }
     });
   }
-  readAllByTagsNameAndValidIsTrueOrderByCreatedAtDesc(name: string, page: number = 0): Observable<PostPageableOutputDto> {
+  readAllByTagsNameAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(name: string, page: number = 0): Observable<PostPageableOutputDto> {
     return this.http.get<PostPageableOutputDto>("posts/tag", {
       params: {
         name: name,
@@ -69,7 +69,7 @@ export class PostsService {
       }
     });
   }
-  readAllByTagsNameAndTitleContainingAndValidIsTrueOrderByCreatedAtDesc(tagName: string, title: string, page: number = 0): Observable<PostPageableOutputDto> {
+  readAllByTagsNameAndTitleContainingAndValidIsTrueAndUserDeletedIsFalseOrderByCreatedAtDesc(tagName: string, title: string, page: number = 0): Observable<PostPageableOutputDto> {
     return this.http.get<PostPageableOutputDto>(`posts/tag/${tagName}/title-contains`, {
       params: {
         value: title,
@@ -77,7 +77,7 @@ export class PostsService {
       }
     });
   }
-  readAllByUserIdAndValidOrderByCreatedAtDesc(userId: number, valid: string, page: number = 0): Observable<PostPageableOutputDto> {
+  readAllByUserIdAndValidAndUserDeletedIsFalseOrderByCreatedAtDesc(userId: number, valid: string, page: number = 0): Observable<PostPageableOutputDto> {
     return this.http.get<PostPageableOutputDto>(`posts/user/${userId}`, {
       params: {
         valid: valid,
@@ -85,7 +85,7 @@ export class PostsService {
       }
     });
   }
-  readAllByUserUsernameAndValidOrderByCreatedAtDesc(username: string, page: number = 0): Observable<PostPageableOutputDto> {
+  readAllByUserUsernameAndValidAndUserDeletedIsFalseOrderByCreatedAtDesc(username: string, page: number = 0): Observable<PostPageableOutputDto> {
     return this.http.get<PostPageableOutputDto>("posts/user", {
       params: {
         username: username,
@@ -93,7 +93,7 @@ export class PostsService {
       }
     });
   }
-  readAllByUserUsernameAndTitleContainingAndValidOrderByCreatedAtDesc(username: string, title: string, valid: boolean, page: number = 0): Observable<PostPageableOutputDto> {
+  readAllByUserUsernameAndTitleContainingAndValidAndUserDeletedIsFalseOrderByCreatedAtDesc(username: string, title: string, valid: boolean, page: number = 0): Observable<PostPageableOutputDto> {
     return this.http.get<PostPageableOutputDto>(`posts/user/${username}/title-contains`, {
       params: {
         value: title,
@@ -102,10 +102,10 @@ export class PostsService {
       }
     });
   }
-  readById(id: number): Observable<PostOutputDto> {
+  readByIdAndUserDeletedIsFalse(id: number): Observable<PostOutputDto> {
     return this.http.get<PostOutputDto>(`posts/${id}`);
   }
-  readByTitleAndValidIsTrue(title: string): Observable<PostOutputDto> {
+  readByTitleAndValidIsTrueAndUserDeletedIsFalse(title: string): Observable<PostOutputDto> {
     return this.http.get<PostOutputDto>(`posts/title/${title}`);
   }
   update(id: number, postInputDto: PostInputDto): Observable<PostOutputDto> {

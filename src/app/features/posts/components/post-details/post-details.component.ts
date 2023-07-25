@@ -56,7 +56,7 @@ export class PostDetailsComponent implements OnInit {
     this.reset();
     this.route.params.subscribe(params => {
       const id = params['id'];
-      this.postsService.readById(id).subscribe({
+      this.postsService.readByIdAndUserDeletedIsFalse(id).subscribe({
         next: (res: PostOutputDto) => {
           this.post = res;
           this.currentUser = this.authService.getUser();
@@ -184,7 +184,7 @@ export class PostDetailsComponent implements OnInit {
       this.updateVote(voteInputDto);
     }
   }
-  countLikes(): void {
+  private countLikes(): void {
     this.votesService.countPostLikes(this.post?.id!, true)
       .subscribe({
         next: (res: number) => {
