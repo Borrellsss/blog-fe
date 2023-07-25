@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { take, timer } from "rxjs";
@@ -8,6 +8,7 @@ import { ImageSettingsModel, ToolbarSettingsModel } from "@syncfusion/ej2-angula
 import { CategoriesService } from "../../../../core/services/categories.service";
 import { PostsService } from "../../../../core/services/posts.service";
 import { TagsService } from "../../../../core/services/tags.service";
+import { AuthService } from "../../../../core/services/utils/auth.service";
 import { ValidatorService } from "../../../../core/services/utils/validator.service";
 import { ValidationsService } from "../../../../core/services/validations.service";
 import { PostInputDto } from "../../../../shared/models/input/post-input-dto";
@@ -22,9 +23,9 @@ import ToastSuccess from "../../../../shared/toasts/toast-success";
 import ToastWarning from "../../../../shared/toasts/toast-warning";
 
 @Component({
-  selector: 'app-post-form',
-  templateUrl: './post-form.component.html',
-  styleUrls: ['./post-form.component.scss']
+  selector: "app-post-form",
+  templateUrl: "./post-form.component.html",
+  styleUrls: ["./post-form.component.scss"]
 })
 export class PostFormComponent implements OnInit {
   prefix: string = "PostInputDto";
@@ -40,13 +41,13 @@ export class PostFormComponent implements OnInit {
   public toolbarOptions: ToolbarSettingsModel = {
     type: ToolbarType.MultiRow,
     items: [
-      'Bold', 'Italic', 'Underline', 'StrikeThrough', 'ClearAll', '|',
-      'EmojiPicker', 'FontName', 'FontSize', 'FontColor', 'BackgroundColor', 'LowerCase', 'UpperCase', '|',
-      'Alignments', 'NumberFormatList', 'BulletFormatList', 'Outdent', 'Indent', '|',
-      'CreateTable', 'SubScript', 'SuperScript', 'Cut', 'Copy', 'Paste', '|',
-      'CreateLink', 'Image', 'Replace', '|', 'ClearFormat', 'Print', 'SourceCode', '|',
-      'Undo', 'Redo', '|',
-      'Preview', 'InsertCode'
+      "Bold", "Italic", "Underline", "StrikeThrough", "ClearAll", "|",
+      "EmojiPicker", "FontName", "FontSize", "FontColor", "BackgroundColor", "LowerCase", "UpperCase", "|",
+      "Alignments", "NumberFormatList", "BulletFormatList", "Outdent", "Indent", "|",
+      "CreateTable", "SubScript", "SuperScript", "Cut", "Copy", "Paste", "|",
+      "CreateLink", "Image", "Replace", "|", "ClearFormat", "Print", "SourceCode", "|",
+      "Undo", "Redo", "|",
+      "Preview", "InsertCode"
     ]
   };
   public imageOptions: ImageSettingsModel = {
@@ -61,6 +62,7 @@ export class PostFormComponent implements OnInit {
     private postsService: PostsService,
     private categoriesService: CategoriesService,
     private tagsService: TagsService,
+    private authService: AuthService,
     private validationsService: ValidationsService,
     public formValidatorService: ValidatorService,
     private router: Router,
@@ -79,6 +81,10 @@ export class PostFormComponent implements OnInit {
       this.postsService.readById(postId).subscribe({
         next: (res: PostOutputDto) => {
           this.post = res;
+          if (!this.authService.getUser() || this.post.user.id !== this.authService.getUser()?.id) {
+            this.router.navigate(["/posts/all"]);
+            return;
+          }
           this.postForm.controls["title"].setValue(this.post.title.trim());
           this.postForm.controls["category"].setValue(this.post.category.name);
           this.postForm.controls["content"].setValue(this.post.content);
@@ -194,14 +200,14 @@ export class PostFormComponent implements OnInit {
         this.postsService.update(this.post.id, postInputDto).subscribe({
           next: (res: PostOutputDto) => {
             this.postForm.reset();
-            this.router.navigate(['/posts/details/', res.user.id, res.id, res.title.replaceAll(" ", "-")]);
+            this.router.navigate(["/posts/details/", res.user.id, res.id, res.title.replaceAll(" ", "-")]);
             ToastSuccess.fire({
               text: "Post updated successfully"
             });
           },
           error: (err) => {
             ToastError.fire({
-              text: err.error.message
+              text: err.status === 500 ? "Internal server error" : err.error.message
             });
             // console.log(err);
           }
@@ -210,14 +216,14 @@ export class PostFormComponent implements OnInit {
         this.postsService.create(postInputDto).subscribe({
           next: (res: PostOutputDto) => {
             this.postForm.reset();
-            this.router.navigate(['/posts/details/', res.user.id, res.id, res.title.replaceAll(" ", "-")]);
+            this.router.navigate(["/posts/details/", res.user.id, res.id, res.title.replaceAll(" ", "-")]);
             ToastSuccess.fire({
               text: "Post created successfully"
             });
           },
           error: (err) => {
             ToastError.fire({
-              text: err.error.message
+              text: err.status === 500 ? "Internal server error" : err.error.message
             });
             // console.log(err);
           }

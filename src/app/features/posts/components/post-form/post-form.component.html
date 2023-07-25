@@ -41,24 +41,27 @@
       </div>
       <!-- TAGS -->
       <div class="tags-section" *ngIf="postForm.get('category')?.value && !post">
-        <div [class]="{ 'custom-input-label': true, 'flex': true, 'a-i-center': true, 'input-error': errors.get('tags') }">
-          <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('tags')"></i>
-          <div>Tags<span class="input-required">*</span></div>
-        </div>
-        <div *ngIf="postForm.get('category')?.value" class="flex flex-wrap tags-wrapper">
-          <div class="custom-checkbox-wrapper" *ngFor="let tag of tagPageableOutputDto?.tags">
-            <input type="checkbox" id="{{ 'tag-' + tag.id }}" (click)="addOrRemoveTag($event, tag.id)" [value]="tag.id">
-            <label for="{{ 'tag-' + tag.id }}">{{ tag.name }}</label>
+        <div *ngIf="tagPageableOutputDto && tagPageableOutputDto.tags.length > 0">
+          <div [class]="{ 'custom-input-label': true, 'flex': true, 'a-i-center': true, 'input-error': errors.get('tags') }">
+            <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="errors.get('tags')"></i>
+            <div>Tags<span class="input-required">*</span></div>
+          </div>
+          <div *ngIf="postForm.get('category')?.value" class="flex flex-wrap tags-wrapper">
+            <div class="custom-checkbox-wrapper" *ngFor="let tag of tagPageableOutputDto?.tags">
+              <input type="checkbox" id="{{ 'tag-' + tag.id }}" (click)="addOrRemoveTag($event, tag.id)" [value]="tag.id">
+              <label for="{{ 'tag-' + tag.id }}">{{ tag.name }}</label>
+            </div>
+          </div>
+          <div *ngIf="errors.get('tags')">
+            <div *ngFor="let error of errors.get('tags')" class="input-error">{{ error }}</div>
+          </div>
+          <div class="hint" *ngIf="postForm.get('category')?.value">Select at least one tag</div>
+          <div class="flex next-previous-wrapper">
+            <button type="button" (click)="previousTagsPage()" class="btn btn-rounded btn-2 btn-s" [disabled]="tagPage < 1">Load less</button>
+            <button type="button" (click)="nextTagsPage()" class="btn btn-rounded btn-2 btn-s" [disabled]="tagPage + 1 === tagPageableOutputDto.totalPages">Load more</button>
           </div>
         </div>
-        <div *ngIf="errors.get('tags')">
-          <div *ngFor="let error of errors.get('tags')" class="input-error">{{ error }}</div>
-        </div>
-        <div class="hint" *ngIf="postForm.get('category')?.value">Select at least one tag</div>
-        <div class="flex next-previous-wrapper">
-          <button type="button" (click)="previousTagsPage()" class="btn btn-rounded btn-2 btn-s" [disabled]="tagPage < 1">Load less</button>
-          <button type="button" (click)="nextTagsPage()" class="btn btn-rounded btn-2 btn-s" [disabled]="tagPage + 1 === tagPageableOutputDto?.totalPages">Load more</button>
-        </div>
+        <div class="placeholder" *ngIf="!tagPageableOutputDto || tagPageableOutputDto.tags.length === 0">No tags found</div>
       </div>
       <!-- CONTENT -->
       <div [class]="{ 'custom-input-label': true, 'flex': true, 'a-i-center': true, 'input-error': errors.get('content') }">

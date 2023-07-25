@@ -5,10 +5,16 @@
       <nav class="flex j-c-between a-i-center">
         <div class="nav-l flex a-i-center">
           <div class="logo-wrapper">
-            <img [routerLink]="isSignedIn ? '/' : 'welcome'" src="../../../../assets/logo-2.png" alt="app-logo" class="logo-2">
+            <img [routerLink]="isSignedIn ? '/posts/most-popular' : 'welcome'" src="../../../../assets/logo-2.png" alt="app-logo" class="logo-2">
           </div>
         </div>
-        <div class="nav-r">
+        <div class="flex a-i-center nav-r">
+          <div [routerLink]="['users/details', currentUser.id, currentUser.username]" class="flex a-i-center user-profile-section" *ngIf="currentUser">
+            <div class="user-avatar">
+              <img src="https://picsum.photos/200/300" alt="user image">
+            </div>
+            <div class="user-username">{{ currentUser.username }}</div>
+          </div>
           <ul class="flex nav-links">
             <li *ngIf="!isSignedIn">
               <a routerLink="/sign-in" class="btn btn-squared btn-1 btn-s">Sign in</a>

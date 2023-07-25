@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { take, timer } from "rxjs";
-import ToastError from "../../../shared/toasts/toast-error";
-import ToastSuccess from "../../../shared/toasts/toast-success";
-import ToastWarning from "../../../shared/toasts/toast-warning";
 
 import { AuthService } from "../../services/utils/auth.service";
 import { ValidatorService } from "../../services/utils/validator.service";
@@ -13,6 +10,9 @@ import { ValidationsService } from "../../services/validations.service";
 import { SignUpInputDto } from "../../../shared/models/input/sign-up-input-dto";
 import { SignUpOutputDto } from "../../../shared/models/output/users/sign-up-output-dto";
 import { ValidationOutputDto } from "../../../shared/models/output/validations/validation-output-dto";
+import ToastError from "../../../shared/toasts/toast-error";
+import ToastSuccess from "../../../shared/toasts/toast-success";
+import ToastWarning from "../../../shared/toasts/toast-warning";
 
 @Component({
   selector: 'app-sign-up',
@@ -82,15 +82,16 @@ export class SignUpComponent implements OnInit {
             ToastSuccess.fire({
               text: "You have successfully signed up",
             });
+            this.signUpForm.reset();
           },
           error: (err) => {
+            console.log(err.error.message);
             ToastError.fire({
-              text: err.error.message,
+              text: err.status === 500 ? "Internal server error" : err.error.message
             });
             // console.error(err);
           }
         });
-      this.signUpForm.reset();
     });
   }
 }

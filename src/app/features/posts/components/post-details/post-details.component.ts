@@ -61,7 +61,6 @@ export class PostDetailsComponent implements OnInit {
           this.post = res;
           this.currentUser = this.authService.getUser();
           document.getElementById('post-content')!.innerHTML = this.post?.content;
-          console.log(document.querySelectorAll('post-content img'));
           this.votesService.readByUserIdAndPostId(this.currentUser?.id!, this.post?.id!).subscribe({
             next: (res: VoteOutputDto) => {
               if (res.liked) {
@@ -79,7 +78,7 @@ export class PostDetailsComponent implements OnInit {
           this.readComments(this.commentPage);
         },
         error: (err) => {
-          this.router.navigate(['/posts']);
+          this.router.navigate(['/posts/all']);
           // console.log(err);
         }
       });
@@ -113,7 +112,7 @@ export class PostDetailsComponent implements OnInit {
       },
       error: (err) => {
         ToastError.fire({
-          text: err.error.message
+          text: err.status === 500 ? "Internal server error" : err.error.message
         });
         // console.log(err);
       }
@@ -133,7 +132,7 @@ export class PostDetailsComponent implements OnInit {
       },
       error: (err) => {
         ToastError.fire({
-          text: err.error.message
+          text: err.status === 500 ? "Internal server error" : err.error.message
         });
         // console.log(err);
       }
@@ -151,7 +150,7 @@ export class PostDetailsComponent implements OnInit {
       },
       error: (err) => {
         ToastError.fire({
-          text: err.error.message
+          text: err.status === 500 ? "Internal server error" : err.error.message
         });
         // console.log(err);
       }
@@ -209,7 +208,6 @@ export class PostDetailsComponent implements OnInit {
     this.commentsService.readAllByPostIdOrderByCreatedAtDesc(this.post?.id!, page).subscribe({
       next: (res: CommentPageableOutputDto) => {
         this.commentPageableOutputDto = res;
-        console.log(this.commentPageableOutputDto);
       },
       error: (err) => {
         // console.log(err);
@@ -257,7 +255,7 @@ export class PostDetailsComponent implements OnInit {
         },
         error: (err) => {
           ToastError.fire({
-            text: err.error.message
+            text: err.status === 500 ? "Internal server error" : err.error.message
           });
           // console.log(err);
         }
@@ -279,14 +277,14 @@ export class PostDetailsComponent implements OnInit {
     if (this.currentUser?.role?.authority === "ROLE_MODERATOR") {
       this.postsService.accept(this.post?.id!).subscribe({
         next: () => {
-          this.router.navigate(['/posts']);
+          this.router.navigate(["/posts/all"]);
           ToastSuccess.fire({
             text: "Post accepted successfully"
           });
         },
         error: (err) => {
           ToastError.fire({
-            text: err.error.message
+            text: err.status === 500 ? "Internal server error" : err.error.message
           });
           // console.log(err);
         }
@@ -301,14 +299,14 @@ export class PostDetailsComponent implements OnInit {
     if (this.currentUser?.role?.authority === "ROLE_MODERATOR") {
       this.postsService.reject(this.post?.id!).subscribe({
         next: () => {
-          this.router.navigate(['/posts']);
+          this.router.navigate(['/posts/all']);
           ToastSuccess.fire({
             text: "Post rejected successfully"
           });
         },
         error: (err) => {
           ToastError.fire({
-            text: err.error.message
+            text: err.status === 500 ? "Internal server error" : err.error.message
           });
           // console.log(err);
         }
@@ -316,6 +314,29 @@ export class PostDetailsComponent implements OnInit {
     } else {
       ToastWarning.fire({
         text: "You don't have permission to accept this post"
+      });
+    }
+  }
+  deletePost(): void {
+    if (this.post?.user.id === this.currentUser?.id ||
+      this.currentUser?.role?.authority === "ROLE_MODERATOR") {
+      this.postsService.delete(this.post?.id!).subscribe({
+        next: () => {
+          this.router.navigate(["/posts/all"]);
+          ToastSuccess.fire({
+            text: "Post deleted successfully"
+          });
+        },
+        error: (err) => {
+          ToastError.fire({
+            text: err.status === 500 ? "Internal server error" : err.error.message
+          });
+          // console.log(err);
+        }
+      });
+    } else {
+      ToastWarning.fire({
+        text: "You don't have permission to delete this post"
       });
     }
   }

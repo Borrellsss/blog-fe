@@ -20,7 +20,7 @@
     <button (click)="nextPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page + 1 === categoryPageableOutputDto.totalPages">Next</button>
   </div>
   <div class="categories-wrapper flex flex-wrap" *ngIf="categoryPageableOutputDto && categoryPageableOutputDto.categories.length > 0">
-    <div routerLink="/posts" [queryParams]="{category: category.name.replaceAll(' ', '%')}" *ngFor="let category of categoryPageableOutputDto.categories" class="card category-card">
+    <div routerLink="/posts/all" [queryParams]="{category: category.name.replaceAll(' ', '%')}" *ngFor="let category of categoryPageableOutputDto.categories" class="card category-card">
       <div class="category-card-title">{{ category.name }}</div>
       <div class="category-card-body">
         <p>{{ category.description }}</p>

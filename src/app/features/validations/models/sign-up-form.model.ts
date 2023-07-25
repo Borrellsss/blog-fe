@@ -6,5 +6,4 @@ export class SignUpForm {
   username = null;
   password = null;
   avatar = null;
-  role = null;
 }

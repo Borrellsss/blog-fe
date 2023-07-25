@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2 } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 
@@ -9,11 +9,14 @@ import { ErrorMessageInputDto } from "../../../../shared/models/input/error-mess
 import { UserOutputDto } from "../../../../shared/models/output/users/user-output-dto";
 import { ErrorMessageOutputDto } from "../../../../shared/models/output/validations/error-message-output-dto";
 import { ValidationOutputDto } from "../../../../shared/models/output/validations/validation-output-dto";
+import ToastError from "../../../../shared/toasts/toast-error";
+import ToastSuccess from "../../../../shared/toasts/toast-success";
+import ToastWarning from "../../../../shared/toasts/toast-warning";
 
 @Component({
-  selector: 'app-validations-details',
-  templateUrl: './validation-details.component.html',
-  styleUrls: ['./validation-details.component.scss']
+  selector: "app-validations-details",
+  templateUrl: "./validation-details.component.html",
+  styleUrls: ["./validation-details.component.scss"]
 })
 export class ValidationDetailsComponent implements OnInit {
   validation: ValidationOutputDto | null = null;
@@ -55,7 +58,7 @@ export class ValidationDetailsComponent implements OnInit {
           },
           error: (err) => {
             this.validation = null;
-            console.log(err);
+            // console.log(err);
           }
         });
     });
@@ -70,11 +73,9 @@ export class ValidationDetailsComponent implements OnInit {
 
   private setCreatedByAndUpdatedBy(target: any, id: number, field: string) {
     this.userService.readById(id).subscribe({
-      next: (res: UserOutputDto) => {
-        target[field] = res.username;
-      },
+      next: (res: UserOutputDto) => target[field] = res.username,
       error: (err) => {
-        console.log(err);
+        // console.log(err);
       }
     });
   }
@@ -104,8 +105,16 @@ export class ValidationDetailsComponent implements OnInit {
         next: (res) => {
           this.validation = null;
           this.router.navigate(["/validations"]);
+          ToastSuccess.fire({
+            text: "Validation deleted successfully!"
+          });
         },
-        error: (err) => console.log(err)
+        error: (err) => {
+          ToastError.fire({
+            text: err.status === 500 ? "Internal server error" : err.error.message
+          });
+          // console.log(err);
+        }
       });
   }
   deleteErrorMessage(id: number): void {
@@ -117,8 +126,16 @@ export class ValidationDetailsComponent implements OnInit {
             .filter((errorMessage) => errorMessage.id !== id).slice();
           this.disableRadioButton();
           this.resetAddValidationErrorMessageWrapper();
+          ToastSuccess.fire({
+            text: "Error message deleted successfully!"
+          });
         },
-        error: (err) => console.log(err)
+        error: (err) => {
+          ToastError.fire({
+            text: err.status === 500 ? "Internal server error" : err.error.message
+          });
+          // console.log(err);
+        }
       });
   }
   private isErrorMessagePresent(errorType: string): boolean {
@@ -171,7 +188,7 @@ export class ValidationDetailsComponent implements OnInit {
             this.isErrorMessagePresent("minSpecialCharacters");
           break;
         default:
-          console.log("Error");
+          // console.log("Error");
           return;
       }
       radioEl.disabled ? this.renderer.addClass(radioEl, "disabled") : this.renderer.removeClass(radioEl, "disabled");
@@ -234,6 +251,9 @@ export class ValidationDetailsComponent implements OnInit {
       }
     }
     if (this.errorMessageForm.invalid) {
+      ToastWarning.fire({
+        text: "Please fill in all the required fields!"
+      });
       return;
     }
     const errorType = `${this.validation?.field}.${this.errorMessageForm.controls["errorType"].value}`;
@@ -258,6 +278,15 @@ export class ValidationDetailsComponent implements OnInit {
           this.renderer.removeClass(addValidationErrorMessageWrapper, "active");
           this.resetAddValidationErrorMessageWrapper();
         }
+        ToastSuccess.fire({
+          text: "Error message created successfully!"
+        });
+      },
+      error: (err) => {
+        ToastError.fire({
+          text: err.status === 500 ? "Internal server error" : err.error.message
+        });
+        // console.log(err);
       }
     });
     this.clearForm(this.errorMessageForm);
@@ -289,6 +318,15 @@ export class ValidationDetailsComponent implements OnInit {
           return;
         }
         this.renderer.removeClass(editValidationErrorMessage, "active");
+        ToastSuccess.fire({
+          text: "Error message updated successfully!"
+        });
+      },
+      error: (err) => {
+        ToastError.fire({
+          text: err.status === 500 ? "Internal server error" : err.error.message
+        });
+        // console.log(err);
       }
     });
     this.clearForm(this.editErrorMessageForm);

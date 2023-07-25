@@ -79,7 +79,7 @@ export class SignInComponent implements OnInit {
           },
           error: (err) => {
             ToastError.fire({
-              text: err.error.message,
+              text: err.status === 500 ? "Internal server error" : err.error.message,
             });
             // console.error(err);
           }

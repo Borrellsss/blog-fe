@@ -20,7 +20,7 @@
     <button (click)="nextPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page + 1 === tagPageableOutputDto.totalPages">Next</button>
   </div>
   <div class="tags-wrapper flex flex-wrap" *ngIf="tagPageableOutputDto && tagPageableOutputDto.tags.length > 0">
-    <div routerLink="/posts" [queryParams]="{tag: tag.name.replaceAll(' ', '%')}" *ngFor="let tag of tagPageableOutputDto.tags" class="card tag-card">
+    <div routerLink="/posts/all" [queryParams]="{tag: tag.name.replaceAll(' ', '%')}" *ngFor="let tag of tagPageableOutputDto.tags" class="card tag-card">
       <div class="tag-card-title">
         <span class="tag">{{ tag.name }}</span>
       </div>

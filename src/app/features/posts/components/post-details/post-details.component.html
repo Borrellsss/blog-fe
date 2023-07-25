@@ -13,11 +13,24 @@
   <div class="post-content-section">
     <div class="post-wrapper">
       <div class="post-category">{{ post?.category?.name }}</div>
-      <div class="flex j-c-between a-i-center">
+      <div class="flex j-c-between a-i-center post-title">
         <h1>{{ post?.title }}</h1>
-        <div class="flex">
-          <button [routerLink]="['/posts/edit']" [queryParams]="{post: post?.id}" class="btn btn-2 btn-rounded btn-s" *ngIf="post?.user?.id === currentUser?.id">Edit</button>
-          <button class="btn btn-2 btn-rounded btn-s" *ngIf="post?.user?.id === currentUser?.id">Delete</button>
+        <div class="flex edit-or-delete-post">
+          <button
+            [routerLink]="['/posts/edit']"
+            [queryParams]="{post: post?.id}"
+            class="btn btn-1 btn-rounded btn-s"
+            *ngIf="post?.user?.id === currentUser?.id"
+          >
+            Edit
+          </button>
+          <button
+            (click)="deletePost()"
+            class="btn btn-2 btn-rounded btn-s"
+            *ngIf="post?.user?.id === currentUser?.id || currentUser?.role?.authority === 'ROLE_MODERATOR'"
+          >
+            Delete
+          </button>
         </div>
       </div>
       <div class="post-dates">
@@ -33,7 +46,7 @@
           <img src="https://picsum.photos/200/300" alt="user image">
         </div>
         <div>
-          <div>{{ post?.user?.username }}</div>
+          <a [routerLink]="['/users/details', post?.user?.id, post?.user?.username]">{{ post?.user?.username }}</a>
           <div>{{ post?.user?.role?.authority! | userRoleConverter }}</div>
         </div>
       </div>
@@ -91,8 +104,9 @@
               </div>
               <div class="comment-content">{{ comment?.content }}</div>
               <div class="flex update-or-delete-comment" *ngIf="comment.user.id === currentUser?.id">
-                <button (click)="createComment()" class="btn btn-squared btn-1 btn-s">Edit</button>
-                <button (click)="clearForm(commentForm)" type="button" class="btn btn-squared btn-2 btn-s">Delete</button>
+<!--                TODO: implements edit and delete comments -->
+                <button class="btn btn-squared btn-1 btn-s">Edit</button>
+                <button type="button" class="btn btn-squared btn-2 btn-s">Delete</button>
               </div>
             </div>
           </div>

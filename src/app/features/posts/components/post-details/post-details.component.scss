@@ -53,13 +53,13 @@
       > .post-category {
         color: $color-2;
       }
-      > .flex:first-child {
+      .post-title {
         margin-bottom: 1em;
 
         h1 {
           margin-bottom: 0;
         }
-        > .flex {
+        .edit-or-delete-post {
           gap: 1em;
         }
       }

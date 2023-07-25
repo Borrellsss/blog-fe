@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+
 import { ValidationsService } from "../../../../core/services/validations.service";
 import { ValidationInputDto } from "../../../../shared/models/input/validation-input-dto";
 import { ValidationOutputDto } from "../../../../shared/models/output/validations/validation-output-dto";
+import ToastError from "../../../../shared/toasts/toast-error";
+import ToastSuccess from "../../../../shared/toasts/toast-success";
 
 @Component({
-  selector: 'app-validations-form',
-  templateUrl: './validation-form.component.html',
-  styleUrls: ['./validation-form.component.scss']
+  selector: "app-validations-form",
+  templateUrl: "./validation-form.component.html",
+  styleUrls: ["./validation-form.component.scss"]
 })
 export class ValidationFormComponent implements OnInit {
   validation: ValidationOutputDto | null = null;
@@ -51,7 +54,7 @@ export class ValidationFormComponent implements OnInit {
             }
           },
           error: (err) => {
-            console.log(err);
+            // console.log(err);
             this.validation = null;
           }
         });
@@ -81,25 +84,42 @@ export class ValidationFormComponent implements OnInit {
       validationInputDto.field = this.validation.field;
       this.validationsService.update(this.validation.code, validationInputDto)
         .subscribe({
-          next: (res: ValidationOutputDto) =>
+          next: (res: ValidationOutputDto) => {
             this.router.navigate(["/validations",
               this.formField.split(" ")[0],
               this.formField.split(" ")[2]
-            ]),
-          error: (err) => console.log(err)
+            ]);
+            ToastSuccess.fire({
+              text: "Validation updated successfully",
+            });
+          },
+          error: (err) => {
+            ToastError.fire({
+              text: err.status === 500 ? "Internal Server Error" : err.error.message,
+            });
+            // console.log(err);
+          }
         });
     } else {
       validationInputDto.code = this.validationForm.controls["code"].value;
       validationInputDto.field = this.formField.replace(" Form ", "InputDto.");
-      // @ts-ignore
       this.validationsService.create(validationInputDto)
         .subscribe({
-          next: (res: ValidationOutputDto) =>
+          next: (res: ValidationOutputDto) => {
             this.router.navigate(["/validations",
               this.formField.split(" ")[0],
               this.formField.split(" ")[2]
-            ]),
-          error: (err) => console.log(err)
+            ]);
+            ToastSuccess.fire({
+              text: "Validation created successfully",
+            });
+          },
+          error: (err) => {
+            ToastError.fire({
+              text: err.status === 500 ? "Internal Server Error" : err.error.message,
+            });
+            // console.log(err);
+          }
         });
     }
   }

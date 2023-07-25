@@ -20,6 +20,8 @@
 }
 
 body {
+  //width: 100vw;
+  //min-height: 100vh;
   background-color: $main-color;
   font-family: 'Poppins', sans-serif;
   font-size: 0.75rem;
@@ -513,11 +515,8 @@ body {
     margin-top: 63px;
   }
   section {
-    padding-block: 4em;
-
-    &.content {
-      padding-block: 2em;
-    }
+    padding-block: 4em 8em;
+    min-height: calc(100vh - 63px - 250px);
   }
   img:not(.e-rte-image) {
     width: 100%;

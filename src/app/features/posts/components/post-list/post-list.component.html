@@ -1,7 +1,7 @@
 <div class="post-list-section">
   <div class="flex j-c-between a-i-center">
     <h1>Posts</h1>
-    <a routerLink="edit" class="btn btn-1 btn-rounded btn-s">New</a>
+    <a routerLink="/posts/edit" class="btn btn-1 btn-rounded btn-s">New</a>
   </div>
   <div class="form-wrapper-dark-1">
     <form [formGroup]="postListForm" (keyup)="filterPosts()">

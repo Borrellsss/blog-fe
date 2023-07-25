@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { SignInInputDto } from "../../shared/models/input/sign-in-input-dto";
 
+import { SignInInputDto } from "../../shared/models/input/sign-in-input-dto";
 import { SignUpInputDto } from "../../shared/models/input/sign-up-input-dto";
 import { UserInputDto } from "../../shared/models/input/user-input-dto";
 import { SignInOutputDto } from "../../shared/models/output/users/sign-in-output-dto";

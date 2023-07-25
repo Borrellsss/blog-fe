@@ -136,7 +136,7 @@ export class UserDetailsComponent implements OnInit {
       },
       error: (err: any) => {
         ToastError.fire({
-          text: err.error.message
+          text: err.status === 500 ? "Internal server error" : err.error.message
         });
         // console.log(err);
       }
@@ -158,7 +158,7 @@ export class UserDetailsComponent implements OnInit {
       },
       error: (err: any) => {
         ToastWarning.fire({
-          text: err.error.message
+          text: err.status === 500 ? "Internal server error" : err.error.message
         });
         // console.log(err);
       }

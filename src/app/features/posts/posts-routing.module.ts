@@ -1,5 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+
+import { moderatorGuard } from "../../core/guards/moderator.guard";
 import { PostDetailsComponent } from "./components/post-details/post-details.component";
 import { PostFormComponent } from "./components/post-form/post-form.component";
 import { MostPopularComponent } from "./components/post-list/most-popular/most-popular.component";
@@ -10,7 +12,8 @@ import { PostPendingComponent } from "./components/post-list/post-pending/post-p
 const routes: Routes = [
   {
     path: "",
-    component: PostListComponent
+    redirectTo: "most-popular",
+    pathMatch: "full"
   },
   {
     path: "most-popular",
@@ -19,6 +22,10 @@ const routes: Routes = [
   {
     path: "most-up-voted",
     component: MostUpVotedComponent
+  },
+  {
+    path: "all",
+    component: PostListComponent
   },
   {
     path: "details/:userId/:id/:title",
@@ -30,8 +37,9 @@ const routes: Routes = [
   },
   {
     path: "pending",
-    component: PostPendingComponent
-  },
+    component: PostPendingComponent,
+    canActivate: [moderatorGuard],
+  }
 ];
 
 @NgModule({

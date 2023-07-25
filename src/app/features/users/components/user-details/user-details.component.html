@@ -40,7 +40,7 @@
   <div class="user-posts">
     <div class="section-title">Recent posts</div>
     <div class="flex flex-wrap user-posts-list" *ngIf="validPostPageableOutputDto && validPostPageableOutputDto.posts.length > 0">
-      <div [routerLink]="['/posts/details', post.user.id, post.id, post.title]" class="user-post" *ngFor="let post of validPostPageableOutputDto?.posts">
+      <div [routerLink]="['/posts/details', post.user.id, post.id, post.title.replaceAll(' ', '-')]" class="user-post" *ngFor="let post of validPostPageableOutputDto?.posts">
         <div class="user-post-category">{{ post.category.name }}</div>
         <div class="user-post-title">{{ post.title }}</div>
         <div class="user-post-body">
@@ -60,7 +60,7 @@
   <div class="user-posts" *ngIf="user?.id === currentUser?.id || currentUser?.role?.authority !== 'ROLE_USER'">
     <div class="section-title">Post rejected</div>
     <div class="flex flex-wrap user-posts-list" *ngIf="invalidPostPageableOutputDto && invalidPostPageableOutputDto.posts.length > 0">
-      <div [routerLink]="['/posts/details', post.user.id, post.id, post.title]" class="user-post" *ngFor="let post of invalidPostPageableOutputDto?.posts">
+      <div [routerLink]="['/posts/details', post.user.id, post.id, post.title.replaceAll(' ', '-')]" class="user-post" *ngFor="let post of invalidPostPageableOutputDto?.posts">
         <div class="user-post-category">{{ post.category.name }}</div>
         <div class="user-post-title">{{ post.title }}</div>
         <div class="user-post-body">
@@ -80,7 +80,7 @@
   <div class="user-posts" *ngIf="user?.id === currentUser?.id || currentUser?.role?.authority !== 'ROLE_USER'">
     <div class="section-title">Pending post</div>
     <div class="flex flex-wrap user-posts-list" *ngIf="pendingPostPageableOutputDto && pendingPostPageableOutputDto.posts.length > 0">
-      <div [routerLink]="['/posts/details', post.user.id, post.id, post.title]" class="user-post" *ngFor="let post of pendingPostPageableOutputDto?.posts">
+      <div [routerLink]="['/posts/details', post.user.id, post.id, post.title.replaceAll(' ', '-')]" class="user-post" *ngFor="let post of pendingPostPageableOutputDto?.posts">
         <div class="user-post-category">{{ post.category.name }}</div>
         <div class="user-post-title">{{ post.title }}</div>
         <div class="user-post-body">

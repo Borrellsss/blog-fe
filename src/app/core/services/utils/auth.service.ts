@@ -31,7 +31,7 @@ export class AuthService {
     }
   }
   getUser(): UserOutputDto | null {
-    if (!this.isTokenValid()) {
+    if (!localStorage.getItem("token")) {
       return null;
     }
     return JSON.parse(this.parseJwt(localStorage.getItem("token")).user);

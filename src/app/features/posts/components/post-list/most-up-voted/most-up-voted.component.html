@@ -1,7 +1,7 @@
 <div class="post-list-section">
   <div class="flex j-c-between a-i-center">
     <h1>Most up voted</h1>
-    <a routerLink="../edit" class="btn btn-1 btn-rounded btn-s">New</a>
+    <a routerLink="/posts/edit" class="btn btn-1 btn-rounded btn-s">New</a>
   </div>
   <div class="flex next-previous-wrapper" *ngIf="postPageableOutputDto && postPageableOutputDto.posts.length > 0">
     <button (click)="previousPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page < 1">Previous</button>

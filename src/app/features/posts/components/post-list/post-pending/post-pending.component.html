@@ -1,5 +1,5 @@
 <div class="post-list-section">
-  <h1>Posts</h1>
+  <h1>Posts pending</h1>
   <div class="flex next-previous-wrapper" *ngIf="postPageableOutputDto && postPageableOutputDto.posts.length > 0">
     <button (click)="previousPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page < 1">Previous</button>
     <button (click)="nextPage()" class="btn btn-squared btn-2 btn-s" [disabled]="page + 1 === postPageableOutputDto.totalPages">Next</button>

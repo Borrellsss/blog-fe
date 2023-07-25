@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
+
 import { CategoryOutputDto } from "../../shared/models/output/categories/category-output-dto";
 import { CategoryPageableOutputDto } from "../../shared/models/output/categories/category-pageable-output-dto";
-import { TagPageableOutputDto } from "../../shared/models/output/tags/tag-pageable-output-dto";
 
 @Injectable({
   providedIn: 'root'

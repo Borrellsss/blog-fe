@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from "@angular/forms";
+
 import { CategoriesService } from "../../../../core/services/categories.service";
 import { CategoryPageableOutputDto } from "../../../../shared/models/output/categories/category-pageable-output-dto";
 
@@ -26,7 +27,9 @@ export class CategoryListComponent implements OnInit {
   private readAllByOrderByName(page: number) {
     this.categoriesService.readAllByOrderByName(page).subscribe({
       next: (res: CategoryPageableOutputDto) => this.categoryPageableOutputDto = res,
-      error: (err) => console.log(err)
+      error: (err) => {
+        // console.log(err);
+      }
     });
   }
   private readAllByNameContainsOrderByName(name: string, page: number): void {
@@ -36,7 +39,7 @@ export class CategoryListComponent implements OnInit {
       },
       error: (err) => {
         this.categoryPageableOutputDto = null;
-        console.log(err);
+        // console.log(err);
       }
     });
   }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
+
+import { UserOutputDto } from "../../../shared/models/output/users/user-output-dto";
 import { AuthService } from "../../services/utils/auth.service";
 
 @Component({
@@ -10,6 +12,7 @@ import { AuthService } from "../../services/utils/auth.service";
 })
 export class HeaderComponent implements OnInit {
   private sub: Subscription = new Subscription();
+  currentUser: UserOutputDto | null = null;
   isSignedIn: boolean = false;
 
   constructor(
@@ -21,8 +24,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.sub = this.authService.isSignedIn$.subscribe((res: boolean) => {
       this.isSignedIn = res;
+      this.currentUser = this.authService.getUser();
     });
-    this.authService.isTokenValid();
   }
 
   signOut(): void {

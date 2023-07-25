@@ -41,9 +41,8 @@ export class UserListComponent implements OnInit {
       }
     });
   }
-  filterTags(): void {
+  filterUsers(): void {
     const username = this.userListForm.controls["username"].value;
-    console.log(username)
     this.page = 0;
     if (!username) {
       this.isFilterActive = false;
