@@ -6,5 +6,4 @@ export class UserForm {
   username = null;
   password = null;
   avatar = null;
-  role = null;
 }

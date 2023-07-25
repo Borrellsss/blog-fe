@@ -20,8 +20,6 @@
 }
 
 body {
-  //width: 100vw;
-  //min-height: 100vh;
   background-color: $main-color;
   font-family: 'Poppins', sans-serif;
   font-size: 0.75rem;
@@ -561,6 +559,7 @@ body {
     border-radius: 0.25em;
   }
   .next-previous-wrapper {
+    flex-wrap: wrap;
     gap: 1em;
 
     > .btn {

@@ -99,6 +99,9 @@ export class ValidatorService {
     if (validation.min && array.length < validation.min) {
       this.addErrors(suffix, validation, "min");
     }
+    if (validation.max && array.length > validation.max) {
+      this.addErrors(suffix, validation, "max");
+    }
   }
   private addErrors(key: string, validation: ValidationOutputDto, errorType: string): void {
     const errorMessageOutputDtos: Array<ErrorMessageOutputDto> = validation.errorMessages

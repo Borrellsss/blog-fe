@@ -48,7 +48,7 @@ export class PostListComponent implements OnInit {
     this.postsService.readAllByValidAndUserDeletedIsFalseOrderByCreatedAtDesc("true", page).subscribe({
       next: (res: PostPageableOutputDto) => this.postPageableOutputDto = res,
       error: (err) => {
-        console.log(err);
+        // console.log(err);
       }
     });
   }

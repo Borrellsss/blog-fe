@@ -40,11 +40,13 @@
           appInputIgnoreSpecialCharacters
           type="number"
           min="1"
+          max="1000000"
           id="min"
         >
         <label for="min">Min</label>
         <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="validationForm.get('min')?.invalid"></i>
       </div>
+      <div class="hint">Max 1000000</div>
       <!-- MAX -->
       <div class="form-input-wrapper">
         <input
@@ -55,11 +57,13 @@
           appInputIgnoreSpecialCharacters
           type="number"
           min="1"
+          max="1000000"
           id="max"
         >
         <label for="max">Max</label>
         <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="validationForm.get('max')?.invalid"></i>
       </div>
+      <div class="hint">Max 1000000</div>
       <!-- REGEX -->
       <div class="form-input-wrapper">
         <input
@@ -83,11 +87,13 @@
           appInputIgnoreSpecialCharacters
           type="number"
           min="1"
+          max="127"
           id="min-uppercase-letters"
         >
         <label for="min-uppercase-letters">Min uppercase letters</label>
         <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="validationForm.get('minUpperCaseLetters')?.invalid"></i>
       </div>
+      <div class="hint">Max 127</div>
       <!-- MIN LOWERCASE LETTERS -->
       <div class="form-input-wrapper">
         <input
@@ -98,11 +104,13 @@
           appInputIgnoreSpecialCharacters
           type="number"
           min="1"
+          max="127"
           id="min-lowercase-letters"
         >
         <label for="min-lowercase-letters">Min lowercase letters</label>
         <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="validationForm.get('minLowerCaseLetters')?.invalid"></i>
       </div>
+      <div class="hint">Max 127</div>
       <!-- MIN DIGITS -->
       <div class="form-input-wrapper">
         <input
@@ -113,11 +121,13 @@
           appInputIgnoreSpecialCharacters
           type="number"
           min="1"
+          max="127"
           id="min-digits"
         >
         <label for="min-digits">Min digits</label>
         <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="validationForm.get('minDigits')?.invalid"></i>
       </div>
+      <div class="hint">Max 127</div>
       <!-- MIN SPECIAL CHARACTERS -->
       <div class="form-input-wrapper">
         <input
@@ -128,11 +138,13 @@
           appInputIgnoreSpecialCharacters
           type="number"
           min="1"
+          max="127"
           id="min-special-characters"
         >
         <label for="min-special-characters">Min special characters</label>
         <i class="fa-solid fa-circle-exclamation input-alert" *ngIf="validationForm.get('minSpecialCharacters')?.invalid"></i>
       </div>
+      <div class="hint">Max 127</div>
       <div class="flex edit-or-delete-section">
         <button (click)="createOrUpdate()" class="btn btn-squared btn-1 btn-s">Confirm</button>
         <button (click)="clearForm()" type="button" class="btn btn-squared btn-2 btn-s">Clear</button>

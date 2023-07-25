@@ -42,3 +42,28 @@
   font-size: 1.5em;
   color: $color-4;
 }
+
+// media queries
+@media screen and (max-width: 1450px) {
+  .form-wrapper-dark-1 {
+    width: 50%;
+  }
+  .categories-wrapper {
+    gap: 1em;
+
+    > .category-card {
+      width: calc((100% / 2) - 0.5em);
+    }
+  }
+}
+@media screen and (max-width: 1040px) {
+  .form-wrapper-dark-1 {
+    width: 100%;
+  }
+  .categories-wrapper {
+
+    > .category-card {
+      width: 100%;
+    }
+  }
+}

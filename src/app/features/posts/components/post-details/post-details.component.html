@@ -51,8 +51,8 @@
         </div>
       </div>
     </div>
-    <div class="flex next-previous-wrapper" *ngIf="post?.valid === null && currentUser?.role?.authority === 'ROLE_MODERATOR'">
-      <button (click)="accept()" class="btn btn-rounded btn-2 btn-s">Accept</button>
+    <div class="flex accept-or-reject" *ngIf="post?.valid === null && currentUser?.role?.authority === 'ROLE_MODERATOR'">
+      <button (click)="accept()" class="btn btn-rounded btn-1 btn-s">Accept</button>
       <button (click)="reject()" class="btn btn-rounded btn-2 btn-s">Reject</button>
     </div>
     <div class="comments-wrapper" *ngIf="post?.valid">

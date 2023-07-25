@@ -95,7 +95,7 @@ export class ValidationFormComponent implements OnInit {
           },
           error: (err) => {
             ToastError.fire({
-              text: err.status === 500 ? "Internal Server Error" : err.error.message,
+              text: err.status === 500 ? "Internal Server Error" : `${Object.keys(err.error)[0]}: ${Object.values(err.error)[0]}`
             });
             // console.log(err);
           }
@@ -116,7 +116,7 @@ export class ValidationFormComponent implements OnInit {
           },
           error: (err) => {
             ToastError.fire({
-              text: err.status === 500 ? "Internal Server Error" : err.error.message,
+              text: err.status === 500 ? "Internal Server Error" : `${Object.keys(err.error)[0]}: ${Object.values(err.error)[0]}`
             });
             // console.log(err);
           }

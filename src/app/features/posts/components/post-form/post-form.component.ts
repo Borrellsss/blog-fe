@@ -207,7 +207,7 @@ export class PostFormComponent implements OnInit {
           },
           error: (err) => {
             ToastError.fire({
-              text: err.status === 500 ? "Internal server error" : err.error.message
+              text: err.status === 500 ? "Internal server error" : `${Object.keys(err.error)[0]}: ${Object.values(err.error)[0]}`
             });
             // console.log(err);
           }
@@ -223,7 +223,7 @@ export class PostFormComponent implements OnInit {
           },
           error: (err) => {
             ToastError.fire({
-              text: err.status === 500 ? "Internal server error" : err.error.message
+              text: err.status === 500 ? "Internal server error" : `${Object.keys(err.error)[0]}: ${Object.values(err.error)[0]}`
             });
             // console.log(err);
           }

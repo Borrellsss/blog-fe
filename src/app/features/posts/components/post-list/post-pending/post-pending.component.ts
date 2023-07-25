@@ -22,12 +22,11 @@ export class PostPendingComponent implements OnInit {
     this.postsService.readAllByValidAndUserDeletedIsFalseOrderByCreatedAtDesc("null", page)
       .subscribe({
         next: (res: PostPageableOutputDto) => {
-          console.log(res);
           this.postPageableOutputDto = res;
         },
         error: (err: any) => {
           this.postPageableOutputDto = null;
-          console.log(err);
+          // console.log(err);
         }
       });
   }

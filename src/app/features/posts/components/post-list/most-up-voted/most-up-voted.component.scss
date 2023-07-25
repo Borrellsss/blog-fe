@@ -55,3 +55,17 @@
     color: $color-4;
   }
 }
+
+// media queries
+@media screen and (max-width: 1150px) {
+  .post-list-section {
+
+    .posts-wrapper {
+      gap: 1em;
+
+      .post-card-wrapper {
+        width: 100%;
+      }
+    }
+  }
+}

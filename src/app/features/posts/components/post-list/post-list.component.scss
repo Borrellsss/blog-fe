@@ -59,3 +59,28 @@
     color: $color-4;
   }
 }
+
+// media queries
+@media screen and (max-width: 1150px) {
+  .post-list-section {
+
+    > .form-wrapper-dark-1 {
+      width: 50%;
+    }
+    .posts-wrapper {
+      gap: 1em;
+
+      .post-card-wrapper {
+        width: 100%;
+      }
+    }
+  }
+}
+@media screen and (max-width: 1040px) {
+  .post-list-section {
+
+    > .form-wrapper-dark-1 {
+      width: 100%;
+    }
+  }
+}

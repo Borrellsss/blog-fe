@@ -46,6 +46,9 @@ export class UsersService {
   updatePassword(id: number, userInputDto: UserInputDto): Observable<void> {
     return this.http.put<void>(`users/${id}/password`, userInputDto);
   }
+  promoteOrDemote(id: number, roleId: number): Observable<void> {
+    return this.http.put<void>(`users/${id}/role/${roleId}`, null);
+  }
   blockOrUnblock(id: number): Observable<void> {
     return this.http.put<void>(`users/${id}/block-or-unblock`, null);
   }

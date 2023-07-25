@@ -41,3 +41,28 @@
   font-size: 1.5em;
   color: $color-4;
 }
+
+// media queries
+@media screen and (max-width: 1450px) {
+  .form-wrapper-dark-1 {
+    width: 50%;
+  }
+  .tags-wrapper {
+    gap: 1em;
+
+    > .tag-card {
+      width: calc((100% / 2) - 0.5em);
+    }
+  }
+}
+@media screen and (max-width: 1040px) {
+  .form-wrapper-dark-1 {
+    width: 100%;
+  }
+  .tags-wrapper {
+
+    > .tag-card {
+      width: 100%;
+    }
+  }
+}

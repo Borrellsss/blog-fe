@@ -85,7 +85,6 @@ export class SignUpComponent implements OnInit {
             this.signUpForm.reset();
           },
           error: (err) => {
-            console.log(err.error.message);
             ToastError.fire({
               text: err.status === 500 ? "Internal server error" : err.error.message
             });

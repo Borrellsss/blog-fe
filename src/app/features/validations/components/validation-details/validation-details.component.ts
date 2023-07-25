@@ -188,7 +188,6 @@ export class ValidationDetailsComponent implements OnInit {
             this.isErrorMessagePresent("minSpecialCharacters");
           break;
         default:
-          // console.log("Error");
           return;
       }
       radioEl.disabled ? this.renderer.addClass(radioEl, "disabled") : this.renderer.removeClass(radioEl, "disabled");

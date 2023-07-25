@@ -9,6 +9,7 @@
     > .user-avatar {
       width: 150px;
       height: 150px;
+      flex-shrink: 0;
       border-radius: 50%;
       overflow: hidden;
       border: 2px solid $color-2;
@@ -19,7 +20,11 @@
         object-fit: cover;
       }
     }
-    > .user-infos {
+    > .flex {
+      flex-grow: 1;
+    }
+    .user-infos {
+      margin-bottom: 1em;
       flex-grow: 1;
 
       > .flex:first-child {
@@ -44,8 +49,46 @@
       }
     }
     .edit-delete-block-section {
-      gap: 1em;
+      gap: 0.7em;
       align-self: start;
+
+      > .promote-or-demote-section {
+        position: relative;
+
+        > .form-wrapper-dark-2 {
+          padding: 2em;
+          width: fit-content;
+          position: absolute;
+          top: calc(100% + 1em);
+          left: 50%;
+          translate: -50%;
+          display: none;
+
+          &.active {
+            display: block;
+          }
+          &::after {
+            content: " ";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent $color-3 transparent;
+          }
+          > form {
+
+            .flex:last-child {
+              gap: 1em;
+
+              > .btn {
+                font-size: 1em;
+              }
+            }
+          }
+        }
+      }
     }
   }
   .section-title {
@@ -118,6 +161,82 @@
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;
+        }
+      }
+    }
+  }
+}
+
+// media queries
+@media screen and (max-width: 1400px) {
+  .user-details-section {
+
+    > .user-comments {
+
+      > .user-comments-list {
+        gap: calc(3em / 2);
+
+        > .user-comment {
+          width: calc((100% / 3) - 1em);
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1150px) {
+  .user-details-section {
+
+    > .user-details {
+      flex-direction: column;
+      gap: 1em;
+    }
+    > .user-posts {
+
+      > .user-posts-list {
+
+        .user-post {
+          width: 100%;
+        }
+      }
+    }
+    > .user-comments {
+
+      > .user-comments-list {
+        gap: 1em;
+
+        > .user-comment {
+          width: calc((100% / 2) - 0.5em);
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 940px) {
+  .user-details-section {
+
+    > .user-details {
+
+      > .user-avatar {
+        align-self: center;
+      }
+      .user-infos {
+        text-align: center;
+
+        > .flex:first-child {
+          margin-bottom: 1em;
+          flex-direction: column;
+        }
+      }
+      .edit-delete-block-section {
+        justify-content: center;
+      }
+    }
+    > .user-comments {
+
+      > .user-comments-list {
+
+        > .user-comment {
+          width: 100%;
         }
       }
     }
