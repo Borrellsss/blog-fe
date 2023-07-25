@@ -1,10 +1,13 @@
 @import "../../../../../styles/variables";
 
 .post-details-section {
+  gap: 6em;
 
   .like-section {
+    height: fit-content;
     gap: 1em;
-    position: fixed;
+    position: sticky;
+    top: calc(63px + 4em);
 
     > .vote-count-wrapper {
       font-size: 1.2em;
@@ -45,7 +48,6 @@
     }
   }
   > .post-content-section {
-    margin-left: 6em;
 
     > .post-wrapper {
       margin-bottom: 3em;

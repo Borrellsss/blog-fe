@@ -26,6 +26,13 @@
     }
     .category-card-body {
       margin-block: 1.3em;
+
+      > p {
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
     }
   }
 }
